@@ -90,6 +90,21 @@ span.stressed {
     padding: 10px;
 }
 
+a.stressed {
+    color: white;
+    background-color: #9F64EB;
+    font-size: 30px;
+    border-radius: 40px;
+    padding: 20px;
+    margin: 60px;
+    transition: all 3s, ease-in-out;
+    
+}
+a.stressed:hover {
+    text-decoration: none;
+    transform: scale(1.1);   
+}
+
 .wrapper {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -118,7 +133,7 @@ span.stressed {
 
 a.biology {
     background-image: linear-gradient(45deg, #D27CCA 0%, #D27CC4 70%, #F2BD6C 70%, #F2BD6C 100%);
-    transition: ease;
+    transition: transform 0.4s ease;
     border-radius: 20px;
 }
 a.biology:hover {
@@ -152,7 +167,7 @@ a.biology p {
 
 a.chemistry {
     background-image: linear-gradient(-45deg, #D27CCA 0%, #D27CCA 70%, #A0D88D 70%, #A0D88D 100%);   
-    transition: ease;
+    transition: transform 0.4s ease;
     border-radius: 20px;
 }
 
@@ -180,7 +195,7 @@ a.chemistry p {
 
 a.bioengineering {
     background-image: linear-gradient(135deg, #B298E9 0%, #B298E9 70%, #F0DB91 70%, #F0DB91 100%);   
-    transition: ease;
+    transition: transform 0.4s ease;
     border-radius: 20px;
 }
 a.bioengineering:hover {
@@ -206,7 +221,7 @@ a.bioengineering p {
 
 a.physics {
     background-image: linear-gradient(-45deg, #A2DE93 0%, #A2DE93 20%, #EC719D 20%, #EC719D 85%, #A2DE93 85%, #A2DE93 100%);
-    transition: ease;
+    transition: transform 0.4s ease;
     border-radius: 20px;
 }
 a.physics:hover {
@@ -232,7 +247,7 @@ a.physics p {
 
 a.math {
     background-image: linear-gradient(279deg, #F2BD6C 0%, #F2BD6C 70%, #EC719D 70%, #EC719D 100%);
-    transition: ease;
+    transition: transform 0.4s ease;
     border-radius: 20px;
 }
 a.math:hover {
@@ -258,7 +273,7 @@ a.math p {
 
 a.informatica {
     background-image: linear-gradient(45deg, #A0D88D 0%, #A0D88D 50%, #C1B6EB 50%, #C1B6EB 100%);
-    transition: ease;
+    transition: transform 0.4s ease;
     border-radius: 20px;
 }
 a.informatica:hover {
@@ -321,4 +336,8 @@ a.social:hover {
 img.social {
     width: 50px;
     height: 50px;
+}
+
+.form_style {
+    background-color: #C1B6EB;
 }

@@ -1,0 +1,658 @@
+/**
+ *
+ * Responsive Styles For Education Buddy Template
+ *
+ * This File have all responsive CSS
+ */
+ 
+/*All Reponsive Code Goes here*/
+
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+	
+	/** Inner Pags css **/
+	.sticky-navigation.fixed-top {
+		position:relative !important;
+	}
+	.title-section-text h1 {
+		font-size:2.5rem;
+	}
+	
+	/** Portfolio Css **/
+	.portfolio-row .portfolio-info {
+		margin:0;
+	}
+	.portfolio-row {
+		margin:0;
+	}
+	.portfolio-info {
+		padding:15px;
+		display:block;
+	}
+	
+	.portfolio-info img {
+		width:100%;
+		height:auto;
+	}
+	.portfolio-text img {
+		max-width:33px;
+	}
+	
+	/** General CSS **/
+	.animated {
+		visibility:visible;
+	}
+
+	@keyframes slideInUp {
+		from { opacity: 1; }
+		to {opacity: 1;}
+	}
+	@keyframes slideInRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes slideInLeft {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none;}
+	}
+	@keyframes slideInUp {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes rotateInUpRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+
+	.container .col-padding-y:first-child {
+		padding-top:0;
+	}
+	.container .col-padding-y:last-child {
+		padding-bottom:0;
+	}
+	.btn-padding {
+    	padding:16px 16px;
+    	min-width: 0;
+		margin-bottom:15px;
+	}
+	
+	/** Top Bar CSS **/
+	.top-bar {
+		background: linear-gradient(90deg, #f2f3f5 100%, #eda900 0%);
+	}
+	.top-bar .text-right {
+		background-color:#eda900;
+	}
+	.top-bar .left-side ul li,
+	.top-bar .text-right {
+		text-align:center !important;
+		width:100%
+	}
+	.top-bar .left-side ul li {
+		margin-right:0;
+	}
+	.top-bar .left-side .menu {
+		width:100%
+	}
+	
+	/** header CSS **/
+	
+	.header {
+		text-align:center;
+	}
+	.header .icon-box,
+	.header .info-container {
+		float:none;
+	}
+	.header .icon-box:after {
+		content:'';
+		display:block;
+		clear:both;
+	}
+	.header .icon-box:last-child ,
+	.header .icon-box {
+		margin: auto;
+		display: table;
+	}
+	.header .icon-box:last-child {
+		display:none;
+	}
+	.header .info-container {
+		padding-bottom:0px;
+	}
+	.info-container .icon-box {
+		margin-bottom:0px;
+	}
+	.header .logo,
+	.header .icon-box:first-child {
+		margin-bottom:0px;
+	}
+	.nav-container .navigation .container .row .col-sm-6 {
+		width:50%;
+	}
+	.nav-icons:before {
+		left:0;
+		border:0;
+	}
+	.navbar-light .navbar-nav .nav-item:first-child .nav-link {
+		padding-left:30px;
+	}
+	
+	/** Banner Container CSS **/
+	.slide-text {
+		padding:100px 15px;
+	}
+	.slide-text h2 span, 
+	.slide-text h2, 
+	.slide-text p {
+		text-align:center;
+
+	}
+	.slide-text .btn {
+		margin:auto;
+		display:block;
+		margin-top:0.75rem;
+		margin-bottom:0.75rem;
+	}
+	.course-warp .menu {
+		display:block;
+		
+	}
+	.call-to-action-img {
+		min-width: 100%;
+		min-height: 100%;
+		/* margin-bottom: -253px; */
+		position: absolute;
+		background-size: cover;
+		margin-top: -100px;
+		margin-bottom: 0px;
+	}
+	
+	/** Information Boxes **/
+	.events-block {
+		margin-top:0;
+	}
+	
+	/** About Us **/
+	.about-img img {
+		position:relative;
+		display:block;
+		left:0;
+	}
+	
+	/** Our staff **/
+	.our-staff .row {
+		margin:0;
+	}
+	.staff-text {
+		padding:15px;
+	}
+	/** Testimonials Wrap **/
+	.testimonial-slid {
+		margin:0;
+	}
+	
+	/** Why Chose Us **/
+	.faq-wrap .card-body {
+		padding:30px;
+	}
+	.video-preview-one:after {
+		display:none;
+	}
+	.video-preview-one img {
+		width: auto;
+		height: auto;
+		margin-left: 0;
+		display: block;
+	}
+	.video-icon {
+		left: 50%;
+		top: 50%;
+		margin-left: -55px;
+		margin-top: -55px;
+	}
+	
+	/** Call To Action **/
+	.call-to-action {
+		padding:100px 0px;
+		background-color:transparent;
+	}
+	.call-to-action .row .col-sm-12:nth-child(1) .call-box ,
+	.call-to-action .row .col-sm-12:nth-child(2) .call-box ,
+	.call-to-action .row .col-sm-12:nth-child(3) .call-box {
+		border-radius:20px;
+		padding:30px;
+	}
+	.call-to-action .row .col-sm-12:nth-child(2) .call-box {
+		margin-top:0;
+	}
+	.call-to-action .row .col-sm-12 {
+		padding-top:15px;
+		padding-bottom:15px;
+	}
+	.call-to-action .row .col-sm-12:first-child {
+		padding-top:0;
+	}
+	.call-to-action .row .col-sm-12:last-child {
+		padding-bottom:0;
+	}
+	
+	/** Footer **/
+	.footer-top-text {
+		padding: 0px 0px 30px 0px;
+	}
+	
+	.footer-top-text .form-group input {
+		width:100%;
+		margin-bottom:30px;
+	}
+	.subscribe-us ul li:first-child input {
+		width:200px;
+	}
+	.footer-box .links.col-padding-y  {
+		padding-top:15px;
+	}
+	.footer-top .form-group input::placeholder {
+		color:#ffffff;
+	}
+}
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+	
+	/** Inner Pags css **/
+	.sticky-navigation.fixed-top {
+		position:relative !important;
+	}
+	
+	.navbar-light .navbar-nav .nav-item:first-child .nav-link {
+		padding-left:30px;
+	}
+	.call-to-action-img {
+		min-width: 100%;
+		min-height: 100%;
+		/* margin-bottom: -253px; */
+		position: absolute;
+		background-size: cover;
+		margin-top: -100px;
+		margin-bottom: 0px;
+	}
+	
+	/** Portfolio Css **/
+	.portfolio-row .portfolio-info {
+		margin:0;
+	}
+	.portfolio-row {
+		margin:0;
+	}
+	.portfolio-info {
+		padding:15px;
+		display:block;
+	}
+	
+	.portfolio-info img {
+		width:100%;
+		height:auto;
+	}
+	.portfolio-text img {
+		max-width:33px;
+	}
+	
+	/** General CSS **/
+	.animated {
+		visibility:visible;
+	}
+
+	@keyframes slideInUp {
+		from { opacity: 1; }
+		to {opacity: 1;}
+	}
+	@keyframes slideInRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes slideInLeft {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none;}
+	}
+	@keyframes slideInUp {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes rotateInUpRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+	
+	/** Top Bar CSS **/
+	.top-bar {
+		background: linear-gradient(90deg, #f2f3f5 100%, #eda900 0%);
+	}
+	.top-bar .text-right {
+		background-color:#eda900;
+	}
+	.top-bar .left-side ul li,
+	.top-bar .text-right {
+		text-align:center !important;
+		width:100%
+	}
+	.top-bar .left-side ul li {
+		margin-right:0;
+	}
+	.top-bar .left-side .menu {
+		width:100%
+	}
+	
+	/** Header CSS **/
+	.header {
+    	text-align: center;
+	}
+	.header .info-container {
+		display:table;
+		margin:auto;
+		float:none;
+	}
+	
+	/** Banner Container CSS **/
+	.slide-text {
+		padding-right:0;
+	}
+	
+	/** Information Boxes **/
+	.events-block {
+		margin-top:0;
+	}
+	
+	/** About Us **/
+	.about-img img {
+		position:relative;
+		display:block;
+		left:0;
+	}
+	
+	/** Call To Action **/
+	.call-to-action {
+		padding:100px 0px;
+		background-color:transparent;
+	}
+	.call-to-action .row .col-sm-12:nth-child(1) .call-box ,
+	.call-to-action .row .col-sm-12:nth-child(2) .call-box ,
+	.call-to-action .row .col-sm-12:nth-child(3) .call-box {
+		border-radius:20px;
+	}
+	.call-to-action .row .col-sm-12:nth-child(2) .call-box {
+		margin-top:0;
+	}
+	.call-to-action .row .col-sm-12 {
+		padding-top:15px;
+		padding-bottom:15px;
+	}
+	.call-to-action .row .col-sm-12:first-child {
+		padding-top:0;
+	}
+	.call-to-action .row .col-sm-12:last-child {
+		padding-bottom:0;
+	}
+	
+	/** Footer **/
+	.footer-top-text {
+		padding: 0px 0px 30px 0px;
+	}
+	
+	.footer-top-text .form-group input {
+		width:100%;
+		margin-bottom:30px;
+	}
+	.footer-box.follow-us {
+		text-align:center;
+	}
+	.footer-box.Privacy ,
+	.footer-box.Courses {
+		margin:auto;
+		display:table;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+	
+	/** Inner Pags css **/
+	.sticky-navigation.fixed-top {
+		position:relative !important;
+	}
+	
+	.single-services-post .img-thumbnail img {
+		width:100%;
+		height:auto;
+	}
+	
+	.navbar-light .navbar-nav .nav-item:first-child .nav-link {
+		padding-left:30px;
+	}
+	
+	/** Portfolio Css **/
+	.portfolio-row .portfolio-info {
+		margin:0;
+	}
+	.portfolio-row {
+		margin:0;
+		display:flex;
+	}
+	.portfolio-info {
+		padding:15px;
+		display:block;
+	}
+	.portfolio-info img {
+		width:100%;
+		height:auto;
+	}
+	.portfolio-text img {
+		max-width:33px;
+	}
+	
+	/** General CSS **/
+	.module-margin .row .col-md-6, .row .col-md-6 {
+    	display: block;
+    	margin: auto;
+	}
+	.animated {
+		visibility:visible;
+	}
+
+	@keyframes slideInUp {
+		from { opacity: 1; }
+		to {opacity: 1;}
+	}
+	@keyframes slideInRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes slideInLeft {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none;}
+	}
+	@keyframes slideInUp {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes rotateInUpRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+	
+	/** Top Bar CSS **/
+	.top-bar {
+		background: linear-gradient(90deg, #f2f3f5 100%, #eda900 0%);
+	}
+	.top-bar .text-right {
+		background-color:#eda900;
+	}
+	.top-bar .left-side ul li,
+	.top-bar .text-right {
+		text-align:center !important;
+		width:100%
+	}
+	.top-bar .left-side ul li {
+		margin-right:0;
+	}
+	.top-bar .left-side .menu {
+		width:100%
+	}
+	
+	/** Banner Container CSS **/
+	.slide-text {
+		padding:100px 15px;
+	}
+	
+	/** About Us **/
+	.about-img img {
+		position:relative;
+		display:block;
+		left:0;
+	}
+	
+	/** Why Chose Us **/
+	.video-preview-one:after {
+		display:none;
+	}
+	.video-preview-one img {
+		width:100%;
+		height: auto;
+		margin-left: 0;
+		display: block;
+	}
+	.video-icon {
+		left: 50%;
+		top: 50%;
+		margin-left: -55px;
+		margin-top: -55px;
+	}
+	
+	/** Call To Action **/
+	.call-to-action {
+		padding:100px 0px;
+		background-color:transparent;
+	}
+	.call-to-action .row .col-sm-12:nth-child(1) .call-box ,
+	.call-to-action .row .col-sm-12:nth-child(2) .call-box ,
+	.call-to-action .row .col-sm-12:nth-child(3) .call-box {
+		border-radius:20px;
+		padding:30px;
+	}
+	.call-to-action .row .col-sm-12:nth-child(2) .call-box {
+		margin-top:0;
+	}
+	.call-to-action .row .col-sm-12 {
+		padding-top:15px;
+		padding-bottom:15px;
+	}
+	/** Footer **/
+	.footer-top-text .form-group input {
+		width:100%;
+	}
+	.footer-box.follow-us {
+		text-align:center;
+	}
+	
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+	
+	/** Inner Pags css **/
+	
+	/** Portfolio Css **/
+	.portfolio-row .portfolio-info {
+		margin:0;
+	}
+	.portfolio-row {
+		margin:0;
+		display:flex;
+	}
+	.portfolio-info {
+		padding:15px;
+		display:block;
+	}
+	.portfolio-info img {
+		width:100%;
+		height:auto;
+	}
+	.portfolio-text img {
+		max-width:33px;
+	}
+	
+	.animated {
+		visibility:visible;
+	}
+
+	@keyframes slideInUp {
+		from { opacity: 1; }
+		to {opacity: 1;}
+	}
+	@keyframes slideInRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes slideInLeft {
+		from { opacity: 1; transform: translate3d(0, 0, 0);}
+		to { opacity: 1; transform: none;}
+	}
+	@keyframes slideInUp {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+	@keyframes rotateInUpRight {
+		from { opacity: 1; transform: translate3d(0, 0, 0); }
+		to { opacity: 1; transform: none; }
+	}
+	
+	/** Top Bar CSS **/
+	.top-bar .right-side ul li {
+		margin-right:14px;
+	}
+	
+	/** Banner Container CSS **/
+	.slide-text {
+		padding-right: 100px;
+	}
+	
+	/** About Us **/
+	.about-img img {
+		position:relative;
+		display:block;
+		left:0;
+	}
+	.call-box {
+		padding-left:15px;
+		padding-right:15px;
+	}
+	/** Our staff **/
+	.our-staff .row {
+		margin:0;
+	}
+	.staff-text {
+		padding:15px;
+	}
+	.staff-text {
+		position:relative;
+	}
+	
+	/** Footer **/
+	.footer-top-text .form-group input {
+		width:100%;
+		margin-bottom:30px;
+	}
+	.subscribe-us ul li:first-child input {
+		width: 230px;
+	}
+	
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+	
+	.container {
+		max-width:75rem;
+	}
+}

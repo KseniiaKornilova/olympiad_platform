@@ -1,0 +1,879 @@
+{% load static %} 
+{% load bootstrap4 %} 
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- important for compatibility charset -->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>EduBuddy school</title>
+    
+    <meta name="author" content="Webful Creations">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    
+    <!-- FavIcon for Website /-->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.png' %}">
+    
+    <!-- important for responsiveness remove to make your site non responsive. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Theme Styles CSS File -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="all" />
+</head>
+
+<body>
+    
+    <div class="main-container">
+    	
+    	<div class="top-bar">
+        	<div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-12 col-lg-8">
+                    	<div class="left-side">
+                        	<ul class="menu">
+                            	<li><i class="fas fa-map-marker-alt"></i> Пресненская набережная, 4с2</li>
+                                <li><a href="index.html"> <i class="fas fa-envelope"></i>focuschool@mail.ru</a></li>
+                            </ul>
+                        </div><!-- Left Side /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-12 col-lg-4 text-right">
+                    	<div class="right-side">
+                            <ul class="menu">
+                                <li><a href="#"><i class="fas fa-user"></i> Зарегистироваться</a></li>
+                                <li><a href="#"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+                            </ul>
+                        </div>
+                    </div><!-- Columns /-->
+                    
+                </div><!-- Row /-->
+            </div><!-- Container /-->
+        </div>
+        <!-- Top Bar /-->
+        
+        <div class="header">
+        	<div class="container">
+            	<div class="row">
+                	
+                    <div class=" col-sm-12 col-lg-4 col-md-4">
+                    	<div class="logo">
+                        	<a href="index.html">
+                            	<img src="{% static 'assets/images/logo.png' %}" alt="Logo">
+                            </a>
+                        </div>
+                    </div><!-- columns /-->
+                    
+                    <div class=" col-sm-12 col-lg-8 col-md-8">
+                        <div class="info-container">
+                        	
+                            <div class="icon-box">
+                                <div class="icon-side">
+                                	<img src="{% static 'assets/images/help/icons/tablet.png' %}" alt="icon">
+                                </div><!-- Icon Side /-->
+                                <div class="info-side">
+                                    <p><strong>8 (495) 248-15-84</strong><br>
+                                    Связаться с нами
+                                    </p>
+                                </div><!-- Info Side /-->
+                            </div>
+                        	
+                            <div class="icon-box">
+                                <div class="icon-side">
+                                	<img src="{% static 'assets/images/help/icons/pointer.png' %}" alt="icon">
+                                </div><!-- Icon Side /-->
+                                <div class="info-side">
+                                    <p><strong>Пресненская наб. 4с2</strong><br>
+                                    башня Эволюция
+                                    </p>
+                                </div><!-- Info Side /-->
+                            </div>
+                            
+                        </div>
+                        <div class="clearfix"></div>
+                    </div><!-- columns /-->
+                    
+                </div><!-- row /-->
+            </div><!-- Container /-->
+        </div>
+        <!-- header /-->
+		
+        <div class="navigation">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="index.html" >Главная</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="about-us.html">Курсы</a>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="about-us.html">Дошкольникам</a>
+                                            <a class="dropdown-item" href="portfolio.html">1-4 классы</a>
+                                            <a class="dropdown-item" href="all-events.html">5-9 классы</a>
+                                            <a class="dropdown-item" href="testimonials.html">10-11 классы</a>
+                                            <a class="dropdown-item" href="faqs.html">Учителям</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="services.html">Олимпиады</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="our-staff.html">Наши учителя</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="appointment.html">О нас</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="blog.html">Контакты</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav><!-- Navbar /-->
+                    </div><!-- columns/-->
+                    
+                </div><!-- Row /-->
+            </div><!-- Container /-->
+        </div>
+        <!-- Navigation /-->
+                
+        <div class="banner-container">
+            <div class="main-banner">
+            
+                <div class="slide transparent-background slide-one">
+                    <div class="slide-text container">
+                        <h2>Добро пожаловать в <span>EduBuddy school</span> 
+                        <p>Твой лучший помощник в сфере школьного образования! Привьем интерес к занятиям и науке, расскажем как подтянуть оценки и подготовиться к олимпиадам, поможем сдать ГИА и ЕГЭ на высший балл, расскажем все о поступлении в лучшие университеты страны.</p>
+                        <a href="#" class="btn btn-primary btn-padding btn-animated">Войти</a>
+                        <a href="#" class="btn btn-secondary btn-padding btn-dark-animated">Зарегистироваться</a>
+                    </div>
+                </div><!-- Slide /-->
+                
+                <div class="slide transparent-background slide-two">
+                    <div class="slide-text container">
+                        <h2>Добро пожаловать в <span>EduBuddy school</span>
+                        <p>Твой лучший помощник в сфере школьного образования! Привьем интерес к занятиям и науке, расскажем как подтянуть оценки и подготовиться к олимпиадам, поможем сдать ГИА и ЕГЭ на высший балл, расскажем все о поступлении в лучшие университеты страны.</p>
+                        <a href="#" class="btn btn-primary btn-padding">Войти</a>
+                        <a href="#" class="btn btn-secondary btn-padding">Зарегистироваться</a>
+                    </div>
+                </div><!-- Slide /-->
+            
+            </div><!-- Main Banner /-->
+        </div>
+        <!-- Banner Container /-->
+        
+        <div class="information-boxes grey-bg grey-bg-color module">
+        	<div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-padding-y">
+                    	<div class="featured-box">
+                        	<div class="featured-img">
+                            	<img src="{% static 'assets/images/help/information-boxes/courses.jpg' %}" alt="Information-Img">
+                            </div>
+                            <div class="featured-text">
+                            	<h5><a href="about-us.html">Курсы для школьников</a></h5>
+                                <p>Программы занятий разработаны с использованием методом мнемотехники для максимально эффективного обучения.</p>
+                                <a href="about-us.html">Подробнее →</a>
+                            </div>
+                        </div><!-- Featured Box /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-padding-y">
+                    	<div class="featured-box">
+                        	<div class="featured-img">
+                            	<img src="{% static 'assets/images/help/information-boxes/olympiads.jpg' %}" alt="Information-Img">
+                            </div>
+                            <div class="featured-text">
+                            	<h5><a href="about-us.html">Олимпиады</a></h5>
+                                <p>Подготовка к олимпиадам любого уровня, которые могут гарантировать твое поступление в университет даже без ЕГЭ!</p>
+                                <a href="about-us.html">Подробнее →</a>
+                            </div>
+                        </div><!-- Featured Box /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-4 col-lg-4 col-padding-y">
+                    	<div class="events-block">
+                        	<div class="events-head">
+                            	<h5>Последние события</h5>
+                                <h5><a href="all-events.html">Все события →</a></h5>
+                            </div>
+                            <div class="events">
+                            	<div class="events-date">
+                                	<h6><i class="far fa-calendar-check"></i>18 сентября 2023</h6>
+                                    <a href="all-events.html">Стартовала Всероссийская олимпиада школьников</a>
+                                </div>
+                                <div class="events-date">
+                                	<h6><i class="far fa-calendar-check"></i>2 сентября 2023</h6>
+                                    <a href="all-events.html">Вебинар "Как выбрать университет и направление"</a>
+                                </div>
+                                <div class="events-date">
+                                	<h6><i class="far fa-calendar-check"></i>31 июля 2023</h6>
+                                    <a href="all-events.html">Начинаем готовиться к ЕГЭ!</a>
+                                </div>
+                                <div class="events-date">
+                                	<h6><i class="far fa-calendar-check"></i>1 июня 2023</h6>
+                                    <a href="all-events.html">Начало программы для дошкольников.</a>
+                                </div>
+                            </div><!-- Events /-->
+                        </div><!-- Events Block /-->
+                    </div><!-- Columns /-->
+                    
+                </div><!-- Row /-->
+            </div><!-- Container /-->
+        </div>
+        <!-- Information Boxes /-->
+    	
+        <div class="about-us module">
+            <div class="section-title">
+            	<h2>Добро пожаловать в <span>EduBuddy school</span></h2>
+                <p>Наша миссия - предоставить уникальную платформу, где знания переплетаются с инновационными методиками обучения.</p>
+            </div><!-- Section Title /-->
+            <div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-padding-y">
+                    	<div class="about-img">
+                        	<img src="{% static 'assets/images/help/about-us/about-img.jpg' %}" alt="About">
+                        </div><!-- About Img /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-padding-y">
+                    	<div class="about-text">
+                        	<p>Мы прекрасно понимаем, что учиться может быть вызовом, 
+                                особенно в суете современной жизни, но с нами вы забудете о скучных учебниках и 
+                                безликих лекциях. Мы уверены, что учиться можно с удовольствием! 
+                                Наши курсы оживят материал интересными иллюстрациями, практическими заданиями 
+                                и реальными примерами из жизни. Мы знаем, как сделать каждый урок увлекательным 
+                                и полезным. </p>
+                            <p>Любовь к учебе – это не врожденное качество, а результат правильного подхода. 
+                                Мы поможем вам найти свой уникальный способ учиться, который будет вдохновлять вас 
+                                на новые достижения. Наши методы основаны на самых эффективных педагогических подходах, 
+                                которые делают обучение интересным и запоминающимся.</p>
+                            <ul class="menu">
+                            	<li><i class="fas fa-check"></i> Профессиональные преподаватели: обеспечат глубокое понимание материала.</li>
+                            	<li><i class="fas fa-check"></i> Гибкость и удобство: платформа доступна 24/7, позволяя вам учиться в удобное для вас время.</li>
+                                <li><i class="fas fa-check"></i> Инновационные методы: увлекательные и эффективные подходы к обучению, основанные на передовых педагогических методиках.</li>
+                                <li><i class="fas fa-check"></i> Актуальность: наши курсы постоянно обновляются и содержат самую полезную и актуальную информацию.</li>
+                                <li><i class="fas fa-check"></i> Сообщество: присоединяясь к нам, вы становитесь частью образовательного сообщества, где можно обмениваться опытом и находить поддержку.</li>
+                            </ul>
+                            <a href="about-us.html" class="btn btn-primary btn-padding btn-animated">О нас</a>
+                            <a href="about-us.html" class="btn btn-secondary btn-padding btn-dark-animated">Связаться с нами</a>
+                        </div><!-- About Text /-->
+                    </div><!-- columns /-->
+                    
+                </div><!-- Row /-->
+            </div><!-- Container -->
+        </div>
+        <!-- About Us /-->
+        
+        <div class="our-courses grey-bg grey-bg-color module">
+            <div class="section-title">
+            	<h2>Наши самые популярные <span>курсы</span></h2>
+                <p>Добро пожаловать в мир наших самых популярных курсов, где знания превращаются в увлекательные и практические навыки!</p>
+            </div><!-- Section Title /-->
+            <div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-courses/our-courses-img1.jpg' %}" alt="Our Courses">
+                                <div class="course-price">
+                                    <h6>40 000</h6>
+                                </div>
+                                <div class="course-teacher">
+                                    <img src="{% static 'assets/images/help/our-courses/teacher-1.png' %}" alt="teacher">
+                                    <h6>Корнилов Кирилл</h6>
+                                </div>
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Готовимся к ЕГЭ по физике</a></h5>
+                                <p>Гарантированно сдашь ЕГЭ по физике на высокий балл.</p>
+                                <ul class="menu">
+                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
+                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
+                                </ul>
+                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-courses/our-courses-img2.jpg' %}" alt="Our Courses">
+                                <div class="course-price">
+                                    <h6>50 000</h6>
+                                </div>
+                                <div class="course-teacher">
+                                    <img src="{% static 'assets/images/help/our-courses/teacher-2.png' %}" alt="teacher">
+                                    <h6>Литов Владимир</h6>
+                                </div>
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Программирование на Python</a></h5>
+                                <p>Освоите один из самых популярных языков программирования</p>
+                                <ul class="menu">
+                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
+                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
+                                </ul>
+                                <a href="#" class="btn btn-dark btn-animated">Присоединиться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-courses/our-courses-img3.jpg' %}" alt="Our Courses">
+                                <div class="course-price">
+                                    <h6>БЕСПЛАТНО</h6>
+                                </div>
+                                <div class="course-teacher">
+                                    <img src="{% static 'assets/images/help/our-courses/teacher-3.png' %}" alt="teacher">
+                                    <h6>Ростова Мария</h6>
+                                </div>
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Готовимся к 1 классу!</a></h5>
+                                <p>Поможем легко освоить основы чтения, письма и математики.</p>
+                                <ul class="menu">
+                                    <li><i class="fas fa-check"></i> 3 месяца</li>
+                                    <li><i class="fas fa-check"></i> 4 занятия в неделю</li>
+                                </ul>
+                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-courses/our-courses-img4.jpg' %}" alt="Our Courses">
+                                <div class="course-price">
+                                    <h6>63 000</h6>
+                                </div>
+                                <div class="course-teacher">
+                                    <img src="{% static 'assets/images/help/our-courses/teacher-1.png' %}" alt="teacher">
+                                    <h6>Корнилов Кирилл</h6>
+                                </div>
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#"></a>Профильная математика ЕГЭ</h5>
+                                <p>Без труда сдашь один из самых сложных экзаменов ЕГЭ на высокий балл.</p>
+                                <ul class="menu">
+                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
+                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
+                                </ul>
+                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-courses/our-courses-img5.jpg' %}" alt="Our Courses">
+                                <div class="course-price">
+                                    <h6>55 000</h6>
+                                </div>
+                                <div class="course-teacher">
+                                    <img src="{% static 'assets/images/help/our-courses/teacher-4.png' %}" alt="teacher">
+                                    <h6>Корнилова Ксения</h6>
+                                </div>
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Введение в биоинженерию</a></h5>
+                                <p>Узнаете о самых иновационных технологиях для развития медицины и промышленности</p>
+                                <ul class="menu">
+                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
+                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
+                                </ul>
+                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-courses/our-courses-img6.jpg' %}" alt="Our Courses">
+                                <div class="course-price">
+                                    <h6>БЕСПЛАТНО</h6>
+                                </div>
+                                <div class="course-teacher">
+                                    <img src="{% static 'assets/images/help/our-courses/teacher-4.png' %}" alt="teacher">
+                                    <h6>Корнилова Ксения</h6>
+                                </div>
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Выбор будущей специальности</a></h5>
+                                <p>Расскажем как определиться с направлением и вузом</p>
+                                <ul class="menu">
+                                    <li><i class="fas fa-check"></i> 1 месяц</li>
+                                    <li><i class="fas fa-check"></i> 1 занятие в неделю + материалы</li>
+                                </ul>
+                                <a href="#" class="btn btn-dark btn-animated">Присоединиться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                
+                </div><!-- Row /-->
+            </div><!-- Container -->
+        </div>
+        <!-- Our Courses /-->
+        
+        <div class="our-staff module">
+            <div class="section-title">
+            	<h2>Наши <span>учителя</span></h2>
+            	<p>Наши учителя - высококвалифицированные профессионалы, готовые вдохновить и поддержать вас на пути к новым знаниям и достижениям.</p>
+            </div><!-- Section Title /-->
+            <div class="row">
+                
+                <div class="col-sm-12 col-md-6 col-lg-3 col-padding-y">
+                    <div class="staff-wrap hover-wrap">
+                        <div class="hover-img">
+                            <img src="{% static 'assets/images/help/our-staff/staff-img-1.png' %}" alt="Staff Images">
+                            <div class="staff-detail hover-info">
+                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                            </div>
+                        </div>
+                        <div class="staff-text hover-bottom">
+                        	<div class="staff-name">
+                            	<h5><a href="#">Корнилова Ксения</a></h5>
+                            	<p>Биология, биоинженерия, химия</p>
+                            </div>
+                        </div>
+                    </div><!-- Staff Wrap /-->
+                </div><!-- columns /-->
+                
+                <div class="col-sm-12 col-md-6 col-lg-3 col-padding-y">
+                    <div class="staff-wrap hover-wrap">
+                        <div class="hover-img">
+                            <img src="{% static 'assets/images/help/our-staff/staff-img-2.png' %}" alt="Staff Images">
+                            <div class="staff-detail hover-info">
+                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                            </div>
+                        </div>
+                        <div class="staff-text hover-bottom">
+                        	<div class="staff-name">
+                            	<h5><a href="#">Литов Владимир</a></h5>
+                            	<p>Программирование</p>
+                            </div>
+                        </div>
+                    </div><!-- Staff Wrap /-->
+                </div><!-- columns /-->
+                
+                <div class="col-sm-12 col-md-6 col-lg-3 col-padding-y">
+                    <div class="staff-wrap hover-wrap">
+                        <div class="hover-img">
+                            <img src="{% static 'assets/images/help/our-staff/staff-img-3.png' %}" alt="Staff Images">
+                            <div class="staff-detail hover-info">
+                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                            </div>
+                        </div>
+                        <div class="staff-text hover-bottom">
+                        	<div class="staff-name">
+                            	<h5><a href="#">Корнилов Кирилл</a></h5>
+                            	<p>Физика, математика</p>
+                            </div>
+                        </div>
+                    </div><!-- Staff Wrap /-->
+                </div><!-- columns /-->
+                
+                <div class="col-sm-12 col-md-6 col-lg-3 col-padding-y">
+                    <div class="staff-wrap hover-wrap">
+                        <div class="hover-img">
+                            <img src="{% static 'assets/images/help/our-staff/staff-img-4.png' %}" alt="Staff Images">
+                            <div class="staff-detail hover-info">
+                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                            </div>
+                        </div>
+                        <div class="staff-text hover-bottom">
+                        	<div class="staff-name">
+                            	<h5><a href="#">Ростова Мария</a></h5>
+                            	<p>Обучение детей</p>
+                            </div>
+                        </div>
+                    </div><!-- Staff Wrap /-->
+                </div><!-- columns /-->
+                
+            </div><!-- Row /-->
+        </div>
+        <!-- Our Staff /-->
+        
+        <!-- Olympiads -->
+        <div class="our-courses grey-bg grey-bg-color module">
+            <div class="section-title">
+            	<h2><span>Олимпиады</span></h2>
+                <p>Олимпиады могут дать тебе преимущество при поступлении в университет твоей мечты, а также это просто весело!</p>
+            </div><!-- Section Title /-->
+            <div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img1.jpg' %}" alt="Our Olympiads">
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Олимпиада Ломоносова</a></h5>
+                                <p>Хороший результат в этой олимпиаде может избавить тебя от необходимости сдачи вступительных экзаменов в университеты.</p>
+                                <a href="#" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img2.jpg' %}" alt="Our Olympiads">
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Олимпиада "Высшая проба" от Вышки</a></h5>
+                                <p>Главная олимпиада Вышки, позволяющая абитуриентам поступать в университет без конкурса!</p>
+                                <a href="#" class="btn btn-dark btn-animated">Зарегистрироваться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="course-warp">
+                        	<div class="course-img">
+                                <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img3.jpg' %}" alt="Our Olympiads">
+                            </div>
+                            <div class="course-text">
+                            	<h5><a href="#">Всероссийская олимпиада школьников</a></h5>
+                                <p>Дойди до финала и получили привилегии для поступления в университеты страны.</p>
+                                <a href="#" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
+                            </div>
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                    
+                    
+                        </div><!-- Courses warp /-->
+                    </div><!-- columns /-->
+                
+                </div><!-- Row /-->
+            </div><!-- Container -->
+        </div>
+        <!-- Olympiads /-->
+
+        <div class="testimonials-wrap grey-bg dark-bg module">
+            <div class="container">
+            	<div class="row">
+                	
+                	<div class="col-sm-12 col-md-12 col-lg-12 col-padding-y">
+                    	<div class="testimonials">
+                        	<div class="testimonial-slid">
+                            	<div class="testimonial-text">
+                                	<p>" Я просто в восторге от этой онлайн-школы! Уроки здесь не только интересные, но и настолько понятные благодаря преподавателям. Я больше не боюсь учиться новому – это как приключение каждый раз. Спасибо за такое замечательное обучение! "</p>
+                                </div>
+                                <div class="testimonial-img">
+                                	<img src="{% static 'assets/images/help/testimonial-1.png' %}" alt="">
+                                	<h6>Владислав Кочетков</h6>
+                                    <p>7 класс</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-slid">
+                            	<div class="testimonial-text">
+                                	<p>" Мы с моим ребенком абсолютно в восторге от этой онлайн-школы! Она не только предоставляет качественное образование, но и создает теплую и поддерживающую обстановку, которая важна особенно в начальных классах. Профессиональные преподаватели умеют заинтересовать детей и делать учебу увлекательной. Наш ребенок с радостью участвует в уроках и каждый раз узнает что-то новое. Благодаря этой школе, он полон энтузиазма и желания учиться. Большое спасибо за вашу работу! "</p>
+                                </div>
+                                <div class="testimonial-img">
+                                	<img src="{% static 'assets/images/help/testimonial-2.png' %}" alt="">
+                                	<h6>Ольга Зябликова</h6>
+                                    <p>Родитель</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-slid">
+                            	<div class="testimonial-text">
+                                	<p>" Я безмерно благодарен этой онлайн-школе за то, что она сделала возможным мои отличные результаты на ЕГЭ! Отличная методика подачи материала и профессиональные преподаватели действительно помогли мне уверенно подготовиться. Благодаря вашим урокам, я смог не только справиться с экзаменами, но и по-настоящему понять предметы. Это был невероятный опыт, который изменил мою жизнь. Спасибо вам за ваше трудолюбие и преданность образованию! "</p>
+                                </div>
+                                <div class="testimonial-img">
+                                	<img src="{% static 'assets/images/help/testimonial-3.png' %}" alt="">
+                                	<h6>Сергей Волков</h6>
+                                    <p>11 класс</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-slid">
+                            	<div class="testimonial-text">
+                                	<p>" Эта онлайн-школа – моя находка! С удивлением обнаружила, что учиться может быть настолько интересно. Преподаватели здесь как друзья, всегда готовы помочь и разъяснить, а уроки превращаются в увлекательные путешествия по миру знаний. Благодаря этой школе, у меня появилась уверенность в своих силах, и я с нетерпением жду новых уроков каждый день! "</p>
+                                </div>
+                                <div class="testimonial-img">
+                                	<img src="{% static 'assets/images/help/testimonial-1.png' %}" alt="">
+                                	<h6>Александра Золотова</h6>
+                                    <p>10 класс</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-slid">
+                            	<div class="testimonial-text">
+                                	<p>" Я так счастлива, что учусь в этой онлайн-школе! Теперь учеба стала моей любимой частью дня. У нас здесь такие забавные уроки, и учителя всегда объясняют все понятно. Я даже стала лучше понимать математику, которая раньше казалась мне сложной. Большое спасибо за такую веселую и увлекательную школу! "</p>
+                                </div>
+                                <div class="testimonial-img">
+                                	<img src="{% static 'assets/images/help/testimonial-2.png' %}" alt="">
+                                	<h6>Екатерина Ежова</h6>
+                                    <p>5 класс</p>
+                                </div>
+                            </div>
+                        </div><!-- Testimonials /-->
+                    </div><!-- Columns /-->
+                	
+                </div><!-- Row /-->
+            </div><!-- Container -->
+        </div>
+        <!-- Testimonials Wrap /-->
+        
+        
+        <div class="call-to-action">
+        	<img class="call-to-action-img" src="{% static 'assets/images/help/background-effect-2.jpg' %}" alt="">
+            <div class="container">
+                <div class="row no-gutters">
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="call-box">
+                            <img src="{% static 'assets/images/help/icons/book-icon.png' %}" alt="book Icon">
+                            <h3><a href="#">Выбери курс</a></h3>
+                            <p>Ты точно найдешь свой идеальный курс, соответствующий твоим запросам!</p>
+                        </div><!-- call Box /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="call-box">
+                            <img src="{% static 'assets/images/help/icons/light-bulb.png' %}" alt="Light Bulb">
+                            <h3><a href="#">Присоединяйся к семинарам</a></h3>
+                            <p>Наши профессиональные кураторы во всех деталях объяснят сложные моменты.     </p>
+                        </div><!-- call Box /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="call-box">
+                            <img src="{% static 'assets/images/help/icons/hat-college.png' %}" alt="Hat College">
+                            <h3><a href="#">Построй свое будущее</a></h3>
+                            <p>Прямо сейчас ты можешь сделать шаг на пути к своему успеху!</p>
+                        </div><!-- call Box /-->
+                    </div><!-- Columns /-->
+                    
+                </div><!-- Row /-->
+            </div><!-- Container /-->
+        </div>
+        <!-- Call to Action /-->
+        
+        <div class="blog-post grey-bg grey-bg-color">
+            <div class="section-title">
+            	<h2>Актуальные <span>новости</span></h2>
+                <p>Оставайся в курсе всех событий школы</p>
+            </div><!-- Section Title /-->
+            <div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="blog-box">
+                        	<div class="blog-img">
+                            	<img src="{% static 'assets/images/help/blog/blog-img1.jpg' %}" alt="Blog Img">
+                            </div>
+                            <div class="blog-text">
+                            	<h5><a href="blog.html">Вебинар о компьютерной грамотности.</a></h5>
+                                <div class="meta-tags">
+                                    <i class="far fa-user"> <span>От:</span><a href="single-post-page.html">Владимир</a></i>
+                                    <i class="far fa-comment"> <a href="single-post-page.html">0</a></i>
+                                </div>
+                            	<p>24 сентября в 13:00 по Москве пройдет вебинар о базовой компьютерной грамотности. Длительность вебинара - 1,5 часа.</p>
+                                <a href="#" class="btn btn-light btn-dark-animated">Подробнее</a>
+                            </div>
+                        </div><!-- Post Box /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="blog-box">
+                        	<div class="blog-img">
+                            	<img src="{% static 'assets/images/help/blog/blog-img2.jpg' %}" alt="Blog Img">
+                            </div>
+                            <div class="blog-text">
+                            	<h5><a href="blog.html">Статья: как не потерять мотивацию учиться?</a></h5>
+                                <div class="meta-tags">
+                                    <i class="far fa-user"> <span>От:</span><a href="single-post-page.html">Ксения</a></i>
+                                    <i class="far fa-comment"> <a href="single-post-page.html">0</a></i>
+                                </div>
+                            	<p><i>Длительность чтения - 15 минут.</i>
+                                Впереди экзамены и олимпиады, поэтому нельзя сбавлять темп обучения, чтобы обучение не было в тягость...</p>
+                                <a href="#" class="btn btn-dark btn-animated">Подробнее</a>
+                            </div>
+                        </div><!-- Post Box /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    	<div class="blog-box">
+                        	<div class="blog-img">
+                            	<img src="{% static 'assets/images/help/blog/blog-img3.jpg' %}" alt="Blog Img">
+                            </div>
+                            <div class="blog-text">
+                            	<h5><a href="blog.html">Расскажем о процессе подачи документов в университеты.</a></h5>
+                                <div class="meta-tags">
+                                    <i class="far fa-user"> <span>От:</span><a href="single-post-page.html">Кирилл</a></i>
+                                    <i class="far fa-comment"> <a href="single-post-page.html">0</a></i>
+                                </div>
+                            	<p>Присоединяйся к вебинару 2 октября в 20:00 по Москве. Узнаешь о пакете необходимых документов, привилегиях...</p>
+                                <a href="#" class="btn btn-light btn-dark-animated">Подробнее</a>
+                            </div>
+                        </div><!-- Post Box /-->
+                    </div><!-- Columns /-->
+                    
+                </div><!-- Row /-->
+            </div><!-- Container -->
+        </div>
+        <!-- Blog Post /-->
+        
+        <div class="footer dark-bg grey-bg">
+        	
+        	<div class="footer-top">
+            	<div class="container">
+                	<div class="row">
+                    	
+                    	<div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="footer-top-text footer-border">
+                            	<h2>Присоединяйся к нам!</h2>
+                                <p>Оставь свою почту и мы с тобой свяжемся!</p>
+                                <div class="row">
+                                	
+                                    <div class="col-sm-12 col-md-8 col-lg-8">
+                                        <div class="form-group">
+                                        	<input type="email" class="form-control" id="exampleInputEmail2" placeholder="e-mail адрес">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-sm-12 col-md-4 col-lg-4">
+                                        <div class="footer-top-btn">
+                                        	<button type="submit" class="btn btn-light">Отправить</button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div><!-- columns /-->
+                    	
+                    </div><!-- Row /-->
+                </div><!-- Container /-->
+            </div><!-- Footer Top /-->
+        	
+            <div class="footer-bottom">
+            	<div class="container">
+                	<div class="row">
+                    	
+                        <div class="col-lg-5 col-md-7 col-sm-12">
+                            <div class="footer-box Courses">
+                            	<ul class="links  col-padding-y">
+                                    <li><h6>О школе EduBuddy</h6></li>
+                                    <li><a href="#">О нас</a></li>
+                                    <li><a href="#">Наши учителя</a></li>
+                                    <li><a href="#">Отзывы о EduBuddy</a></li>
+                                    <li><a href="#">Контакты</a></li>
+                                    <li><a href="#">Обратная связь</a></li>
+                                    <li><a href="#">Сведения об образовательной организации</a></li>
+                                </ul>
+                                
+                            </div><!-- Footer Box /-->
+                        </div><!-- Columns /-->
+                        
+                        <div class="col-lg-3 col-md-5 col-sm-12 col-padding-y">
+                            <div class="footer-box Privacy">
+                            	<ul class="links">
+                                    <li><h6>Учеба в EduBuddy</h6></li>
+                                    <li><a href="#">Наши курсы</a></li>
+                                    <li><a href="#">Олимпиады</a></li>
+                                    <li><a href="#">Блог</a></li>
+                                    <li><a href="#">События</a></li>
+                                </ul>
+                            </div><!-- Footer Box /-->
+                        </div><!-- Columns /-->
+                        
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-padding-y">
+                            <div class="footer-box follow-us">
+                            	<h6>Наши социальные сети</h6>
+                                <div class="social-icons">
+                                    <ul class="menu">
+                                        <li><a href="#"><i class="fab fa-vk"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-telegram"></i></a></li>                                     
+                                    </ul>
+                                </div>
+                            	<div class="subscribe-us">
+                                	<h6>Подпишись</h6>
+                                    <ul class="menu">
+                                        <li>
+                                        	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="e-mail адрес">
+                                        </li>
+                                        <li>
+                                        	<button type="submit" class="btn btn-light"><i class="fas fa-chevron-right"></i></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- Footer Box /-->
+                        </div><!-- Columns /-->
+                        
+                    </div><!-- Row /-->
+                </div><!-- Container /-->
+            </div><!-- Footer Bottom /-->
+            
+            <div class="footer-Copyright">
+            	<div class="container">
+                	<div class="row">
+                    	
+                        
+                    </div><!-- Row /-->
+                </div><!-- Container /-->
+            </div><!-- Footer Bottom /-->
+            
+        </div>
+        <!-- Footer /-->
+        
+    </div>
+    <!-- Main Container /-->
+    
+	<!-- Move to Top Icon 
+    	 Remove to Not Display /-->
+    <a href="#" id="top" title="Go to Top">
+    	<i class="far fa-caret-square-up"></i>
+    </a>
+    
+    <!-- Page Preloader
+    	 Delete to Remove Preloader /-->
+    <div class="preloader">
+        <div class="spinner animated infinite fadeIn">
+            <div class="preloader-img"></div>
+        </div>
+	</div><!-- Preloader /-->
+        
+    <!-- Including Jquery so All js Can run -->
+    <script src="{% static 'assets/js/jquery.js' %}"></script>
+    
+    <!-- Including bootstrap JS so bootstrap function can work. -->
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    
+    <!-- Carousel JS -->
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    
+    <!--  animation.css on scroll Jquery Appear JS -->
+    <script src="{% static 'assets/js/jquery.appear.js' %}"></script>
+    
+    <!-- Magnific Popup is a responsive lightbox -->
+    <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+       
+   <!-- Webful JS -->
+    <script src="{% static 'assets/js/template.js' %}"></script>
+    
+</body>
+</html>    
