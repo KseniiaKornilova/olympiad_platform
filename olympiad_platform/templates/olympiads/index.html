@@ -1,154 +1,12 @@
+{% extends 'basic.html' %} 
 {% load static %} 
-{% load bootstrap4 %} 
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- important for compatibility charset -->
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <title>EduBuddy school</title>
-    
-    <meta name="author" content="Webful Creations">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    
-    <!-- FavIcon for Website /-->
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.png' %}">
-    
-    <!-- important for responsiveness remove to make your site non responsive. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Theme Styles CSS File -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" media="all" />
-</head>
+ {% load bootstrap4 %}
 
-<body>
     
-    <div class="main-container">
-    	
-    	<div class="top-bar">
-        	<div class="container">
-            	<div class="row">
-                	
-                    <div class="col-sm-12 col-md-12 col-lg-8">
-                    	<div class="left-side">
-                        	<ul class="menu">
-                            	<li><i class="fas fa-map-marker-alt"></i> Пресненская набережная, 4с2</li>
-                                <li><a href="index.html"> <i class="fas fa-envelope"></i>focuschool@mail.ru</a></li>
-                            </ul>
-                        </div><!-- Left Side /-->
-                    </div><!-- Columns /-->
-                    
-                    <div class="col-sm-12 col-md-12 col-lg-4 text-right">
-                    	<div class="right-side">
-                            <ul class="menu">
-                                <li><a href="#"><i class="fas fa-user"></i> Зарегистироваться</a></li>
-                                <li><a href="#"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
-                            </ul>
-                        </div>
-                    </div><!-- Columns /-->
-                    
-                </div><!-- Row /-->
-            </div><!-- Container /-->
-        </div>
-        <!-- Top Bar /-->
-        
-        <div class="header">
-        	<div class="container">
-            	<div class="row">
-                	
-                    <div class=" col-sm-12 col-lg-4 col-md-4">
-                    	<div class="logo">
-                        	<a href="index.html">
-                            	<img src="{% static 'assets/images/logo.png' %}" alt="Logo">
-                            </a>
-                        </div>
-                    </div><!-- columns /-->
-                    
-                    <div class=" col-sm-12 col-lg-8 col-md-8">
-                        <div class="info-container">
-                        	
-                            <div class="icon-box">
-                                <div class="icon-side">
-                                	<img src="{% static 'assets/images/help/icons/tablet.png' %}" alt="icon">
-                                </div><!-- Icon Side /-->
-                                <div class="info-side">
-                                    <p><strong>8 (495) 248-15-84</strong><br>
-                                    Связаться с нами
-                                    </p>
-                                </div><!-- Info Side /-->
-                            </div>
-                        	
-                            <div class="icon-box">
-                                <div class="icon-side">
-                                	<img src="{% static 'assets/images/help/icons/pointer.png' %}" alt="icon">
-                                </div><!-- Icon Side /-->
-                                <div class="info-side">
-                                    <p><strong>Пресненская наб. 4с2</strong><br>
-                                    башня Эволюция
-                                    </p>
-                                </div><!-- Info Side /-->
-                            </div>
-                            
-                        </div>
-                        <div class="clearfix"></div>
-                    </div><!-- columns /-->
-                    
-                </div><!-- row /-->
-            </div><!-- Container /-->
-        </div>
-        <!-- header /-->
-		
-        <div class="navigation">
-            <div class="container">
-                <div class="row">
-                    
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <nav class="navbar navbar-expand-lg navbar-light">
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="index.html" >Главная</a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="about-us.html">Курсы</a>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="about-us.html">Дошкольникам</a>
-                                            <a class="dropdown-item" href="portfolio.html">1-4 классы</a>
-                                            <a class="dropdown-item" href="all-events.html">5-9 классы</a>
-                                            <a class="dropdown-item" href="testimonials.html">10-11 классы</a>
-                                            <a class="dropdown-item" href="faqs.html">Учителям</a>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="services.html">Олимпиады</a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="our-staff.html">Наши учителя</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="appointment.html">О нас</a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="blog.html">Контакты</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav><!-- Navbar /-->
-                    </div><!-- columns/-->
-                    
-                </div><!-- Row /-->
-            </div><!-- Container /-->
-        </div>
-        <!-- Navigation /-->
-                
+    {% block title %} EduBuddy school {% endblock %}
+    
+    {% block content %}
+
         <div class="banner-container">
             <div class="main-banner">
             
@@ -735,145 +593,39 @@
             </div><!-- Container -->
         </div>
         <!-- Blog Post /-->
-        
+
         <div class="footer dark-bg grey-bg">
         	
-        	<div class="footer-top">
-            	<div class="container">
-                	<div class="row">
-                    	
-                    	<div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        
+                        <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="footer-top-text footer-border">
-                            	<h2>Присоединяйся к нам!</h2>
+                                <h2>Присоединяйся к нам!</h2>
                                 <p>Оставь свою почту и мы с тобой свяжемся!</p>
                                 <div class="row">
-                                	
+                                    
                                     <div class="col-sm-12 col-md-8 col-lg-8">
                                         <div class="form-group">
-                                        	<input type="email" class="form-control" id="exampleInputEmail2" placeholder="e-mail адрес">
+                                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="e-mail адрес">
                                         </div>
                                     </div>
                                     
                                     <div class="col-sm-12 col-md-4 col-lg-4">
                                         <div class="footer-top-btn">
-                                        	<button type="submit" class="btn btn-light">Отправить</button>
+                                            <button type="submit" class="btn btn-light">Отправить</button>
                                         </div>
                                     </div>
                                     
                                 </div>
                             </div>
                         </div><!-- columns /-->
-                    	
+                        
                     </div><!-- Row /-->
                 </div><!-- Container /-->
             </div><!-- Footer Top /-->
+        
+        
         	
-            <div class="footer-bottom">
-            	<div class="container">
-                	<div class="row">
-                    	
-                        <div class="col-lg-5 col-md-7 col-sm-12">
-                            <div class="footer-box Courses">
-                            	<ul class="links  col-padding-y">
-                                    <li><h6>О школе EduBuddy</h6></li>
-                                    <li><a href="#">О нас</a></li>
-                                    <li><a href="#">Наши учителя</a></li>
-                                    <li><a href="#">Отзывы о EduBuddy</a></li>
-                                    <li><a href="#">Контакты</a></li>
-                                    <li><a href="#">Обратная связь</a></li>
-                                    <li><a href="#">Сведения об образовательной организации</a></li>
-                                </ul>
-                                
-                            </div><!-- Footer Box /-->
-                        </div><!-- Columns /-->
-                        
-                        <div class="col-lg-3 col-md-5 col-sm-12 col-padding-y">
-                            <div class="footer-box Privacy">
-                            	<ul class="links">
-                                    <li><h6>Учеба в EduBuddy</h6></li>
-                                    <li><a href="#">Наши курсы</a></li>
-                                    <li><a href="#">Олимпиады</a></li>
-                                    <li><a href="#">Блог</a></li>
-                                    <li><a href="#">События</a></li>
-                                </ul>
-                            </div><!-- Footer Box /-->
-                        </div><!-- Columns /-->
-                        
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-padding-y">
-                            <div class="footer-box follow-us">
-                            	<h6>Наши социальные сети</h6>
-                                <div class="social-icons">
-                                    <ul class="menu">
-                                        <li><a href="#"><i class="fab fa-vk"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-telegram"></i></a></li>                                     
-                                    </ul>
-                                </div>
-                            	<div class="subscribe-us">
-                                	<h6>Подпишись</h6>
-                                    <ul class="menu">
-                                        <li>
-                                        	<input type="email" class="form-control" id="exampleInputEmail1" placeholder="e-mail адрес">
-                                        </li>
-                                        <li>
-                                        	<button type="submit" class="btn btn-light"><i class="fas fa-chevron-right"></i></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div><!-- Footer Box /-->
-                        </div><!-- Columns /-->
-                        
-                    </div><!-- Row /-->
-                </div><!-- Container /-->
-            </div><!-- Footer Bottom /-->
-            
-            <div class="footer-Copyright">
-            	<div class="container">
-                	<div class="row">
-                    	
-                        
-                    </div><!-- Row /-->
-                </div><!-- Container /-->
-            </div><!-- Footer Bottom /-->
-            
-        </div>
-        <!-- Footer /-->
-        
-    </div>
-    <!-- Main Container /-->
-    
-	<!-- Move to Top Icon 
-    	 Remove to Not Display /-->
-    <a href="#" id="top" title="Go to Top">
-    	<i class="far fa-caret-square-up"></i>
-    </a>
-    
-    <!-- Page Preloader
-    	 Delete to Remove Preloader /-->
-    <div class="preloader">
-        <div class="spinner animated infinite fadeIn">
-            <div class="preloader-img"></div>
-        </div>
-	</div><!-- Preloader /-->
-        
-    <!-- Including Jquery so All js Can run -->
-    <script src="{% static 'assets/js/jquery.js' %}"></script>
-    
-    <!-- Including bootstrap JS so bootstrap function can work. -->
-    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-    
-    <!-- Carousel JS -->
-    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
-    
-    <!--  animation.css on scroll Jquery Appear JS -->
-    <script src="{% static 'assets/js/jquery.appear.js' %}"></script>
-    
-    <!-- Magnific Popup is a responsive lightbox -->
-    <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
-       
-   <!-- Webful JS -->
-    <script src="{% static 'assets/js/template.js' %}"></script>
-    
-</body>
-</html>    
+{% endblock %}
