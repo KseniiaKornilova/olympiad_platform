@@ -47,7 +47,11 @@
                     	<div class="right-side">
                             <ul class="menu">
                                 <li><a href="#"><i class="fas fa-user"></i> Зарегистироваться</a></li>
-                                <li><a href="#"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+                                {% if user.is_authenticated %} 
+                                <li><a href="#"><i class="fas fa-sign-in-alt"></i> {{user.first_name}}</a></li>
+                                {% else %} 
+                                <li><a href="{% url 'students:login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+                                {% endif %} 
                             </ul>
                         </div>
                     </div><!-- Columns /-->
@@ -155,7 +159,7 @@
 {% endblock %} 
 
 
-<div class="footer-bottom">
+<div class="footer-bottom dark-bg grey-bg">
     <div class="container">
         <div class="row">
             
@@ -191,7 +195,7 @@
                     <h6>Наши социальные сети</h6>
                     <div class="social-icons">
                         <ul class="menu">
-                            <li><a href="#"><i class="fab fa-vk"></i></a></li>
+                            <li><a href="404-error-page.html"><i class="fab fa-vk"></i></a></li>
                             <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                             <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                             <li><a href="#"><i class="fab fa-telegram"></i></a></li>                                     
