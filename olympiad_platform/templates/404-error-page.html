@@ -1,0 +1,48 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+    
+    {% block title %} EduBuddy school {% endblock %}
+    
+    {% block content %}
+
+        <div class="error-page grey-bg grey-bg-color">
+        	<div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-padding-y">
+                    	<div class="error-taxt">
+                        	<h2>404! Page is not found!</h2>
+                        	<p>Этой страницы не существует!</p>
+                            <a href="index.html" class="btn btn-secondary btn-dark-animated btn-padding">Вернуться на главную страницу</a>
+                        </div>
+                    </div><!-- columns /-->
+                    
+                </div><!-- row /-->
+            </div><!-- Container /-->
+        </div>
+        <!-- Error Page /-->
+        
+        <div class="request-appointment">
+        	<div class="container">
+            	<div class="row">
+                	
+                    <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
+                    	<div class="appointment-text">
+                        	<h2>Связаться с нами!</h2>
+                            <p>Мы всегда на связи и готовы Вам помочь!</p>
+                        </div><!-- Appointment Text /-->
+                    </div><!-- Columns /-->
+                    
+                    <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
+                    	<div class="appointment-btn">
+                        	<a href="appointment.html" class="btn btn-secondary btn-padding btn-dark-animated">Нужна помощь</a>
+                        </div><!-- Appointment Btn /-->
+                    </div><!-- Columns /-->
+                    
+                </div><!-- Row /-->
+            </div><!-- Container /-->
+        </div>
+        <!-- Request Appointment /-->     
+{% endblock %}

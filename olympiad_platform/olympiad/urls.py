@@ -22,8 +22,10 @@ from django.views.decorators.cache import never_cache
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.olympiads.urls')),
-    
+    path('', include('apps.students.urls')),    
 ]
+
+handler404 = "olympiad.views.page_not_found"
 
 if settings.DEBUG:
     urlpatterns.append(path('static/<path:path>', never_cache(serve)))
