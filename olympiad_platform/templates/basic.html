@@ -48,7 +48,13 @@
                             <ul class="menu">
                                 <li><a href="#"><i class="fas fa-user"></i> Зарегистироваться</a></li>
                                 {% if user.is_authenticated %} 
-                                <li><a href="#"><i class="fas fa-sign-in-alt"></i> {{user.first_name}}</a></li>
+                                <li class="nav-item dropdown">
+                                    <a href="#"><i class="fas fa-sign-in-alt"></i> {{user.first_name}}</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown_login dropdown-item" href="{% url 'students:profile' %}">Мой профиль</a>
+                                        <a class="dropdown_login dropdown-item" href="{% url 'students:logout' %}">Выйти</a>
+                                    </div>
+                                </li>
                                 {% else %} 
                                 <li><a href="{% url 'students:login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
                                 {% endif %} 
@@ -121,7 +127,7 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="index.html" >Главная</a>
+                                        <a class="nav-link" href="{% url 'olympiads:index' %}">Главная</a>
                                     </li>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="about-us.html">Курсы</a>
@@ -134,16 +140,16 @@
                                         </div>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="services.html">Олимпиады</a>
+                                        <a class="nav-link" href="services.html">Олимпиады</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="our-staff.html">Наши учителя</a>
+                                        <a class="nav-link" href="our-staff.html">Наши учителя</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="appointment.html">О нас</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="blog.html">Контакты</a>
+                                        <a class="nav-link" href="blog.html">Контакты</a>
                                     </li>
                                 </ul>
                             </div>
@@ -157,7 +163,6 @@
 
 {% block content %} 
 {% endblock %} 
-
 
 <div class="footer-bottom dark-bg grey-bg">
     <div class="container">
