@@ -4,13 +4,11 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     LETTER = (
-        ('-', '-'),
         ('a', 'A'),
         ('b', 'Б'),
         ('v', 'В'),
     )
     STATUS = (
-        ('-', '-'),
         ('t', 'Учитель'),
         ('s', 'Ученик'),
     )
