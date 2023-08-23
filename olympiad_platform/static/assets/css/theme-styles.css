@@ -479,6 +479,7 @@ ul.menu {
 .title-section.dark-bg:after {
     content: "";
     background: url(../images/help/title-section-background-effect-1.jpg);
+	opacity: 0.8;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -541,10 +542,10 @@ ul.menu {
 	margin-right:0px;
 }
 .top-bar .right-side ul li a {
-	color:#ffffff;
+	color:#626060;
 }
 .top-bar .right-side ul li a:hover {
-	color:#444444;
+	color:#171614;
 }
 .top-bar .right-side ul li {
 	margin-right:20px;
@@ -1344,6 +1345,7 @@ ul.menu {
 	line-height:27px;
 }
 .call-to-action .row .col-sm-12 {
+	
 }
 .call-box h3 a:hover {
 	color:#eda900;
@@ -1573,6 +1575,7 @@ ul.menu {
 .header-v2 .navigation .navbar .dropdown-item {
     border-top:1px solid #eda900;
 }
+
 
 /*--------------------------------
 	06 - Boxed Layout Css
