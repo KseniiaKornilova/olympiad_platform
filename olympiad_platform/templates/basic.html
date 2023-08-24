@@ -46,7 +46,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-4 text-right">
                     	<div class="right-side">
                             <ul class="menu">
-                                <li><a href="#"><i class="fas fa-user"></i> Зарегистироваться</a></li>
+                                <li><a href="{% url 'students:register' %}"><i class="fas fa-user"></i> Зарегистироваться</a></li>
                                 {% if user.is_authenticated %} 
                                 <li class="nav-item dropdown">
                                     <a href="#"><i class="fas fa-sign-in-alt"></i> {{user.first_name}}</a>

@@ -1,0 +1,46 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - Регистрация завершена{% endblock %} 
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    <h2>Поздравляем, регистрация завершена</h2>
+                    <h1>Вы успешно зарегистрированы!</h1>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+<!-- Title Section /-->
+
+
+<div class="request-appointment">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
+                <div class="appointment-text">
+                    <h2>Перейти в мой профиль</h2>
+                    <p>Желаем Вам успехов в увлекательном путешествии в образование вместе с EduBuddy school!</p>
+                </div><!-- Appointment Text /-->
+            </div><!-- Columns /-->
+            
+            <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
+                <div class="appointment-btn">
+                    <a href="{% url 'students:profile' %}" class="btn btn-secondary btn-padding btn-dark-animated">Перейти</a>
+                </div><!-- Appointment Btn /-->
+            </div><!-- Columns /-->
+            
+        </div><!-- Row /-->
+    </div><!-- Container /-->
+</div>
+<!-- Request Appointment /-->
+
+{% endblock %}
