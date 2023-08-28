@@ -16,7 +16,7 @@ class UserForm(forms.ModelForm):
         password1 = self.cleaned_data.get('password1')
         if password1:
             password_validation.validate_password(password1)
-            return password1
+        return password1
 
     def clean(self):
         cleaned_data = super().clean()
@@ -24,6 +24,13 @@ class UserForm(forms.ModelForm):
         password2 = cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
             raise ValidationError('Пароли не совпадают!')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+        return user
         
 
     class Meta:
