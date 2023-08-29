@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -46,6 +46,12 @@ class UserChangeInfo(SuccessMessageMixin, UpdateView, LoginRequiredMixin):
 # получение записи пользователя из БД
     def get_object(self, queryset=None): 
         return self.request.user
+
+
+class UserChangePassword(SuccessMessageMixin, PasswordChangeView, LoginRequiredMixin):
+    template_name = 'students/password_change.html'
+    success_url = reverse_lazy('students:profile')
+    success_message = 'Пароль успешно изменен'
 
 
 

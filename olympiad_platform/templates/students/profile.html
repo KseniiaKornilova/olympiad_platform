@@ -3,15 +3,13 @@
 {% load bootstrap4 %}
 
     
-    {% block title %} EduBuddy school {% endblock %}
+    {% block title %} EduBuddy school - Профиль пользователя {% endblock %}
     
     {% block content %}
 
-    <ul class="messages btn btn-secondary btn-padding">
     {% for message in messages %}
-        <li>{{ message }}</li>
+        <p class="messages btn btn-secondary btn-padding">{{ message }}</p>
     {% endfor %} 
-    </ul>
  
 
 
@@ -91,6 +89,9 @@
                 <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
                     <div class="appointment-btn">
                         <a href="{% url 'students:profile_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Редактировать профиль</a>
+                    </div><!-- Appointment Btn /-->
+                    <div class="appointment-btn">
+                        <a href="{% url 'students:password_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Изменить пароль</a>
                     </div><!-- Appointment Btn /-->
                 </div><!-- Columns /-->
                 
