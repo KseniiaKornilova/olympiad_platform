@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import UserLogin, profile, UserLogout, UserRegister, UserRegisterDone
+from .views import UserLogin, profile, UserLogout, UserRegister, UserRegisterDone, UserChangeInfo
 
 app_name = 'students'
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('accounts/logout/', UserLogout.as_view(), name='logout'),
     path('accounts/register/', UserRegister.as_view(), name='register'),
     path('accounts/register/done', UserRegisterDone.as_view(), name='register_done'),
+    path('accounts/profile_change/', UserChangeInfo.as_view(), name='profile_change'),
 ]

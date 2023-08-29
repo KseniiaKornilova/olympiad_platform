@@ -6,6 +6,15 @@
     {% block title %} EduBuddy school {% endblock %}
     
     {% block content %}
+
+    <ul class="messages btn btn-secondary btn-padding">
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %} 
+    </ul>
+ 
+
+
     <div class="title-section dark-bg grey-bg">
         <div class="container">
             <div class="row">
@@ -81,7 +90,7 @@
                 
                 <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
                     <div class="appointment-btn">
-                        <a href="appointment.html" class="btn btn-secondary btn-padding btn-dark-animated">Редактировать профиль</a>
+                        <a href="{% url 'students:profile_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Редактировать профиль</a>
                     </div><!-- Appointment Btn /-->
                 </div><!-- Columns /-->
                 

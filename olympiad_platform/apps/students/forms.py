@@ -36,3 +36,9 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'status', 'degree', 'degree_id', 'password1', 'password2')
+
+
+class ChangeInfoForm(forms.ModelForm):
+    class Meta: 
+        model = User
+        fields = ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'status', 'degree', 'degree_id')

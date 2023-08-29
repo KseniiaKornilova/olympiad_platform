@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView
-from .forms import UserForm
+from django.views.generic.edit import CreateView, UpdateView
+from .forms import UserForm, ChangeInfoForm
 from .models import User
 
 # Create your views here.
@@ -33,3 +34,18 @@ class UserRegister(CreateView):
 
 class UserRegisterDone(TemplateView):
     template_name = 'students/register_done.html'
+
+
+class UserChangeInfo(SuccessMessageMixin, UpdateView, LoginRequiredMixin):
+    model = User
+    form_class = ChangeInfoForm
+    template_name = 'students/change_info.html'
+    success_url = reverse_lazy('students:profile')
+    success_message = 'Редактирование профиля успешно завершено'
+
+# получение записи пользователя из БД
+    def get_object(self, queryset=None): 
+        return self.request.user
+
+
+
