@@ -14,7 +14,11 @@
                     <div class="slide-text container">
                         <h2>Добро пожаловать в <span>EduBuddy school</span> 
                         <p>Твой лучший помощник в сфере школьного образования! Привьем интерес к занятиям и науке, расскажем как подтянуть оценки и подготовиться к олимпиадам, поможем сдать ГИА и ЕГЭ на высший балл, расскажем все о поступлении в лучшие университеты страны.</p>
+                        {% if user.is_authenticated %} 
+                        <a href="{% url 'students:profile' %}" class="btn btn-primary btn-padding btn-animated">Войти</a>
+                        {% else %}
                         <a href="{% url 'students:login' %}" class="btn btn-primary btn-padding btn-animated">Войти</a>
+                        {% endif %} 
                         <a href="{% url 'students:register' %}" class="btn btn-secondary btn-padding btn-dark-animated">Зарегистироваться</a>
                     </div>
                 </div><!-- Slide /-->
