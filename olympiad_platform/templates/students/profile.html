@@ -28,7 +28,7 @@
         </div><!-- Grid Container /-->
     </div>
     <!-- Title Section /-->
-            
+
     <div class="blog-post blog-post-page grey-bg grey-bg-color">
         <div class="container">
             <div class="row">
@@ -72,31 +72,36 @@
                         </div>
                     </div><!-- Post Box /-->
                 </div><!-- Columns /-->
-                           
-    <!-- Blog Post /-->
-    
-    <div class="request-appointment">
-        <div class="container">
-            <div class="row">
-                
-                <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
-                    <div class="appointment-text">
-                        <h2>Редактировать профиль</h2>
-                        <p>Пожалуйста, вводи актуальные данные, это поможет тебе избежать трудностей!</p>
-                    </div><!-- Appointment Text /-->
-                </div><!-- Columns /-->
-                
-                <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
-                    <div class="appointment-btn">
-                        <a href="{% url 'students:profile_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Редактировать профиль</a>
-                    </div><!-- Appointment Btn /-->
-                    <div class="appointment-btn">
-                        <a href="{% url 'students:password_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Изменить пароль</a>
-                    </div><!-- Appointment Btn /-->
-                </div><!-- Columns /-->
-                
-            </div><!-- Row /-->
-        </div><!-- Container /-->
+
+            </div> 
+        </div>
     </div>
-    <!-- Request Appointment /-->
+    
+                 
+
+                <div class="request-appointment">
+                    <div class="container">
+                        <div class="row">
+                            
+                            <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
+                                <div class="appointment-text">
+                                    <h2>Редактировать профиль</h2>
+                                    <p>Пожалуйста, вводи актуальные данные, это поможет тебе избежать трудностей!</p>
+                                </div><!-- Appointment Text /-->
+                            </div><!-- Columns /-->
+                            
+                            <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
+                                <div class="appointment-btn">
+                                    <a href="{% url 'students:profile_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Редактировать профиль</a>
+                                </div><!-- Appointment Btn /-->
+                                <div class="appointment-btn">
+                                    <a href="{% url 'students:password_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Изменить пароль</a>
+                                </div><!-- Appointment Btn /-->
+                            </div><!-- Columns /-->
+                            
+                        </div><!-- Row /-->
+                    </div><!-- Container /-->
+                </div>
+                <!-- Request Appointment /-->          
+
     {% endblock %}
