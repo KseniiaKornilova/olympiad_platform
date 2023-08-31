@@ -21,7 +21,7 @@ class OlympiadAdmin(admin.ModelAdmin):
     list_filter = ('subject',)
     fieldsets = (
         ('Основная информация', {
-            'fields': ('title', 'subject', 'degree'),
+            'fields': ('title', 'subject', 'degree', 'image'),
             'classes': ('wide',),
         }),
         ('Временные данные', {

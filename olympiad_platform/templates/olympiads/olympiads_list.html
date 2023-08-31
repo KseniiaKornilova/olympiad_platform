@@ -1,0 +1,51 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - Список олимпиад {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>Олимпиады, на которые вы зарегистрированы</h1>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+<div class="our-courses grey-bg grey-bg-color module">
+<div class="container">
+    <div class="row">
+
+        {% for olympiad in olympiads %} 
+
+        <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+            <div class="course-warp">
+                <div class="course-img">
+                    <img src="{% static olympiad.image %}" alt="Our Olympiads">
+                    <div class="course-teacher">
+                        <h6>{{ olympiad.date_of_start }}</h6>
+                    </div>
+                </div>
+                <div class="course-text">
+                    <h5><a href="#">{{ olympiad.title }}</a></h5>
+                    <ul class="menu">
+                        <li><i class="fas fa-check"></i> Продолжительность олимпиады: {{ olympiad.olympiad_duration }}</li>
+                        <li><i class="fas fa-check"></i> Предмет: {{ olympiad.subject }}</li>
+                    </ul>
+                    <a href="#" class="btn btn-light btn-dark-animated">Перейти</a>
+                </div>
+            </div><!-- Courses warp /-->
+        </div><!-- columns /-->
+{% endfor %} 
+    </div>
+</div>
+</div>
+{% endblock %} 
