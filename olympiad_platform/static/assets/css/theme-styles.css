@@ -1858,7 +1858,7 @@ body.box {
     margin-top: 1.875rem;
 }
 .side-bar.widget:first-child {
-    margin-top:0rem;
+    margin-top: 80px;
 }
 .side-bar .content ul li {
 	margin-bottom:1rem;

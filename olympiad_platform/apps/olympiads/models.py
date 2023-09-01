@@ -15,6 +15,7 @@ class Subject(models.Model):
 class Olympiad(models.Model):
     title = models.CharField(max_length=150, unique=True, verbose_name='Название олимпиады')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='Название дисциплины')
+    stage = models.CharField(max_length=100, verbose_name='Этап олимпиады', null=True, blank=True)
     degree = models.SmallIntegerField(verbose_name='Рекомендуемый класс обучения')
     date_of_start = models.DateTimeField(verbose_name='Начало проведения олимпиады')
     registration_dedline = models.DateTimeField(verbose_name='Дата окончания регистрации')

@@ -12,7 +12,8 @@
             <div class="col-sm-12 col-padding-y">
                 <div class="title-section-text">
                     
-                    <h1>Олимпиады, на которые вы зарегистрированы</h1>
+                    <h1>Олимпиады,</h1>
+                    <h2>на которые Вы зарегистрированы</h2>
                 </div>
             </div><!-- Top Columns /-->
             
@@ -20,32 +21,69 @@
     </div><!-- Grid Container /-->
 </div>
 
-<div class="our-courses grey-bg grey-bg-color module">
-<div class="container">
+<div class="container-fluid">
     <div class="row">
 
-        {% for olympiad in olympiads %} 
+    <div class="col-sm-12 col-md-12 col-lg-9">
+        <div class="our-courses grey-bg grey-bg-color module">
+            <div class="container">
+                <div class="row">
 
-        <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-            <div class="course-warp">
-                <div class="course-img">
-                    <img src="{% static olympiad.image %}" alt="Our Olympiads">
-                    <div class="course-teacher">
-                        <h6>{{ olympiad.date_of_start }}</h6>
+                {% for olympiad in olympiads %} 
+
+                <div class="col-sm-12 col-md-6 col-lg-6 col-padding-y">
+                    <div class="course-warp">
+                        <div class="course-img">
+                            <img src="{% static olympiad.image %}" alt="Our Olympiads">
+                            <div class="course-teacher">
+                                <h6>{{ olympiad.date_of_start }}</h6>
+                            </div>
+                        </div>
+                        <div class="course-text">
+                            <h5>{{ olympiad.title }}</h5>
+                            <ul class="menu">
+                                <li><i class="fas fa-check"></i> Предмет: {{ olympiad.subject }}</li> 
+                                <li><i class="fas fa-check"></i> Этап: {{ olympiad.stage }}</li>
+                                <li><i class="fas fa-check"></i> Продолжительность олимпиады: {{ olympiad.olympiad_duration }}</li>
+                            </ul>
+                            <a href="#" class="btn btn-light btn-dark-animated">Перейти</a>
+                        </div>
+                    </div><!-- Courses warp /-->
+                </div><!-- columns /-->
+                {% endfor %} 
+                </div>
+            </div>
+        </div>
+        </div>
+
+                 <div class="col-sm-12 col-md-12 col-lg-3 col-padding-y ">
+                    <!-- <ul class="menu">
+                        <li>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Поиск">
+                        </li>
+                        <li>
+                            
+                        </li>
+                    </ul> -->
+                    <form method="GET">
+                        {% csrf_token %} 
+                        {{ form }}
+                        <input type="hidden" name="next" value="{{ next }}">
+                        <button type="submit" class="btn btn-light"><i class="fas fa-chevron-right"></i></button>
+                    </form>
+
+                    <div class="widget side-bar border-btm">
+                        <h6>Мои олимпиады</h6>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><a href="{% url 'olympiads:coming_list' %}">Предстоящие олимпиады</a></li>
+                                <li><a href="{% url 'olympiads:previous_list' %}">Прошедшие олимпиады</a></li>
+                                <li><a href="{% url 'olympiads:olympiads_list' %}">Все олимпиады</a></li>
+                            </ul>
+                        </div><!-- Widget Content /-->
                     </div>
-                </div>
-                <div class="course-text">
-                    <h5><a href="#">{{ olympiad.title }}</a></h5>
-                    <ul class="menu">
-                        <li><i class="fas fa-check"></i> Продолжительность олимпиады: {{ olympiad.olympiad_duration }}</li>
-                        <li><i class="fas fa-check"></i> Предмет: {{ olympiad.subject }}</li>
-                    </ul>
-                    <a href="#" class="btn btn-light btn-dark-animated">Перейти</a>
-                </div>
-            </div><!-- Courses warp /-->
-        </div><!-- columns /-->
-{% endfor %} 
+                </div> <!-- columns /-->
     </div>
 </div>
-</div>
+
 {% endblock %} 
