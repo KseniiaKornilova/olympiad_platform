@@ -1,4 +1,4 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
@@ -31,6 +31,11 @@ class UserRegister(CreateView):
     template_name = 'students/register_user.html'
     form_class = UserForm
     success_url = reverse_lazy('students:register_done')
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        login(self.request, self.object)
+        return redirect(self.success_url)
 
 
 class UserRegisterDone(TemplateView):
