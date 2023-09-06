@@ -9,8 +9,8 @@ class User(AbstractUser):
         ('v', 'В'),
     )
     STATUS = (
-        ('t', 'Учитель'),
         ('s', 'Ученик'),
+        ('t', 'Учитель'),
     )
     email = models.EmailField(max_length=50, unique=True, blank=False, verbose_name='Электронная почта')
     username = models.CharField(max_length=50, unique=False, null=True, blank=True)

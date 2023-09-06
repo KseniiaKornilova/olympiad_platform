@@ -5,12 +5,22 @@ from django.forms import widgets
 from .models import User
 
 class UserForm(forms.ModelForm):
-    email = forms.EmailField(label='Электронная почта', 
-        help_text='Любые уведомления будут приходить на эту почту') 
-    degree = forms.IntegerField(label='Класс', min_value=1, max_value=11)
-    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput, 
-        help_text='Минимальная длина пароля - 8 символов, пароль должен включать как минимум 1 буквенный символ')
-    password2 = forms.CharField(label='Введите пароль повторно', widget=forms.PasswordInput)
+    email = forms.EmailField(label='Электронная почта', widget=forms.EmailInput(attrs={
+       'class': 'form-control form-group',
+       'placeholder': 'Email'
+    }), help_text='Любые уведомления будут приходить на эту почту', error_messages={'unique': 'Пользователь с таким email уже существует.'}) 
+    degree = forms.IntegerField(label='Класс', min_value=1, max_value=11, widget=forms.NumberInput(attrs={
+        'class': 'form-control form-group mb-3',
+        'placeholder': 'Класс'
+    }))
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-group',
+        'placeholder': 'Пароль'
+    }), help_text='Минимальная длина пароля - 8 символов, пароль должен включать как минимум 1 буквенный символ')
+    password2 = forms.CharField(label='Введите пароль повторно', widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-group mb-3 mt-3',
+        'placeholder': 'Пароль (повторно)'
+    }))
 
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')
@@ -31,11 +41,38 @@ class UserForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-        
 
     class Meta:
         model = User
         fields = ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'status', 'degree', 'degree_id', 'password1', 'password2')
+
+        widgets = {
+            "last_name": forms.TextInput(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Фамилия'
+            }),
+            "first_name": forms.TextInput(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Имя'
+            }),
+            "patronymic": forms.TextInput(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Отчество'
+            }),
+            "birthday": forms.DateInput(attrs={
+                'class': 'form-control form-group mb-3, mt-3',
+                'placeholder': 'День рождения'
+            }),
+            "status": forms.Select(attrs={
+                'class': 'form-control form-group mb-3 mt-3',
+                'placeholder': '--'
+            }),
+            "degree_id": forms.Select(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Буква класса'
+            })
+        }
+    
 
 
 class ChangeInfoForm(forms.ModelForm):
