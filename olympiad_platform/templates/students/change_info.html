@@ -21,10 +21,33 @@
 </div>
 <!-- Title Section /-->
 
-<form method="POST">
-    {% csrf_token %} 
-    {% bootstrap_form  form layout='horizontal' %}
-    {% buttons submit='Сохранить' %} {% endbuttons %}
-</form>
+<div class="widget side-bar border-btm"> 
+    <h6>Редактирование профиля</h6>
+    <div class="content">
+        <form method="POST">
+            {% csrf_token %} 
+
+            {{ form.last_name }}
+            {{ form.first_name }}
+            {{ form.patronymic }}
+            {{ form.email }}
+            {% if form.email.errors %} 
+            <div class="text-danger">
+            {% for error in form.email.errors %} 
+            {{ error }}
+            {% endfor %} 
+            </div>
+            {% endif %} 
+            {{ form.birthday }}
+            {{ form.status }}
+            {{ form.degree }}
+            {{ form.degree_id }}
+            <input type="hidden" name="next" value="{{ next }}">
+            <div class=" mb-3 mt-3">
+                <button class="btn btn-primary" type="submit">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %} 

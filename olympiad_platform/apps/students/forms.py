@@ -90,6 +90,45 @@ class LoginForm(AuthenticationForm):
             }))
 
 class ChangeInfoForm(forms.ModelForm):
+    email = forms.EmailField(label='email', widget=forms.EmailInput(attrs={
+       'class': 'form-control form-group',
+       'placeholder': 'Email'
+    }), error_messages={'unique': 'Пользователь с таким email уже существует.'}) 
+    degree = forms.IntegerField(label='Класс', min_value=1, max_value=11, widget=forms.NumberInput(attrs={
+        'class': 'form-control form-group mb-3',
+        'placeholder': 'Класс'
+    }))
+
     class Meta: 
         model = User
         fields = ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'status', 'degree', 'degree_id')
+
+        widgets = {
+            "last_name": forms.TextInput(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Фамилия'
+            }),
+            "first_name": forms.TextInput(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Имя'
+            }),
+            "patronymic": forms.TextInput(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Отчество'
+            }),
+            "birthday": forms.DateInput(attrs={
+                'class': 'form-control form-group mb-3, mt-3',
+                'placeholder': 'День рождения'
+            }),
+            "status": forms.Select(attrs={
+                'class': 'form-control form-group mb-3 mt-3',
+                'placeholder': '--'
+            }),
+            "degree_id": forms.Select(attrs={
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Буква класса'
+            })
+        }
+
+
+
