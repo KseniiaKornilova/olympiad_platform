@@ -8,12 +8,13 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import UserForm, ChangeInfoForm
+from .forms import UserForm, ChangeInfoForm, LoginForm
 from .models import User
 
 # Create your views here.
 
 class UserLogin(LoginView):
+    form_class = LoginForm
     template_name = 'students/login.html'
 
 

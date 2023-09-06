@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import password_validation
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 from .models import User
@@ -73,7 +74,20 @@ class UserForm(forms.ModelForm):
             })
         }
     
-
+class LoginForm(AuthenticationForm):
+    username = forms.EmailField(widget=forms.EmailInput(attrs={
+        "autofocus": True,
+        'class': 'form-control form-group mb-3',
+        'placeholder': 'Email' 
+        }))
+    password = forms.CharField(
+        label= ("Password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            "autocomplete": "current-password",
+            'class': 'form-control form-group mb-3',
+            'placeholder': 'Пароль'
+            }))
 
 class ChangeInfoForm(forms.ModelForm):
     class Meta: 

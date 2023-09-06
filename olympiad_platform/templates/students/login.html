@@ -5,10 +5,21 @@
 {% block title %} EduBuddy school - Войти {% endblock %} 
 
 {% block content %} 
-<form method="post">
-    {% csrf_token %} 
-    {% bootstrap_form form layout='horizontal' %}
-    <input type="hidden" name="next" value="{{ next }}">
-    {% buttons submit='Войти'%} {% endbuttons %}
-</form>
+<div class="widget side-bar border-btm"> 
+    <h6>Вход</h6>
+    <div class="content">
+        <form method="POST">
+            {% csrf_token %} 
+            {% if form.errors %} 
+            <p class="text-danger">Данные были введены некорректно, попробуйте еще раз.</p>
+            {% endif %} 
+            {{ form.username }}
+            {{ form.password }}
+            <input type="hidden" name="next" value="{{ next }}">
+            <div class=" mb-3 mt-3">
+                <button class="btn btn-primary" type="submit">Войти</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
