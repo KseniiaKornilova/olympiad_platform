@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import UserForm, ChangeInfoForm, LoginForm
+from .forms import UserForm, ChangeInfoForm, LoginForm, ChangePasswordForm
 from .models import User
 
 # Create your views here.
@@ -57,6 +57,7 @@ class UserChangeInfo(SuccessMessageMixin, UpdateView, LoginRequiredMixin):
 
 class UserChangePassword(SuccessMessageMixin, PasswordChangeView, LoginRequiredMixin):
     template_name = 'students/password_change.html'
+    form_class = ChangePasswordForm
     success_url = reverse_lazy('students:profile')
     success_message = 'Пароль успешно изменен'
 

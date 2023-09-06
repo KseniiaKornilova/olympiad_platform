@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 from .models import User
@@ -131,4 +131,34 @@ class ChangeInfoForm(forms.ModelForm):
         }
 
 
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label=("Old password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "autocomplete": "current-password", 
+                "autofocus": True,
+                'class': 'form-control form-group mb-3',
+                'placeholder': 'Старый пароль'
+                }))
 
+    new_password1 = forms.CharField(
+        label=("New password"),
+        widget=forms.PasswordInput(attrs={
+            "autocomplete": "new-password",
+            'class': 'form-control form-group',
+            'placeholder': 'Новый пароль'
+            }),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+
+    new_password2 = forms.CharField(
+        label=("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            "autocomplete": "new-password",
+            'class': 'form-control form-group mb-3 mt-3',
+            'placeholder': 'Подтвердите новый пароль'
+            }))
