@@ -57,6 +57,7 @@
             {{ form.non_field_errors.0 }} 
             </div>
             {% endif %} 
+            <input type="hidden" name="next" value="{{ next }}">
             <div class=" mb-3 mt-3">
                 <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
             </div>
