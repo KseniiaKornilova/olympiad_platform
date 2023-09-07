@@ -8,8 +8,10 @@ class Course(models.Model):
     title = models.CharField(max_length=150, unique=True, verbose_name='Название курса')
     course_description = models.TextField(verbose_name='Описание курса', blank=True, null=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='Название дисциплины')
+    category = models.CharField(verbose_name='Категория учащихся', max_length=150, blank=True, null=True)
     month_amount = models.SmallIntegerField(verbose_name='Продолжительность', blank=True, null=True)
     times_a_week = models.SmallIntegerField(verbose_name='Раз в неделю', blank=True, null=True)
+    price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
     participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса')
     image = models.CharField(verbose_name='Путь до изображения от static директории', null=True, blank=True)
     def __str__(self):

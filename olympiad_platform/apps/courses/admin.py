@@ -13,7 +13,7 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ('^title', '^subject')
     list_per_page = 10
     list_filter = ('subject',)
-    fields = ('title', 'subject', 'course_description', 'month_amount', 'times_a_week', 'image')
+    fields = ('title', 'subject', 'course_description', 'category', 'month_amount', 'times_a_week', 'price','image')
 
     inlines = (CourseUserInline,)
     autocomplete_fields = ('participants',)
