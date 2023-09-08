@@ -1,0 +1,88 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - Список курсов {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>Наши курсы</h1>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+
+    <div class="col-sm-12 col-md-12 col-lg-9">
+        <div class="our-courses grey-bg grey-bg-color module">
+            <div class="container">
+                <div class="row">
+
+                {% for course in courses %} 
+
+                <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
+                    <div class="course-warp">
+                        <div class="course-img">
+                            <img src="{% static course.image %}" alt="Our Courses">
+                            <div class="course-price">
+                                {% if course.price == 0 %}
+                                <h6>БЕСПЛАТНО</h6>
+                                {% else %} 
+                                <h6>{{ course.price }}</h6>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="course-text">
+                            <h5><a href="#">{{ course.title }}</a></h5>
+                            <p>{{ course.course_description }}</p>
+                            <ul class="menu">
+                                <li><i class="fas fa-check"></i> {{ course.month_amount }} месяцев</li>
+                                <li><i class="fas fa-check"></i> {{course.times_a_week }} занятия в неделю</li>
+                            </ul>
+                            <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                        </div>
+                    </div><!-- Courses warp /-->
+                </div><!-- columns /-->
+                {% endfor %} 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-3 col-padding-y ">
+        <form method="GET">
+            {% csrf_token %} 
+            {{ form }}
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="btn btn-light"><i class="fas fa-chevron-right"></i></button>
+        </form>
+
+        <div class="widget side-bar border-btm">
+            <h6>Предметы</h6>
+            <div class="content">
+                <ul class="list-unstyled">
+                    {% for subject in subjects %}
+                    <li><a href="{% url 'courses:courses' %}?subject={{ subject.pk }}">{{ subject.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div><!-- Widget Content /-->
+        </div>
+    </div> <!-- columns /-->
+
+
+    </div>
+</div>
+
+{% endblock %} 

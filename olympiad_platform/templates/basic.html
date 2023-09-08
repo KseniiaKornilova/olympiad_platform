@@ -133,11 +133,12 @@
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="about-us.html">Курсы</a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="about-us.html">Дошкольникам</a>
-                                            <a class="dropdown-item" href="portfolio.html">1-4 классы</a>
-                                            <a class="dropdown-item" href="all-events.html">5-9 классы</a>
-                                            <a class="dropdown-item" href="testimonials.html">10-11 классы</a>
-                                            <a class="dropdown-item" href="faqs.html">Учителям</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}">Все курсы</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=preschoolers">Дошкольникам</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=elementary">1-4 классы</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=middle">5-9 классы</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=ege">10-11 классы</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=it">Программирование</a>
                                         </div>
                                     </li>
                                     <li class="nav-item dropdown">
