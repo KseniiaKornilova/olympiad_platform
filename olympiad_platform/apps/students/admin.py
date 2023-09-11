@@ -17,7 +17,7 @@ class UserAdmin(admin.ModelAdmin):
     list_per_page = 15
     fieldsets = (
         ('Основная информация', {
-            'fields': ('last_name', 'first_name', 'patronymic', 'email', 'birthday'),
+            'fields': ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'image'),
             'classes': ('wide',),
         }),
         ('Данные о школе', {
@@ -31,7 +31,7 @@ class UserAdmin(admin.ModelAdmin):
             if obj.is_staff:
                 fieldsets = (
                 ('Основная информация', {
-                'fields': ('last_name', 'first_name', 'patronymic', 'email', 'birthday'),
+                'fields': ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'image'),
                 'classes': ('wide',),
             }),
                 )
