@@ -58,6 +58,7 @@ class Question(models.Model):
     question_description = models.TextField(verbose_name='Формулировка вопроса')
     section = models.ForeignKey(QuestionSection, on_delete=models.PROTECT, verbose_name='Раздел олимпиады')
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE, verbose_name='Олимпиада')
+    possible_answers = models.TextField(verbose_name='Варианты ответов, перечисленные через ","', blank=True, null=True)
     correct_answer = models.CharField(max_length=100, verbose_name='Правильный ответ')
     def __str__(self):
         return f'{self.question_description}'
