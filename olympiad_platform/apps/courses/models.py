@@ -12,7 +12,8 @@ class Course(models.Model):
     month_amount = models.SmallIntegerField(verbose_name='Продолжительность', blank=True, null=True)
     times_a_week = models.SmallIntegerField(verbose_name='Раз в неделю', blank=True, null=True)
     price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
-    participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса')
+    participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса', related_name='course_participants')
+    teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher', verbose_name='Учитель курса', null=True, blank=True)
     image = models.CharField(verbose_name='Путь до изображения от static директории', null=True, blank=True)
     def __str__(self):
         return f'{self.title}'
@@ -29,6 +30,7 @@ class CourseUser(models.Model):
     class Meta: 
         verbose_name = 'Регистрация ученика на курс'
         verbose_name_plural = 'Регистрации учеников на курсы'
+
 
 class Lesson(models.Model):
     title = models.CharField(max_length=150, unique=True, verbose_name='Название урока')
