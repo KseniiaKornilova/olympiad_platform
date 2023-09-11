@@ -41,7 +41,11 @@
                                 <h6>БЕСПЛАТНО</h6>
                                 {% else %} 
                                 <h6>{{ course.price }}</h6>
-                                {% endif %}
+                                {% endif %} 
+                            </div>
+                            <div class="course-teacher">
+                                <img src="{% static course.teacher.image %}" alt="teacher">
+                                <h6>{{ course.teacher.last_name }} {{ course.teacher.first_name }}</h6>
                             </div>
                         </div>
                         <div class="course-text">

@@ -12,7 +12,7 @@ class UserCoursesList(ListView):
     context_object_name = 'courses'
 
     def get_queryset(self):
-        queryset = self.request.user.course_set.all()
+        queryset = self.request.user.course_participants.all()
         search_word = self.request.GET.get('keyword')
         if search_word:
             queryset = queryset.filter(title__icontains=search_word)

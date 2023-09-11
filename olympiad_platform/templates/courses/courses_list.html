@@ -35,6 +35,10 @@
                     <div class="course-warp">
                         <div class="course-img">
                             <img src="{% static course.image %}" alt="Our Courses">
+                            <div class="course-teacher">
+                                <img src="{% static course.teacher.image %}" alt="teacher">
+                                <h6>{{ course.teacher.last_name }} {{ course.teacher.first_name }}</h6>
+                            </div>
                         </div>
                         <div class="course-text">
                             <h5><a href="#">{{ course.title }}</a></h5>
