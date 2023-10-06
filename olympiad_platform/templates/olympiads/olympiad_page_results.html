@@ -1,0 +1,91 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - {{ olympiad.title }} {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>{{ olympiad.title }}</h1>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-6">
+            <div class="our-courses grey-bg grey-bg-color module" style="padding: 10px 50px;">
+
+                <div class="widget side-bar border-btm" style="margin-top: 10px; padding: 10px;"> 
+                    <h6>Ваши ответы</h6>
+                </div>  
+                <div class="content">
+                <h6>Выберите один правильный ответ</h6>
+                {% for o_question in o_questions %} 
+                    {% include 'olympiads/o_question_result.html' %}
+                {% endfor %}
+                <br>
+                <br>
+                <h6>Выберите один или несколько правильных ответов</h6>
+                {% for m_question in m_questions %} 
+                    {% include 'olympiads/m_question_result.html' %}
+                {% endfor %}
+                <br>
+                <br>
+                <h6>Выберите верный ответ</h6>
+                {% for t_question in t_questions %} 
+                    {% include 'olympiads/t_question_result.html' %}
+                {% endfor %}
+                </div>
+
+                <div class="widget side-bar border-btm" style="margin-top: 10px; padding: 10px;"> 
+                    <h6>Общее количество баллов: {{ submission.earned_mark }} / {{ submission.total_mark }}</h6>
+                </div>    
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-12 col-md-12 col-lg-6 grey-bg grey-bg-color">
+            <div class="our-courses module grey-bg grey-bg-color" style="padding: 10px 50px;">
+
+                <div class="widget side-bar border-btm" style="margin-top: 10px; padding: 10px;"> 
+                    <h6>Рейтинг участников олимпиады</h6>
+                </div>  
+                <div class="content">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Место</th>
+                                <th scope="col">Имя</th>
+                                <th scope="col">Количество баллов</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for every_submission in all_submissions %}
+                            <tr>
+                                <th scope="row">{{ every_submission.ranking_place }} место</th>
+                                <td>{{every_submission.user }}</td>
+                                <td>{{ every_submission.earned_mark }}</td>
+                            </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

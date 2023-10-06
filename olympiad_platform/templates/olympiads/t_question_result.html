@@ -1,0 +1,55 @@
+<b>{{ t_question.title }}</b>:  {{ t_question.description }}
+<p>
+<input
+                            type="radio"
+                            name="t{{ t_question.id }}"
+                            value="true"
+                    {% for t_submission in t_submissions %}
+                    {% if t_submission.question == t_question %}
+
+                    {% if t_submission.answer == True %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    disabled>
+                    {{ t_question.true_choice }}
+</p>
+<span>
+    <input 
+                                type="radio"
+                                name="t{{ t_question.id }}"
+                                value="false"
+                        {% for t_submission in t_submissions %}
+                        {% if t_submission.question == t_question %}
+    
+                        {% if t_submission.answer == False %}
+                            checked
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        disabled>
+                        {{ t_question.false_choice }}
+    </span>
+    <span>
+        {% for t_submission in t_submissions %} 
+    
+        {% if t_submission.question == t_question %}
+        {% if t_submission.students_mark == 1 %} 
+        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} балл из {{ t_question.marks }}</b>
+        {% endif %} 
+        {% if t_submission.students_mark > 1 and  t_submission.students_mark < 5 %} 
+        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} балла из {{ t_question.marks }}</b>
+        {% endif %} 
+        {% if t_submission.students_mark > 4 %} 
+        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} баллов из {{ t_question.marks }}</b>
+        {% endif %}   
+        {% if t_submission.students_mark == 0 %} 
+        <b class="fixed-bad-mark-position">{{ t_submission.students_mark }} баллов из {{ t_question.marks }}</b>
+        {% endif %}   
+        {% endif %} 
+        {% endfor %} 
+    </span>
+    <br>
+    <br>
+               

@@ -1,0 +1,138 @@
+
+<b>{{ m_question.title }}</b>:  {{ m_question.description }}
+
+{% if m_question.a != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="A"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.a %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    disabled>
+                    {{ m_question.a }}
+                </p>
+                {% endif %} 
+
+{% if m_question.b != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="B"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.b %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    disabled>
+                    {{ m_question.b }}
+                </p>
+                {% endif %} 
+
+{% if m_question.c != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="C"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.c %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    disabled>
+                    {{ m_question.c }}
+                </p>
+                {% endif %} 
+
+{% if m_question.d != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="D"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.d %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    disabled>
+                    {{ m_question.d }}
+                </p>
+                {% endif %} 
+
+{% if m_question.e != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="E"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.e %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    disabled>
+                    {{ m_question.e }}
+                </p>
+                {% endif %} 
+
+{% if m_question.f != '' %}
+                <span>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="F"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.f %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    disabled>
+                    {{ m_question.f }}
+                </span>
+                <span>
+                    {% for m_submission in m_submissions %} 
+                
+                    {% if m_submission.question == m_question %}
+                    {% if m_submission.students_mark == 1 %} 
+                    <b class="fixed-good-mark-position">{{ m_submission.students_mark }} балл из {{ m_question.mark }}</b>
+                    {% endif %} 
+                    {% if m_submission.students_mark > 1 and  m_submission.students_mark < 5 %} 
+                    <b class="fixed-good-mark-position">{{ m_submission.students_mark }} балла из {{ m_question.mark }}</b>
+                    {% endif %} 
+                    {% if m_submission.students_mark > 4 %} 
+                    <b class="fixed-good-mark-position">{{ m_submission.students_mark }} баллов из {{ m_question.mark }}</b>
+                    {% endif %}   
+                    {% if m_submission.students_mark == 0 %} 
+                    <b class="fixed-bad-mark-position">{{ m_submission.students_mark }} баллов из {{ m_question.mark }}</b>
+                    {% endif %}   
+                    {% endif %} 
+                    {% endfor %} 
+                </span>
+                {% endif %} 
+                <br>
+                <br>
+                

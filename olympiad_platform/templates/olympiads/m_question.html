@@ -1,0 +1,110 @@
+
+<b>{{ m_question.title }}</b>:  {{ m_question.description }}
+
+{% if m_question.a != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="A"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.a %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ m_question.a }}
+                </p>
+                {% endif %} 
+
+{% if m_question.b != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="B"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.b %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ m_question.b }}
+                </p>
+                {% endif %} 
+
+{% if m_question.c != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="C"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.c %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ m_question.c }}
+                </p>
+                {% endif %} 
+
+{% if m_question.d != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="D"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.d %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ m_question.d }}
+                </p>
+                {% endif %} 
+
+{% if m_question.e != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="E"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.e %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ m_question.e }}
+                </p>
+                {% endif %} 
+
+{% if m_question.f != '' %}
+                <p>
+                    <input
+                            type="checkbox"
+                            name="m{{ m_question.id }}"
+                            value="F"
+                    {% for m_submission in m_submissions %}
+                    {% if m_submission.question == m_question %}
+
+                    {% if m_submission.f %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ m_question.f }}
+                </p>
+                {% endif %} 

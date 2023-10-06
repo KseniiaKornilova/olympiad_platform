@@ -2221,7 +2221,16 @@ body.box {
 /*--------------------------------
 	Footer CSS Ends
 --------------------------------*/
-
+span b.fixed-good-mark-position {
+	position: absolute; 
+	left: 500px;
+	color: #3d8517;
+}
+span b.fixed-bad-mark-position{
+	position: absolute; 
+	left: 500px;
+	color: #801916;
+}
 /**
 	If you want to add your CSS do that in style.css or
 	Add your own Stylesheet to template . Do not 

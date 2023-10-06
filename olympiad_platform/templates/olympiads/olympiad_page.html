@@ -1,0 +1,210 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - {{ olympiad.title }} {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>{{ olympiad.title }}</h1>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+<div id="olympiad-page">
+<div class="container-fluid">
+        <div class="col-sm-12 col-md-12 col-lg-12" id="olympiad-page">
+            <div class="our-courses module" style="padding: 10px 50px;">
+
+                <div class="widget side-bar border-btm" style="margin-top: 10px; padding: 10px; background-color: white;"> 
+                    <h6>Внесите ваши ответы в форму</h6>
+                </div>  
+
+                <div class="content">
+            <h6>Выберите один правильный ответ</h6>
+            {% for o_question in o_questions %} 
+                {% include 'olympiads/o_question.html' %}
+            {% endfor %}
+            <br>
+            <br>
+            <h6>Выберите один или несколько правильных ответов</h6>
+            {% for m_question in m_questions %} 
+                {% include 'olympiads/m_question.html' %}
+            {% endfor %}
+            <br>
+            <br>
+            <h6>Выберите верный ответ</h6>
+            {% for t_question in t_questions %} 
+                {% include 'olympiads/t_question.html' %}
+            {% endfor %}
+            <br>
+            <br>
+
+                </div>
+            </div>
+        </div>
+
+</div>
+
+<div class="container-fluid" style="padding-bottom: 15px;">
+    <button onclick="submit_olympiad_answer({{ olympiad.id }}, {{ student.id }});"
+                                 id="submit_{{ olympiad.id }}_btn"
+                               name="submit_{{ olympiad.id }}_btn"
+                               type="button"
+                              class="btn btn-primary">
+                         Отправить
+                    </button>
+</div>
+</div>
+
+
+
+
+
+
+<script>
+    function submit_o_question_answer(olympiad_id, question_id, answer) {
+        var csrfToken = '{{ csrf_token }}';
+        var data = {
+        csrfmiddlewaretoken: csrfToken,
+        olympiad_id: olympiad_id,
+        question_id: question_id,
+        answer: answer
+        };
+        var url = '/olympiads/submit_o_question_answer';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Обработка ответа от сервера, если необходимо
+            console.log(data);
+        })
+        .catch(error => {
+            // Обработка ошибок, если запрос не удался
+            console.error('Ошибка:', error);
+        });
+    }
+
+
+    function submit_t_question_answer(olympiad_id, question_id, answer) {
+        var csrfToken = '{{ csrf_token }}';
+        var data = {
+        csrfmiddlewaretoken: csrfToken,
+        olympiad_id: olympiad_id,
+        question_id: question_id,
+        answer: answer
+        };
+        var url = '/olympiads/submit_t_question_answer';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Обработка ответа от сервера, если необходимо
+            console.log(data);
+        })
+        .catch(error => {
+            // Обработка ошибок, если запрос не удался
+            console.error('Ошибка:', error);
+        });
+    }
+
+
+
+    function submit_olympiad_answer(olympiad_id, student_id) {
+        var olympiadPage = document.getElementById('olympiad-page');
+        var submitButton = document.getElementById('submit_{{ olympiad.id }}_btn');
+        submitButton.disabled = true;
+
+        var csrfToken = '{{ csrf_token }}';
+
+        var userAnswers = {};
+
+        var checkboxes = document.querySelectorAll('input[type=checkbox]');
+        checkboxes.forEach(function(checkbox) {
+            var questionId = checkbox.name.replace('m', '');
+            var answer = checkbox.value;
+            var isChecked = checkbox.checked;
+
+            if (isChecked) {
+                if (!userAnswers[questionId]) {
+                    userAnswers[questionId] = [];
+                }
+                userAnswers[questionId].push(answer);
+            }
+        });
+
+        var data = {
+        csrfmiddlewaretoken: csrfToken,
+        olympiad_id: olympiad_id,
+        student_id: student_id,
+        user_answers: userAnswers
+    };
+
+        var submissionUrl = '/olympiads/submit_olympiad_answer/';
+        var templateUrl = '{% url "olympiads:get_template" %}';
+
+        fetch(submissionUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+        if (!response.ok) {
+            throw new Error('Ошибка');
+        }
+        return response.json();
+        })
+        .then(function(result) {
+        if (result.status !== 'success') {
+            alert(result.message);
+        } else {
+            fetch(templateUrl)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                    return response.text();
+                })
+                .then(function(htmlTemplate) {
+                    olympiadPage.innerHTML = htmlTemplate;
+                    submitButton.disabled = false;
+                })
+                .catch(function(error) {
+                    console.error('Ошибка', error);
+                });
+        }
+    })
+    .catch(function(error) {
+        console.error('Ошибка', error);
+        submitButton.disabled = false;
+    });
+}
+    
+</script>
+{% endblock %}

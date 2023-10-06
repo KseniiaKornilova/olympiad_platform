@@ -1,0 +1,33 @@
+
+<b>{{ t_question.title }}</b>:  {{ t_question.description }}
+<p>
+<input onclick="submit_t_question_answer({{ olympiad.id }}, {{ t_question.id }}, true);"
+                            type="radio"
+                            name="t{{ t_question.id }}"
+                            value="true"
+                    {% for t_submission in t_submissions %}
+                    {% if t_submission.question == t_question %}
+
+                    {% if t_submission.answer == True %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ t_question.true_choice }}
+</p>
+<p>
+    <input onclick="submit_t_question_answer({{ olympiad.id }}, {{ t_question.id }}, false);"
+                                type="radio"
+                                name="t{{ t_question.id }}"
+                                value="false"
+                        {% for t_submission in t_submissions %}
+                        {% if t_submission.question == t_question %}
+    
+                        {% if t_submission.answer == False %}
+                            checked
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}>
+                        {{ t_question.false_choice }}
+    </p>
+               

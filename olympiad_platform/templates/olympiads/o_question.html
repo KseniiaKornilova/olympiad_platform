@@ -1,0 +1,74 @@
+
+<b>{{ o_question.title }}</b>:  {{ o_question.description }}
+
+                {% if o_question.a != '' %}
+                <p>
+                    <input onclick="submit_o_question_answer({{ olympiad.id }}, {{ o_question.id }}, 'A');"
+                            type="radio"
+                            name="o{{ o_question.id }}"
+                            value="A"
+                    {% for o_submission in o_submissions %}
+                    {% if o_submission.question == o_question %}
+
+                    {% if o_submission.a %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ o_question.a }}
+                </p>
+                {% endif %} 
+
+                {% if o_question.b != '' %}
+                <p>
+                    <input onclick="submit_o_question_answer({{ olympiad.id }}, {{ o_question.id }}, 'B');"
+                            type="radio"
+                            name="o{{ o_question.id }}"
+                            value="B"
+                    {% for o_submission in o_submissions %}
+                    {% if o_submission.question == o_question %}
+
+                    {% if o_submission.b %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ o_question.b }}
+                </p>
+                {% endif %} 
+
+                {% if o_question.c != '' %}
+                <p>
+                    <input onclick="submit_o_question_answer({{ olympiad.id }}, {{ o_question.id }}, 'C');"
+                            type="radio"
+                            name="o{{ o_question.id }}"
+                            value="C"
+                    {% for o_submission in o_submissions %}
+                    {% if o_submission.question == o_question %}
+
+                    {% if o_submission.c %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ o_question.c }}
+                </p>
+                {% endif %} 
+
+                {% if o_question.d != '' %}
+                <p>
+                    <input onclick="submit_o_question_answer({{ olympiad.id }}, {{ o_question.id }}, 'D');"
+                            type="radio"
+                            name="o{{ o_question.id }}"
+                            value="D"
+                    {% for o_submission in o_submissions %}
+                    {% if o_submission.question == o_question %}
+
+                    {% if o_submission.d %}
+                        checked
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}>
+                    {{ o_question.d }}
+                </p>
+                {% endif %} 
