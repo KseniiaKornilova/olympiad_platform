@@ -47,7 +47,7 @@
                                 <li><i class="fas fa-check"></i> {{ course.month_amount }} месяцев</li>
                                 <li><i class="fas fa-check"></i> {{course.times_a_week }} занятия в неделю</li>
                             </ul>
-                            <a href="#" class="btn btn-light btn-dark-animated">Продолжить</a>
+                            <a href="{% url 'courses:course_main_page' course.id %}" class="btn btn-light btn-dark-animated">Продолжить</a>
                         </div>
                     </div><!-- Courses warp /-->
                 </div><!-- columns /-->

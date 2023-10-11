@@ -1,0 +1,53 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - урок {{ lesson_id }} {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>{{ lesson.title }}</h1>
+                    <h2>{{ course.title }} - Урок{{ lesson.number }}</h2>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-3 col-lg-3 col-padding-y">
+            <div class="widget side-bar border-btm">
+                <h6>Содержание курса</h6>
+                <div class="content">
+                    <ul class="list-unstyled">
+                        {% for les in lessons %}
+                        <li><a href="{% url 'courses:lesson_view'  course.id les.id %}">{{ les.title }}</a></li>   
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-9 col-lg-9 col-padding-y">
+                        {{ html_content|safe }}
+        </div>
+
+    
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="mb-3 mt-3 col-sm-3 col-md-3 col-lg-3">
+        <a href="{% url 'courses:lesson_view'  course.id lesson.id|add:1 %}" class="btn btn-primary btn-padding btn-animated" style="margin-left: 350%;">Дальше</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - {{ course.title }} {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>{{ course.title }}</h1>
+                    <h2>{{ course.subject }}</h2>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+
+<div class="module col-padding-y">
+    <div class="section-title">
+        <h2>Мой прогресс</h2>
+        <p>Заработано баллов: {{ course_submission.earned_mark }} из {{ course_submission.total_mark }}</p>
+        <p>Выполнено заданий: {{ assignment_submissions.count }} из {{ assignments.count }}</p>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-padding-y">
+                <div class="widget side-bar border-btm">
+                    <h6>Содержание курса</h6>
+                    <div class="content">
+                        <ul class="list-unstyled">
+                            {% for lesson in lessons %}
+                            <li><a href="{% url 'courses:lesson_view'  course.id lesson.id %}">Урок {{ lesson.number }} {{lesson.title }}</a></li>
+                            {% endfor %} 
+                        </ul>
+                    </div><!-- Widget Content /-->
+                </div>
+            </div>
+
+                
+                <div class="col-sm-12 col-md-6 col-lg-6 col-padding-y">
+                    <div class="widget side-bar border-btm">
+                        <h6>Задания курса</h6>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                {% for assignment in assignments %}
+                                <li><a href="#">{{ assignment.title }}</a></li>   
+                                {% endfor %}
+                            </ul>
+                        </div><!-- Widget Content /-->
+                    </div>
+                </div>
+           
+        </div>
+    </div>
+</div>
+{% endblock %} 
