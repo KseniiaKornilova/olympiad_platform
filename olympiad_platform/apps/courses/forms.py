@@ -14,7 +14,8 @@ class UserCommentForm(forms.ModelForm):
                     }),
                     "student": forms.TextInput(attrs={
                         'class': 'form-control form-group mb-3',
-                        'placeholder': 'Автор комментария'
+                        'placeholder': 'Автор комментария',
+                        'readonly': 'readonly'
                     }),
                     "content": forms.TextInput(attrs={
                         'class': 'form-control form-group mb-3',
