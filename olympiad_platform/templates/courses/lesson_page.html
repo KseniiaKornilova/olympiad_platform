@@ -25,6 +25,9 @@
     <div class="row">
 
         <div class="col-sm-12 col-md-3 col-lg-3 col-padding-y">
+
+            <a href="{% url 'courses:lesson_comment_page' course.id lesson.id %}" class="btn btn-light btn-dark-animated">Обсуждения</a>
+
             <div class="widget side-bar border-btm">
                 <h6>Содержание курса</h6>
                 <div class="content">
@@ -50,4 +53,5 @@
         <a href="{% url 'courses:lesson_view'  course.id lesson.id|add:1 %}" class="btn btn-primary btn-padding btn-animated" style="margin-left: 350%;">Дальше</a>
     </div>
 </div>
+
 {% endblock %}

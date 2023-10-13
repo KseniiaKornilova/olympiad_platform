@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, CourseUser, Lesson, Assignment, AssignmentSubmission, MultipleChoiceQuestion, MultipleChoiceSubmission, OneChoiceQuestion, OneChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
+from .models import Course, CourseUser, Lesson, Assignment, AssignmentSubmission, MultipleChoiceQuestion, MultipleChoiceSubmission, OneChoiceQuestion, OneChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission, Comment
 
 # Register your models here.
 class CourseUserInline(admin.TabularInline):
@@ -142,6 +142,13 @@ class TrueFalseSubmissionAdmin(admin.ModelAdmin):
     list_display_links = ('student',)
     search_fields = ('^student',)
     fields = ('student', 'question', 'students_mark', 'answer')
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('lesson', 'student', 'content')
+    ordering = ('lesson',)
+    list_display_links = ('lesson',)
+    exclude = None
        
 
 
@@ -156,3 +163,4 @@ admin.site.register(OneChoiceQuestion, OneChoiceQuestionAdmin)
 admin.site.register(OneChoiceSubmission, OneChoiceSubmissionAdmin)
 admin.site.register(TrueFalseQuestion, TrueFalseQuestionAdmin)
 admin.site.register(TrueFalseSubmission, TrueFalseSubmissionAdmin)
+admin.site.register(Comment, CommentAdmin)

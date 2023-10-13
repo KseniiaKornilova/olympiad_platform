@@ -222,3 +222,18 @@ class TrueFalseSubmission(models.Model):
         verbose_name = 'Ответ на вопрос "Какое из утверждений верно'
         verbose_name_plural = 'Ответы на вопросы "Какое из утверждений верно'
 
+
+class Comment(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс', blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Урок', blank=True)
+    student = models.CharField(max_length=100, verbose_name='Автор комментария')
+    content = models.TextField(verbose_name='Текст комментария')
+    created_at = models.DateField(verbose_name='Дата публикации комментария')
+    def __str__(self):
+        return f'{{ self.author }} : {{ self.content }}'
+
+    class Meta: 
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ['created_at']
+

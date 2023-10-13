@@ -1,10 +1,13 @@
 import subprocess
 import os
 import re
-from django.http.response import HttpResponse
-from django.shortcuts import render
+import json
+from datetime import datetime
+from django.http.response import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
-from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission
+from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
+from .forms import UserCommentForm
 from ..olympiads.models import Subject
 from ..olympiads.forms import SearchForm
 
@@ -99,11 +102,74 @@ def lesson_view(request, course_id, lesson_id):
     course = Course.objects.get(id=course_id)
     lesson = Lesson.objects.get(id=lesson_id)
     lessons = Lesson.objects.filter(course=course).order_by('number')
+
     context = {'course': course, 
                 'lesson': lesson, 
                 'lessons': lessons,
                 'html_content': html_content_without_footer}
+
     return render(request, 'courses/lesson_page.html', context)
+
+
+def lesson_comment_view(request, course_id, lesson_id):
+    course = Course.objects.get(id=course_id)
+    lesson = Lesson.objects.get(id=lesson_id)
+
+    student = request.user
+    created_at = datetime.now()
+    initial = {'student': student, 'course': course, 'lesson': lesson, 'created_at': created_at}
+    form = UserCommentForm(initial=initial)
+
+    comments = Comment.objects.filter(lesson=lesson, course=course).order_by('-created_at')
+
+    context = {'course': course, 
+                'lesson': lesson, 
+                'form': form, 
+                'comments': comments}
+    
+    return render(request, 'courses/lesson_page_comments.html', context)
+
+
+def submit_comment(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            course_id = data.get('course_id')
+            lesson_id = data.get('lesson_id')
+            course = get_object_or_404(Course, id=course_id)
+            lesson = get_object_or_404(Lesson, id=lesson_id)
+            student = data.get('student')
+            content = data.get('content')
+            created_at = data.get('created_at')
+
+            form_data = {'course': course,
+                         'lesson': lesson,
+                         'student': student,
+                         'content': content, 
+                         'created_at': created_at}
+
+            form = UserCommentForm(form_data)
+            if form.is_valid():
+                form.save()
+            else:
+                print(form.errors)
+                return JsonResponse({'error': 'Неверные данные'})
+
+            comments = Comment.objects.filter(course=course, lesson=lesson).order_by('-created_at').values()               
+            return JsonResponse(list(comments), safe=False)
+            
+        except json.JSONDecodeError:
+            response_data = {
+                'status': 'error',
+                'message': 'Ошибка при разборе данных JSON.'
+            }
+            return JsonResponse(response_data, status=400)
+    
+    else:
+        return JsonResponse({'error': 'Неверный метод запроса'})
+    
+
+
 
 
 
