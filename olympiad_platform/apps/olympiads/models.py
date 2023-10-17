@@ -40,16 +40,20 @@ class OlympiadUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Имя участника')
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE, verbose_name='Название олимпиады')
     registration_date = models.DateTimeField(null = True, verbose_name='Дата регистрации')
+    is_finished = models.BooleanField(null=True, blank=True, default=False, verbose_name='Участник отправил ответы олимпиады на проверку?')
+    earned_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Количество набранных баллов')
+    total_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Максимально возможное количество баллов')
+    ranking_place = models.SmallIntegerField(null=True, blank=True, verbose_name='Место участника в рейтинге')
 
     @classmethod
-    def create(cls, user, olympiad, registration_date):
-        submission = cls(user=user, olympiad=olympiad, registration_date=registration_date)
+    def create(cls, user, olympiad):
+        submission = cls(user=user, olympiad=olympiad)
         submission.save()
         return submission
 
     class Meta:
-        verbose_name = 'Регистрация участника олимпиады'
-        verbose_name_plural = 'Регистрация участника олимпиады'
+        verbose_name = 'Данные о прохождении участником олимпиады'
+        verbose_name_plural = 'Данные о прохождениях участниками олимпиад'
         ordering = ['olympiad', 'user']
 
 
