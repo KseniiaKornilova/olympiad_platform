@@ -1,6 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from ..students.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Subject(models.Model):
@@ -25,6 +26,10 @@ class Olympiad(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    def is_registrations_open(self):
+        now = timezone.now()
+        return self.registration_dedline > now
+
     class Meta:
         verbose_name = 'Олимпиада'
         verbose_name_plural = 'Олимпиады'
@@ -35,10 +40,18 @@ class OlympiadUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Имя участника')
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE, verbose_name='Название олимпиады')
     registration_date = models.DateTimeField(null = True, verbose_name='Дата регистрации')
+
+    @classmethod
+    def create(cls, user, olympiad, registration_date):
+        submission = cls(user=user, olympiad=olympiad, registration_date=registration_date)
+        submission.save()
+        return submission
+
     class Meta:
         verbose_name = 'Регистрация участника олимпиады'
         verbose_name_plural = 'Регистрация участника олимпиады'
         ordering = ['olympiad', 'user']
+
 
 
 class QuestionSection(models.Model):

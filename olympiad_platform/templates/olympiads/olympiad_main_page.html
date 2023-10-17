@@ -1,0 +1,72 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - {{ olympiad.title }} {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>{{ olympiad.title }}</h1>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+{% if result %}
+    <div class="section-title mt-5">
+        <h2>Регистрация на олимпиаду <span>{{ olympiad.title }}</span> успешно завершена</h2>
+        <p>Начало олимпиады: {{ olympiad.date_of_start }}</p>
+    </div>
+
+<div class="request-appointment">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
+                <div class="appointment-text">
+                    <p>Вы можете приступить к выполнению олимпиады сейчас или позже через личный кабинет</p>
+                    <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
+                        <div class="appointment-btn">
+                            <a href="#" class="btn btn-secondary btn-padding btn-dark-animated">Приступить к выполнению</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endif %} 
+
+{% if not result %} 
+<div class="section-title mt-5">
+    <h2>К сожалению, регистрация на олимпиаду <span>{{ olympiad.title }}</span> закрыта</h2>
+    <p>Крайний срок регистрации на олимпиаду:  до {{ olympiad.registration_dedline }}</p>
+</div>
+
+<div class="request-appointment">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
+                <div class="appointment-text">
+                    <p>Вернуться к списку олимпиад</p>
+                    <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
+                        <div class="appointment-btn">
+                            <a href="{% url 'olympiads:olympiads' %}" class="btn btn-secondary btn-padding btn-dark-animated">Вернуться</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} 
+{% endblock %} 

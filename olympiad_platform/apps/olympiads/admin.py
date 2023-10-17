@@ -53,6 +53,13 @@ class UserAnswerAdmin(admin.ModelAdmin):
     list_display = ('user', 'question', 'answer', 'score')
     list_display_links = ('user',)
     search_fields = ('user', '^olympiad')
+
+
+class OlympiadUserAdmin(admin.ModelAdmin):
+    list_display = ('user', 'olympiad', 'registration_date')
+    list_display_links = ('user',)
+    exclude = None
+    search_fields = ('user',)
     
     
     
@@ -62,3 +69,4 @@ admin.site.register(Olympiad, OlympiadAdmin)
 admin.site.register(QuestionSection, QuestionSectionAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(UserAnswer, UserAnswerAdmin)
+admin.site.register(OlympiadUser, OlympiadUserAdmin)

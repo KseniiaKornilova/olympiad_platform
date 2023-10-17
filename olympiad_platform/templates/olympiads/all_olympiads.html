@@ -48,7 +48,7 @@
                                 <li><i class="fas fa-check"></i> Этап: {{ olympiad.stage }}</li><br>
                                 <li><i class="fas fa-check"></i> Продолжительность олимпиады: {{ olympiad.olympiad_duration }}</li><br>
                             </ul>
-                            <a href="#" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
+                            <a href="{% url 'olympiads:olympiad_registration' olympiad.id %}" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
                         </div>
                     </div><!-- Courses warp /-->
                 </div><!-- columns /-->

@@ -1,9 +1,9 @@
-from datetime import date
+from datetime import date, datetime
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from ..students.models import User
-from .models import Olympiad, Subject
+from .models import Olympiad, Subject, OlympiadUser
 from .forms import SearchForm
 
 # Create your views here.
@@ -77,3 +77,30 @@ class OlympiadList(ListView):
         context['subjects'] = Subject.objects.all()
         context['stages'] = Olympiad.objects.values_list('stage', flat=True).distinct()
         return context
+
+
+def olympiad_page(request, olympiad_id, user_id):
+    pass
+
+
+def olympiad_registration(request, olympiad_id):
+    student = request.user
+    try:
+        olympiad = Olympiad.objects.get(id=olympiad_id)
+    except Olympiad.DoesNotExist:
+        olympiad = None
+
+    result = olympiad.is_registrations_open()
+    if result:
+        olympiad_user = OlympiadUser.create(user=student, olympiad=olympiad, registration_date=datetime.now())
+    else:
+        result = False
+        olympiad_user = None
+
+    context = {
+            'olympiad': olympiad,
+            'student': student,
+            'result': result,
+            'olympiad_user': olympiad_user
+        }
+    return render(request, 'olympiads/olympiad_main_page.html', context)
