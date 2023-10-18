@@ -33,6 +33,12 @@ class CourseUser(models.Model):
     earned_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Количество набранных баллов')
     total_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Максимально возможное количество баллов')
     percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0, null=True, blank=True, verbose_name='% выполнения курса')
+    @classmethod
+    def create(cls, user, course, is_finished, earned_mark, total_mark, percent_mark):
+        submission = cls(user=user, course=course, is_finished=is_finished, earned_mark=earned_mark, total_mark=total_mark, percent_mark=percent_mark)
+        submission.save()
+        return submission
+
     class Meta: 
         verbose_name = 'Прохождение курса учеником'
         verbose_name_plural = 'Прохождения курсов учениками'
@@ -59,7 +65,7 @@ class Assignment(models.Model):
     image = models.CharField(verbose_name='Путь до изображения от static директории', null=True, blank=True)
 
     def __str__(self):
-        return f'{self.course} : {self.assignment_num}'
+        return f'{self.course} : {self.title}'
 
     class Meta:
         verbose_name = 'Задание курса'
@@ -69,8 +75,14 @@ class Assignment(models.Model):
 class AssignmentSubmission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, verbose_name='Задание курса')
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
-    earned_mark = models.SmallIntegerField(validators=[validators.MinValueValidator(0)], verbose_name='Количество полученных баллов за задание')
+    earned_mark = models.SmallIntegerField(validators=[validators.MinValueValidator(0)], verbose_name='Количество полученных баллов за задание', default=0)
     is_finished = models.BooleanField(default=False, verbose_name='Задание отправлено на проверку?')
+
+    @classmethod
+    def create(cls, assignment, student, earned_mark, is_finished):
+        submission = cls(assignment=assignment, student=student, earned_mark=earned_mark, is_finished=is_finished)
+        submission.save()
+        return submission
 
     def __str__(self):
         return f'{self.assignment} : {self.student}'

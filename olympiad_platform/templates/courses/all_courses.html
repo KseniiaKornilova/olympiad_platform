@@ -55,7 +55,12 @@
                                 <li><i class="fas fa-check"></i> {{ course.month_amount }} месяцев</li>
                                 <li><i class="fas fa-check"></i> {{course.times_a_week }} занятия в неделю</li>
                             </ul>
-                            <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+    
+                            {% if course.id in all_courses_id %}
+                                <a href="{% url 'courses:course_main_page' course.id %}" class="btn btn-light btn-dark-animated">Продолжить</a>
+                            {% else %} 
+                            <a href="{% url 'courses:courses_registration' course.id %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                            {% endif %}  
                         </div>
                     </div><!-- Courses warp /-->
                 </div><!-- columns /-->
@@ -89,4 +94,13 @@
     </div>
 </div>
 
-{% endblock %} 
+{% endblock %}
+
+
+
+
+if user.user_courses.select(user_course.course_id).include?(course.id)
+    render button('продолжить')
+else
+    render button('стартовать')
+end

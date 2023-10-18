@@ -1,0 +1,32 @@
+{% extends 'basic.html' %} 
+{% load static %} 
+{% load bootstrap4 %}
+
+{% block title %} EduBuddy school - Список курсов {% endblock %} 
+
+{% block content %} 
+<div class="title-section dark-bg grey-bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-12 col-padding-y">
+                <div class="title-section-text">
+                    
+                    <h1>{{ course.title }}</h1>
+                </div>
+            </div><!-- Top Columns /-->
+            
+        </div>
+    </div><!-- Grid Container /-->
+</div>
+
+<div class="section-title mt-5">
+    <h2>Регистрация на курс <br>
+        <span>{{ course.title }}</span></h2>
+    <p>Для оплаты курса приветствую донаты в любой сумме, на которую Вы оцениваете проделанную мной работу!</p>
+</div>
+
+<div class="container d-flex justify-content-center mb-5">
+<a href="{% url 'courses:course_main_page' course.id %}" class="btn btn-primary btn-padding btn-animated">Я оплатил(а) курс!</a>
+</div>
+{% endblock %} 

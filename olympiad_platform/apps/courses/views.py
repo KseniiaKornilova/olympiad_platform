@@ -5,6 +5,7 @@ import json
 from datetime import datetime
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
 from .forms import UserCommentForm
@@ -53,13 +54,25 @@ class CourseList(ListView):
         context = super().get_context_data(**kwargs)
         context['subjects'] = Subject.objects.all()
         context['form'] = SearchForm(self.request.GET)
+
+        courses = Course.objects.all()
+        student = self.request.user
+        course_submissions = CourseUser.objects.filter(user=student)
+        all_courses_id = list()
+        for course_submission in course_submissions:
+            all_courses_id.append(course_submission.course.id)
+        context['all_courses_id'] = all_courses_id
         return context
 
 
 def course_main_page(request, course_id):
     student = request.user
     course = Course.objects.get(id=course_id)
-    course_submission = CourseUser.objects.get(user=student, course=course)
+    try:
+        course_submission = CourseUser.objects.get(user=student, course=course)
+    except CourseUser.DoesNotExist:
+        course_submission = CourseUser.objects.create(user=student, course=course)
+
     try:
         assignments = Assignment.objects.filter(course=course)
     except Assignment.DoesNotExist:
@@ -67,6 +80,10 @@ def course_main_page(request, course_id):
 
     try:
         assignment_submissions = AssignmentSubmission.objects.filter(assignment__course=course, student=student)
+        if not assignment_submissions.exists():
+            for assignment in assignments:
+                assignment_submissions = AssignmentSubmission.objects.create(assignment=assignment, student=student)
+
     except AssignmentSubmission.DoesNotExist:
         assignment_submissions = None
 
@@ -167,6 +184,12 @@ def submit_comment(request):
     
     else:
         return JsonResponse({'error': 'Неверный метод запроса'})
+
+
+def course_registration(request, course_id):
+    course = Course.objects.get(id=course_id)
+    context = {'course': course}
+    return render(request, 'courses/course_registration.html', context)
     
 
 
