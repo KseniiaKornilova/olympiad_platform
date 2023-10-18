@@ -46,7 +46,16 @@
                                 <li><i class="fas fa-check"></i> Этап: {{ olympiad.stage }}</li>
                                 <li><i class="fas fa-check"></i> Продолжительность олимпиады: {{ olympiad.olympiad_duration }}</li>
                             </ul>
-                            <a href="{% url 'olympiads:olympiad_page' olympiad.id user.id %}" class="btn btn-light btn-dark-animated">Перейти</a>
+                            {% for user_submission in user_submissions %} 
+                            {% if user_submission.olympiad == olympiad %} 
+                            {% if user_submission.is_finished %} 
+                            <a href="{% url 'olympiads:olympiad_page' olympiad.id user.id %}" class="btn btn-light btn-dark-animated">Посмотреть результат</a>
+                            {% endif %} 
+                            {% if not user_submission.is_finished %} 
+                            <a href="{% url 'olympiads:olympiad_page' olympiad.id user.id %}" class="btn btn-light btn-dark-animated">Перейти к выполнению</a>
+                            {% endif %} 
+                            {% endif %} 
+                            {% endfor %} 
                         </div>
                     </div><!-- Courses warp /-->
                 </div><!-- columns /-->

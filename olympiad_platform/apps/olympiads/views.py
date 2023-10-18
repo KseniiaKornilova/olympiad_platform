@@ -34,6 +34,9 @@ class UserOlympiadList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = SearchForm(self.request.GET)
+        student = self.request.user
+        user_submissions = OlympiadUser.objects.filter(user=student)
+        context['user_submissions'] = user_submissions
         return context
 
 
