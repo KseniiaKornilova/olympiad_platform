@@ -26,7 +26,7 @@
     <div class="section-title">
         <h2>Мой прогресс</h2>
         <p>Заработано баллов: {{ course_submission.earned_mark }} из {{ course_submission.total_mark }}</p>
-        <p>Выполнено заданий: {{ assignment_submissions.count }} из {{ assignments.count }}</p>
+        <p>Выполнено заданий: {{ assignment_submissions_done.count }} из {{ assignments.count }}</p>
     </div>
     
     <div class="container">
@@ -51,7 +51,7 @@
                         <div class="content">
                             <ul class="list-unstyled">
                                 {% for assignment in assignments %}
-                                <li><a href="#">{{ assignment.title }}</a></li>   
+                                <li><a href="{% url 'courses:assignment_view' course.id assignment.id %}">{{ assignment.title }}</a></li>   
                                 {% endfor %}
                             </ul>
                         </div><!-- Widget Content /-->

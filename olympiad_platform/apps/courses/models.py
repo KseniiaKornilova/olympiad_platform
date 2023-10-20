@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.conf import settings
 from django.core import validators
@@ -59,7 +60,7 @@ class Lesson(models.Model):
 class Assignment(models.Model):
     assignment_num = models.SmallIntegerField(validators=[validators.MinValueValidator(1)], verbose_name='Номер задания')
     title = models.CharField(max_length=100, verbose_name='Название задания')
-    description = models.CharField(max_length=200, verbose_name='Описание задания')
+    description = models.TextField(verbose_name='Описание задания')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс, к которому относится задание')
     total_mark = models.SmallIntegerField(verbose_name='Максимально возможное количество баллов')
     image = models.CharField(verbose_name='Путь до изображения от static директории', null=True, blank=True)
@@ -71,12 +72,20 @@ class Assignment(models.Model):
         verbose_name = 'Задание курса'
         verbose_name_plural = 'Задания курсов'
 
+def upload_homework(instance, filename):
+        file_extension = os.path.splitext(filename)[1]
+        new_filename = f'{instance.student.last_name}_{instance.student.first_name}_{instance.assignment.course.title}_{instance.assignment.assignment_num}{file_extension}'
+        upload_path = os.path.join('homework_files', new_filename)
+        return upload_path
+
 
 class AssignmentSubmission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, verbose_name='Задание курса')
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     earned_mark = models.SmallIntegerField(validators=[validators.MinValueValidator(0)], verbose_name='Количество полученных баллов за задание', default=0)
     is_finished = models.BooleanField(default=False, verbose_name='Задание отправлено на проверку?')
+    homework_file = models.FileField(verbose_name='Файл с решением', null=True, blank=True, upload_to=upload_homework)
+        
 
     @classmethod
     def create(cls, assignment, student, earned_mark, is_finished):

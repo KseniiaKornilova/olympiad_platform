@@ -4,11 +4,12 @@ import re
 import json
 from datetime import datetime
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
-from .forms import UserCommentForm
+from .forms import UserCommentForm, AssignmentSubmissionForm
 from ..olympiads.models import Subject
 from ..olympiads.forms import SearchForm
 
@@ -78,15 +79,8 @@ def course_main_page(request, course_id):
     except Assignment.DoesNotExist:
         assignments = None
 
-    try:
-        assignment_submissions = AssignmentSubmission.objects.filter(assignment__course=course, student=student)
-        if not assignment_submissions.exists():
-            for assignment in assignments:
-                assignment_submissions = AssignmentSubmission.objects.create(assignment=assignment, student=student)
-
-    except AssignmentSubmission.DoesNotExist:
-        assignment_submissions = None
-
+    assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course, student=student, is_finished=True)
+    
     try:
         lessons = Lesson.objects.filter(course=course).order_by('number')
     except Lesson.DoesNotExist:
@@ -96,7 +90,7 @@ def course_main_page(request, course_id):
                 'course': course, 
                 'course_submission': course_submission, 
                 'assignments': assignments, 
-                'assignment_submissions': assignment_submissions,
+                'assignment_submissions_done': assignment_submissions_done,
                 'lessons': lessons}
 
     return render (request, 'courses/course_main_page.html', context)
@@ -190,6 +184,34 @@ def course_registration(request, course_id):
     course = Course.objects.get(id=course_id)
     context = {'course': course}
     return render(request, 'courses/course_registration.html', context)
+
+
+
+def assignment_view(request, course_id, assignment_id):
+    course = Course.objects.get(id=course_id)
+    assignment = Assignment.objects.get(id=assignment_id, course=course)
+    student = request.user
+
+    if request.method == 'POST':
+        form = AssignmentSubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            assignment_submission = form.save(commit=False)
+            assignment_submission.assignment = assignment
+            assignment_submission.student = student
+            assignment_submission.save()
+            messages.success(request, 'Файл успешно добавлен, Ваш преподаватель скоро его проверит.')
+        else:
+            messages.error(request, 'Произошла ошибка, возможно, Вы пытались прикрепить файл с запрещенным расширением.')
+        return redirect('courses:assignment_view', course_id=course_id, assignment_id=assignment_id)
+
+    else:
+        form = AssignmentSubmissionForm(initial={'assignment': assignment, 'student': student})
+        context = {
+            'course': course, 
+            'assignment': assignment,
+            'form': form
+        }
+        return render(request, 'courses/assignment_page.html', context)
     
 
 

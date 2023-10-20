@@ -2239,3 +2239,14 @@ span b.fixed-bad-mark-position{
 	
 	Thank you!
 */
+
+p.assignment_page {
+	margin-left: 3rem;
+	margin-right: 3rem;
+	font-family: 'Open Sans', sans-serif;
+    margin-bottom: 0;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.3125rem;
+    line-height: 31px;
+}

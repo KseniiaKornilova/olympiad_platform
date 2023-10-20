@@ -1,5 +1,6 @@
 from django import forms
-from .models import Comment
+from django.core.validators import FileExtensionValidator
+from .models import Comment, AssignmentSubmission
 
 
 class UserCommentForm(forms.ModelForm):
@@ -27,10 +28,19 @@ class UserCommentForm(forms.ModelForm):
                     })
             }
 
-    # def __init__(self, *args, **kwargs):
-    #     super(UserCommentForm, self).__init__(*args, **kwargs)
-    #     self.fields['course'].required = False
-    #     self.fields['lesson'].required = False
+
+
+class AssignmentSubmissionForm(forms.ModelForm):
+    homework_file = forms.FileField(widget=forms.FileInput(attrs={
+        'class': 'form-control form-group mb-3'}),
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'docx'], message='Пожалуйста, прикрепите файл с расширением .pdf или .doc')]
+        )
+        
+    class Meta:
+        model = AssignmentSubmission
+        fields = ['homework_file']
+        
+
 
 
 
