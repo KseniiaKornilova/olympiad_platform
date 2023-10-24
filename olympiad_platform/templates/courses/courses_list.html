@@ -11,9 +11,14 @@
             
             <div class="col-sm-12 col-padding-y">
                 <div class="title-section-text">
-                    
+                    {% if status == 'student' %} 
                     <h1>Курсы,</h1>
                     <h2>которые Вы изучаете</h2>
+                    {% endif %} 
+                    {% if status == 'teacher' %} 
+                    <h1>Курсы,</h1>
+                    <h2>преподавателем которых Вы являетесь</h2>
+                    {% endif %} 
                 </div>
             </div><!-- Top Columns /-->
             

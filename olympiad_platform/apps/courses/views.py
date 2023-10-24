@@ -21,15 +21,24 @@ class UserCoursesList(ListView):
     context_object_name = 'courses'
 
     def get_queryset(self):
-        queryset = self.request.user.course_participants.all()
+        user = self.request.user
+        if len(user.course_teacher.all()) == 0:
+            queryset = user.course_participants.all()
+        else:
+            queryset = user.course_teacher.all()
         search_word = self.request.GET.get('keyword')
         if search_word:
             queryset = queryset.filter(title__icontains=search_word)
         return queryset
+            
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = SearchForm(self.request.GET)
+        if len(self.request.user.course_teacher.all()) == 0:
+            context['status'] = 'student'
+        else:
+            context['status'] = 'teacher'
         return context
 
 
@@ -67,33 +76,57 @@ class CourseList(ListView):
 
 
 def course_main_page(request, course_id):
-    student = request.user
+    user = request.user
     course = Course.objects.get(id=course_id)
-    try:
-        course_submission = CourseUser.objects.get(user=student, course=course)
-    except CourseUser.DoesNotExist:
-        course_submission = CourseUser.objects.create(user=student, course=course)
+    course_teacher = course.teacher
 
     try:
-        assignments = Assignment.objects.filter(course=course)
+            assignments = Assignment.objects.filter(course=course)
     except Assignment.DoesNotExist:
-        assignments = None
+            assignments = None
 
-    assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course, student=student, is_finished=True)
-    
     try:
-        lessons = Lesson.objects.filter(course=course).order_by('number')
+            lessons = Lesson.objects.filter(course=course).order_by('number')
     except Lesson.DoesNotExist:
-        lessons = None
+            lessons = None
 
-    context = {'student': student, 
-                'course': course, 
-                'course_submission': course_submission, 
-                'assignments': assignments, 
-                'assignment_submissions_done': assignment_submissions_done,
-                'lessons': lessons}
 
-    return render (request, 'courses/course_main_page.html', context)
+    if user != course_teacher:
+        try:
+            course_submission = CourseUser.objects.get(user=user, course=course)
+        except CourseUser.DoesNotExist:
+            course_submission = CourseUser.objects.create(user=user, course=course)
+
+        assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course, student=user, is_finished=True)
+    
+
+        student_context = {'student': user, 
+                    'course_teacher': course_teacher,
+                    'course': course, 
+                    'course_submission': course_submission, 
+                    'assignments': assignments, 
+                    'assignment_submissions_done': assignment_submissions_done,
+                    'lessons': lessons}
+
+        return render (request, 'courses/course_main_page.html', student_context)
+
+    else:
+        course_students = course.participants.all().order_by('last_name')
+        assignment_submissions_all = AssignmentSubmission.objects.filter(assignment__in=assignments)
+
+        teacher_context = {
+            'user': user,
+            'course_teacher': course_teacher,
+            'course_students': course_students,
+            'course': course, 
+            'assignment_submissions_all': assignment_submissions_all,
+            'lessons': lessons,
+            'assignments': assignments
+        }
+
+        return render (request, 'courses/course_main_page.html', teacher_context)
+
+        
 
 
 def lesson_view(request, course_id, lesson_id):
@@ -198,6 +231,7 @@ def assignment_view(request, course_id, assignment_id):
             assignment_submission = form.save(commit=False)
             assignment_submission.assignment = assignment
             assignment_submission.student = student
+            assignment_submission.status = 's'
             assignment_submission.save()
             messages.success(request, 'Файл успешно добавлен, Ваш преподаватель скоро его проверит.')
         else:

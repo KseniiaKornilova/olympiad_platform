@@ -24,10 +24,47 @@
 
 <div class="module col-padding-y">
     <div class="section-title">
-        <h2>Мой прогресс</h2>
-        <p>Заработано баллов: {{ course_submission.earned_mark }} из {{ course_submission.total_mark }}</p>
-        <p>Выполнено заданий: {{ assignment_submissions_done.count }} из {{ assignments.count }}</p>
+    {% if user != course_teacher %}
+            <h2>Мой прогресс</h2>
+            <p>Заработано баллов: {{ course_submission.earned_mark }} из {{ course_submission.total_mark }}</p>
+            <p>Выполнено заданий: {{ assignment_submissions_done.count }} из {{ assignments.count }}</p>
+            <br>
+            <p>Преподаватель: {{ course_teacher }}     ({{ course_teacher.email }})</p>
     </div>
+    {% endif %} 
+
+{% if user == course_teacher %} 
+        <h2>Прогресс моих учеников</h2>
+    </div>
+        <div class="content">
+            <table class="table ml-3 mr-3">
+                <thead>
+                    <tr>
+                        <th scope="col">Студент</th>
+                        <th scope="col">Задание</th>
+                        <th scope="col">Файл</th>
+                        <th scope="col">Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course_student in course_students %} 
+                    {% for assignment_submission in assignment_submissions_all %} 
+                        {% if assignment_submission.student == course_student %}
+                    <tr>
+                        <th scope="row">{{ course_student }}</th> 
+                        <td>{{ assignment_submission.assignment.title }}</td>
+                        <td><a href="{{ assignment_submission.homework_file.url }}" target="_blank">Открыть файл</a></td>
+                        <td>{{ assignment_submission.get_status_display }}</td>
+                    </tr>
+                        {% endif %} 
+                        {% endfor %} 
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+{% endif %} 
+
+ 
     
     <div class="container">
         <div class="row">

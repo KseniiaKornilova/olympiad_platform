@@ -72,18 +72,26 @@ class Assignment(models.Model):
         verbose_name = 'Задание курса'
         verbose_name_plural = 'Задания курсов'
 
+
 def upload_homework(instance, filename):
         file_extension = os.path.splitext(filename)[1]
-        new_filename = f'{instance.student.last_name}_{instance.student.first_name}_{instance.assignment.course.title}_{instance.assignment.assignment_num}{file_extension}'
+        new_filename = f'{instance.student.last_name}_{instance.student.first_name}_{instance.assignment.course.title}_{instance.assignment.title}{file_extension}'
         upload_path = os.path.join('homework_files', new_filename)
         return upload_path
 
+
+STATUS = (
+        ('s', 'Ждет проверку'),
+        ('r', 'Получено ревью задания'),
+        ('f', 'Выполнено'),
+    )
 
 class AssignmentSubmission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, verbose_name='Задание курса')
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     earned_mark = models.SmallIntegerField(validators=[validators.MinValueValidator(0)], verbose_name='Количество полученных баллов за задание', default=0)
-    is_finished = models.BooleanField(default=False, verbose_name='Задание отправлено на проверку?')
+    status = models.CharField(max_length=1, choices=STATUS, null=True, blank=True, verbose_name='Статус выполнения задания')
+    is_finished = models.BooleanField(default=False, verbose_name='Задание засчитано?')
     homework_file = models.FileField(verbose_name='Файл с решением', null=True, blank=True, upload_to=upload_homework)
         
 

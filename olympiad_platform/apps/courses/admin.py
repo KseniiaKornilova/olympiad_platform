@@ -49,7 +49,7 @@ class AssignmentSubmissionAdmin(admin.ModelAdmin):
     list_display_links = ('assignment',)
     search_fields = ('^assignment', '^student')
     list_filter = ('student',)
-    fields = ('assignment', 'student', 'earned_mark', 'is_finished', 'homework_file')
+    fields = ('assignment', 'student', 'earned_mark', 'status', 'is_finished', 'homework_file')
 
 
 class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
