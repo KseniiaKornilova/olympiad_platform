@@ -31,8 +31,8 @@ class CourseUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Имя ученика')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс')
     is_finished = models.BooleanField(null=True, blank=True, default=False, verbose_name='Участник выполнил все задания?')
-    earned_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Количество набранных баллов')
-    total_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Максимально возможное количество баллов')
+    earned_mark = models.SmallIntegerField(null=True, blank=True, default=0, verbose_name='Количество набранных баллов')
+    total_mark = models.SmallIntegerField(null=True, blank=True, default=0, verbose_name='Максимально возможное количество баллов')
     percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0, null=True, blank=True, verbose_name='% выполнения курса')
     @classmethod
     def create(cls, user, course, is_finished, earned_mark, total_mark, percent_mark):
@@ -81,6 +81,7 @@ def upload_homework(instance, filename):
 
 
 STATUS = (
+        ('-', 'Студент не начал работу'),
         ('s', 'Ждет проверку'),
         ('r', 'Получено ревью задания'),
         ('f', 'Выполнено'),
@@ -90,9 +91,10 @@ class AssignmentSubmission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, verbose_name='Задание курса')
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     earned_mark = models.SmallIntegerField(validators=[validators.MinValueValidator(0)], verbose_name='Количество полученных баллов за задание', default=0)
-    status = models.CharField(max_length=1, choices=STATUS, null=True, blank=True, verbose_name='Статус выполнения задания')
+    status = models.CharField(max_length=1, default='-', choices=STATUS, null=True, blank=True, verbose_name='Статус выполнения задания')
     is_finished = models.BooleanField(default=False, verbose_name='Задание засчитано?')
     homework_file = models.FileField(verbose_name='Файл с решением', null=True, blank=True, upload_to=upload_homework)
+    teacher_comment = models.TextField(verbose_name='Комментарий преподавателя', null=True, blank=True)
         
 
     @classmethod

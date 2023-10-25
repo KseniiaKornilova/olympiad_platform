@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
-from .forms import UserCommentForm, AssignmentSubmissionForm
+from .forms import UserCommentForm, AssignmentSubmissionForm, AssignmentSubmissionTeacherCheckForm
 from ..olympiads.models import Subject
 from ..olympiads.forms import SearchForm
 
@@ -80,6 +80,7 @@ def course_main_page(request, course_id):
     course = Course.objects.get(id=course_id)
     course_teacher = course.teacher
 
+
     try:
             assignments = Assignment.objects.filter(course=course)
     except Assignment.DoesNotExist:
@@ -95,7 +96,23 @@ def course_main_page(request, course_id):
         try:
             course_submission = CourseUser.objects.get(user=user, course=course)
         except CourseUser.DoesNotExist:
-            course_submission = CourseUser.objects.create(user=user, course=course)
+            course_submission = None
+
+        course_submission_total = 0
+        for assignment in assignments:
+            course_submission_total += assignment.total_mark
+        course_submission.total_mark = course_submission_total
+        course_submission.save()
+
+        try:
+            assignment_submissions = AssignmentSubmission.objects.filter(student=user, assignment__course=course)
+            course_submission_earned = 0
+            for assignment_submission in assignment_submissions:
+                course_submission_earned += assignment_submission.earned_mark
+            course_submission.earned_mark = course_submission_earned
+            course_submission.save()
+        except:
+            assignment_submissions = None
 
         assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course, student=user, is_finished=True)
     
@@ -105,6 +122,7 @@ def course_main_page(request, course_id):
                     'course': course, 
                     'course_submission': course_submission, 
                     'assignments': assignments, 
+                    'assignment_submissions': assignment_submissions,
                     'assignment_submissions_done': assignment_submissions_done,
                     'lessons': lessons}
 
@@ -215,6 +233,16 @@ def submit_comment(request):
 
 def course_registration(request, course_id):
     course = Course.objects.get(id=course_id)
+    user = request.user
+    course_teacher = course.teacher
+    assignments = Assignment.objects.filter(course=course)
+    if user != course_teacher:
+        course_submission = CourseUser.objects.create(user=user, course=course)
+        course_submission.save()
+        for assignment in assignments:
+            assignment_submission = AssignmentSubmission.objects.create(assignment=assignment, student=user)
+            assignment_submission.save()
+
     context = {'course': course}
     return render(request, 'courses/course_registration.html', context)
 
@@ -224,15 +252,16 @@ def assignment_view(request, course_id, assignment_id):
     course = Course.objects.get(id=course_id)
     assignment = Assignment.objects.get(id=assignment_id, course=course)
     student = request.user
+    assignment_submission = AssignmentSubmission.objects.get(student=student, assignment=assignment)
 
     if request.method == 'POST':
-        form = AssignmentSubmissionForm(request.POST, request.FILES)
+        form = AssignmentSubmissionForm(request.POST, request.FILES, instance=assignment_submission)
         if form.is_valid():
-            assignment_submission = form.save(commit=False)
-            assignment_submission.assignment = assignment
-            assignment_submission.student = student
-            assignment_submission.status = 's'
-            assignment_submission.save()
+            form.save(commit=False)
+            form.instance.assignment = assignment
+            form.instance.student = student
+            form.instance.status = 's'
+            form.save()
             messages.success(request, 'Файл успешно добавлен, Ваш преподаватель скоро его проверит.')
         else:
             messages.error(request, 'Произошла ошибка, возможно, Вы пытались прикрепить файл с запрещенным расширением.')
@@ -246,9 +275,35 @@ def assignment_view(request, course_id, assignment_id):
             'form': form
         }
         return render(request, 'courses/assignment_page.html', context)
-    
 
 
 
+def assignment_check(request, assignment_submission_id):
+    assignment_submission = AssignmentSubmission.objects.get(id=assignment_submission_id)
+    assignment = assignment_submission.assignment
+    student = assignment_submission.student
+    course = assignment.course
+    if request.method == 'POST':
+        form = AssignmentSubmissionTeacherCheckForm(request.POST, instance=assignment_submission)
+        if form.is_valid():
+            form.save(commit=False)
+            if form.instance.earned_mark == 0:
+                form.instance.status = 'r'
+            else:
+                form.instance.status = 'f'
+                form.instance.is_finished = True
+            form.save()
+            messages.success(request, 'Комментарий к работе студента успешно создан.')
+        else:
+            messages.error(request, 'Упс, что-то пошло не так!')
+        return redirect('courses:course_main_page', course_id=course.id)
 
-
+    else:
+        initial = {'assignment': assignment, 'student': student, 'earned_mark': 0}
+        form = AssignmentSubmissionTeacherCheckForm(initial=initial)
+        context = {
+            'form': form,
+            'assignment_submission': assignment_submission,
+            'course': course
+        }
+        return render(request, 'courses/assignment_check.html', context)

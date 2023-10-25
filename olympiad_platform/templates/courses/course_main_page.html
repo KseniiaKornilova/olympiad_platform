@@ -14,6 +14,11 @@
                     
                     <h1>{{ course.title }}</h1>
                     <h2>{{ course.subject }}</h2>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <p class="messages btn btn-secondary btn-padding mt-5">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div><!-- Top Columns /-->
             
@@ -42,7 +47,7 @@
                     <tr>
                         <th scope="col">Студент</th>
                         <th scope="col">Задание</th>
-                        <th scope="col">Файл</th>
+                        <th scope="col">Решение</th>
                         <th scope="col">Статус</th>
                     </tr>
                 </thead>
@@ -53,8 +58,15 @@
                     <tr>
                         <th scope="row">{{ course_student }}</th> 
                         <td>{{ assignment_submission.assignment.title }}</td>
+                        {% if assignment_submission.homework_file %}
                         <td><a href="{{ assignment_submission.homework_file.url }}" target="_blank">Открыть файл</a></td>
+                        {% else %} 
+                        <td>-</td>
+                        {% endif %} 
                         <td>{{ assignment_submission.get_status_display }}</td>
+                        {% if assignment_submission.get_status_display == 'Ждет проверку' %} 
+                        <td><a href="{% url 'courses:assignment_check' assignment_submission.id %}">Проверить работу</a></td>
+                        {% endif %} 
                     </tr>
                         {% endif %} 
                         {% endfor %} 
@@ -87,9 +99,20 @@
                         <h6>Задания курса</h6>
                         <div class="content">
                             <ul class="list-unstyled">
-                                {% for assignment in assignments %}
-                                <li><a href="{% url 'courses:assignment_view' course.id assignment.id %}">{{ assignment.title }}</a></li>   
-                                {% endfor %}
+                                {% if user != course_teacher %}
+                                    {% for assignment_submission in assignment_submissions %} 
+                                    {% if assignment_submission in assignment_submissions_done %} 
+                                    <li><a href="{% url 'courses:assignment_view' course.id assignment_submission.assignment.id %}">{{ assignment_submission.assignment.title }} &#9989</a></li> 
+                                    {% else %} 
+                                    <li><a href="{% url 'courses:assignment_view' course.id assignment_submission.assignment.id %}">{{ assignment_submission.assignment.title }}</a></li> 
+                                    {% endif %} 
+                                    {% endfor %} 
+                                {% else %}
+                                    {% for assignment in assignments %} 
+                                    <li><a href="{% url 'courses:assignment_view' course.id assignment.id %}">{{ assignment.title }}</a></li>
+                                    {% endfor %} 
+                                {% endif %} 
+                                
                             </ul>
                         </div><!-- Widget Content /-->
                     </div>

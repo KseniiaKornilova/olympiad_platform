@@ -39,6 +39,21 @@ class AssignmentSubmissionForm(forms.ModelForm):
     class Meta:
         model = AssignmentSubmission
         fields = ['homework_file']
+
+
+
+class AssignmentSubmissionTeacherCheckForm(forms.ModelForm):
+    teacher_comment = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control form-group mb-3',
+        'placeholder': 'Комментарий'}))
+
+    earned_mark = forms.IntegerField(label='Баллы за работу', min_value=0, widget=forms.NumberInput(attrs={
+        'class': 'form-control form-group mb-3',
+        'placeholder': 'Баллы за работу'}))
+
+    class Meta:
+        model = AssignmentSubmission
+        fields = ['teacher_comment', 'earned_mark']
         
 
 
