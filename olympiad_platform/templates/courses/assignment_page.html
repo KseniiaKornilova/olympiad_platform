@@ -13,7 +13,7 @@
                 <div class="title-section-text">
                     
                     <h1>{{ course.title }}</h1>
-                    <h2>Задание{{ assignment.assignment_num }}</h2>
+                    <h2>Задание {{ assignment.assignment_num }}</h2>
                     {% if messages %}
                         {% for message in messages %}
                         <p class="messages btn btn-secondary btn-padding mt-5">{{ message }}</p>
@@ -36,6 +36,7 @@
     </div>
     <p class="assignment_page">{{ assignment.description }}</p>
 
+    {% if assignment_submission.is_finished == False %} 
     <div class="widget side-bar border-btm"> 
         <h6>Прикрепите файл с Вашим решением в формате .pdf или .docx</h6>
         <div class="content">
@@ -49,7 +50,28 @@
             </form>
         </div>
     </div>
+    {% else %} 
+    <div class="mt-5 d-flex justify-content-center"> 
+    <h3>Поздравляем, задание выполнено и оценено на <span>{{ assignment_submission.earned_mark }}/{{ assignment.total_mark }}</span> баллов!</h3>
+    </div>
+    <div class="mt-3 d-flex justify-content-center"> 
+    <a href="{{ assignment_submission.homework_file.url }}" class="btn btn-light" target="_blank">Ваша работа</a>
+    </div>
+    {% endif %} 
 </div>
 
+<div class="mt-3 ml-5 mb-5">
+{% if assignment_submission.homework_file %} 
+    <h5><a href="{{ assignment_submission.homework_file.url }}" target="_blank">Здесь Вы можете посмотреть Ваше решение</a></h5>
+{% endif %} 
+</div>
+{% if assignment_submission.teacher_comment %} 
+<div class="widget side-bar border-btm"> 
+    <h6>Комментарий преподавателя:</h6>
+        <div class="content">
+            <p>{{ assignment_submission.teacher_comment }}</p>
+        </div>
+</div>
+{% endif %} 
 
 {% endblock %} 

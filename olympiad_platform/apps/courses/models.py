@@ -17,7 +17,7 @@ class Course(models.Model):
     price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
     participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса', related_name='course_participants')
     teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher', verbose_name='Учитель курса', null=True, blank=True)
-    image = models.CharField(verbose_name='Путь до изображения от static директории', null=True, blank=True)
+    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, blank=True)
     def __str__(self):
         return f'{self.title}'
 
@@ -63,7 +63,7 @@ class Assignment(models.Model):
     description = models.TextField(verbose_name='Описание задания')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс, к которому относится задание')
     total_mark = models.SmallIntegerField(verbose_name='Максимально возможное количество баллов')
-    image = models.CharField(verbose_name='Путь до изображения от static директории', null=True, blank=True)
+    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, blank=True)
 
     def __str__(self):
         return f'{self.course} : {self.title}'

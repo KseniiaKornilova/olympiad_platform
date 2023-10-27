@@ -22,7 +22,7 @@ class Olympiad(models.Model):
     registration_dedline = models.DateTimeField(verbose_name='Дата окончания регистрации')
     olympiad_duration = models.DurationField(verbose_name='Продолжительность олимпиады')
     participants = models.ManyToManyField(User, through='OlympiadUser', verbose_name='Участники олимпиады')
-    image = models.CharField(verbose_name='Путь до изображения от static директории', null=True, blank=True)
+    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, blank=True)
     def __str__(self):
         return f'{self.title}'
 

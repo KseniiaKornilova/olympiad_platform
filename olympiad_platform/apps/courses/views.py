@@ -272,6 +272,7 @@ def assignment_view(request, course_id, assignment_id):
         context = {
             'course': course, 
             'assignment': assignment,
+            'assignment_submission': assignment_submission,
             'form': form
         }
         return render(request, 'courses/assignment_page.html', context)
