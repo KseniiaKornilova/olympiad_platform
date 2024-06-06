@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-# Create your models here.
+
 
 class User(AbstractUser):
     LETTER = (
@@ -21,7 +21,9 @@ class User(AbstractUser):
     status = models.CharField(max_length=1, choices=STATUS, null=True, verbose_name='Должность')
     degree = models.SmallIntegerField(null=True, blank=False, verbose_name='Класс')
     degree_id = models.CharField(max_length=1, choices=LETTER, null=True, verbose_name='Буква класса')
-    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, blank=True)
+    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True,
+                             blank=True)
+
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.patronymic}'
 
@@ -29,8 +31,6 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
-        ordering = ['status', 'degree', 'degree_id','last_name', 'first_name']
+        ordering = ['status', 'degree', 'degree_id', 'last_name', 'first_name']
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-
-

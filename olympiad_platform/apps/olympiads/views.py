@@ -6,12 +6,11 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from ..students.models import User
-from ..courses.models import OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
+from ..courses.models import OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, MultipleChoiceSubmission, \
+    TrueFalseQuestion, TrueFalseSubmission
 from .models import Olympiad, Subject, OlympiadUser
 from .forms import SearchForm
 
-
-# Create your views here.
 
 def index(request):
     return render(request, 'olympiads/index.html')
@@ -78,7 +77,7 @@ class OlympiadList(ListView):
         if subject:
             queryset = queryset.filter(subject__exact=subject)
         return queryset
-    
+  
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = SearchForm(self.request.GET)
@@ -121,7 +120,7 @@ def olympiad_page(request, olympiad_id, user_id):
         t_submissions = TrueFalseSubmission.objects.filter(student=student, question__olympiad=olympiad)
     except TrueFalseSubmission.DoesNotExist:
         t_submissions = None
-    
+ 
     if not submission.is_finished:
         context = {
             'olympiad': olympiad, 
@@ -139,7 +138,7 @@ def olympiad_page(request, olympiad_id, user_id):
     else:
         all_submissions = OlympiadUser.objects.filter(olympiad=olympiad)
         result_context = {
-            'olympiad': olympiad, 
+            'olympiad': olympiad,
             'student': student,
             'o_questions': o_questions,
             'o_submissions': o_submissions,
@@ -167,12 +166,12 @@ def submit_o_question_answer(request):
                 question = OneChoiceQuestion.objects.get(id=question_id, olympiad=olympiad)
             except OneChoiceQuestion.DoesNotExist:
                 response_data = {
-                'status': 'error',
-                'message': 'Ошибка при разборе данных JSON.'
+                                 'status': 'error',
+                                 'message': 'Ошибка при разборе данных JSON.'
                 }
                 return JsonResponse(response_data, status=400)
 
-            try:   
+            try:
                 submission = OneChoiceSubmission.objects.get(question=question, student=student)
             except OneChoiceSubmission.DoesNotExist:
                 submission = OneChoiceSubmission.objects.create(student=student, question=question)
@@ -184,7 +183,8 @@ def submit_o_question_answer(request):
                 setattr(submission, answer.lower(), True)
                 submission.save()
 
-            if question.a_is_correct == submission.a and question.b_is_correct == submission.b and question.c_is_correct == submission.c and question.d_is_correct == submission.d:
+            if question.a_is_correct == submission.a and question.b_is_correct == submission.b and \
+               question.c_is_correct == submission.c and question.d_is_correct == submission.d:
                 submission.students_mark = question.mark
             else:
                 submission.students_mark = 0
@@ -196,13 +196,12 @@ def submit_o_question_answer(request):
                 }
             return JsonResponse(response_data)
 
-        except:
+        except Exception:
             response_data = {
                 'status': 'error',
                 'message': 'Ошибка при разборе данных JSON.'
             }
             return JsonResponse(response_data, status=400)
-
 
 
 def submit_t_question_answer(request):
@@ -219,8 +218,8 @@ def submit_t_question_answer(request):
                 t_question = TrueFalseQuestion.objects.get(id=question_id, olympiad=olympiad)
             except TrueFalseQuestion.DoesNotExist:
                 response_data = {
-                'status': 'error',
-                'message': 'ошибка в нахождении олимпиады и вопроса'
+                                 'status': 'error',
+                                 'message': 'ошибка в нахождении олимпиады и вопроса'
                 }
                 return JsonResponse(response_data, status=400)
 
@@ -244,13 +243,12 @@ def submit_t_question_answer(request):
                     }
             return JsonResponse(response_data)
 
-        except:
+        except Exception:
             response_data = {
                 'status': 'error',
                 'message': 'Ошибка при разборе данных JSON в конце.'
             }
             return JsonResponse(response_data, status=400)
-
 
 
 def submit_olympiad_answer(request):
@@ -267,8 +265,8 @@ def submit_olympiad_answer(request):
                 question = MultipleChoiceQuestion.objects.get(id=id_question, olympiad__id=olympiad_id)
             except MultipleChoiceQuestion.DoesNotExist:
                 response_data = {
-                'status': 'error',
-                'message': 'Ошибка при разборе данных JSON.'
+                                 'status': 'error',
+                                 'message': 'Ошибка при разборе данных JSON.'
                 }
                 return JsonResponse(response_data, status=400)
 
@@ -303,7 +301,6 @@ def submit_olympiad_answer(request):
                 question_submission.students_mark = 0
             question_submission.save()
 
-
         try:
             submission = OlympiadUser.objects.get(olympiad=olympiad, user=student)
         except OlympiadUser.DoesNotExist:
@@ -314,8 +311,9 @@ def submit_olympiad_answer(request):
 
         compute_score(student, olympiad, submission)
         update_olympiad_user_ranking(olympiad)
-        response_data = {'status' : 'success', 'message' : 'submitted'}
+        response_data = {'status': 'success', 'message': 'submitted'}
         return JsonResponse(response_data)
+
 
 def compute_score(student, olympiad, submission):
     submission.earned_mark = 0
@@ -348,7 +346,6 @@ def update_olympiad_user_ranking(olympiad):
         OlympiadUser.objects.filter(id=user.id).update(ranking_place=ranking_place)
 
 
-
 def get_template_view(request):
     template_name = 'olympiads/page_after_sending_olympiads_answers.html'
     template_path = os.path.join(settings.BASE_DIR, 'templates', template_name)
@@ -359,8 +356,6 @@ def get_template_view(request):
         return HttpResponse(html_template, content_type='text/html')
     except FileNotFoundError:
         return HttpResponse("Файл не найден", status=404)
-
-
 
 
 def olympiad_registration(request, olympiad_id):

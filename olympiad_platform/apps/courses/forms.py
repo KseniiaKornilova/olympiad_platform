@@ -10,36 +10,34 @@ class UserCommentForm(forms.ModelForm):
         widgets = {"course": forms.HiddenInput(attrs={
                     'class': 'form-control form-group mb-3'
                     }),
-                    "lesson": forms.HiddenInput(attrs={
+                   "lesson": forms.HiddenInput(attrs={
                     'class': 'form-control form-group mb-3'
                     }),
-                    "student": forms.TextInput(attrs={
+                   "student": forms.TextInput(attrs={
                         'class': 'form-control form-group mb-3',
                         'placeholder': 'Автор комментария',
                         'readonly': 'readonly'
                     }),
-                    "content": forms.TextInput(attrs={
+                   "content": forms.TextInput(attrs={
                         'class': 'form-control form-group mb-3',
                         'placeholder': 'Текст комментария'
                     }),
-                    "created_at": forms.DateInput(attrs={
+                   "created_at": forms.DateInput(attrs={
                         'class': 'form-control form-group mb-3',
                         'placeholder': 'Дата отправки комментария'
-                    })
-            }
-
+                    })}
 
 
 class AssignmentSubmissionForm(forms.ModelForm):
     homework_file = forms.FileField(widget=forms.FileInput(attrs={
         'class': 'form-control form-group mb-3'}),
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'docx'], message='Пожалуйста, прикрепите файл с расширением .pdf или .doc')]
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'docx'], 
+                                           message='Пожалуйста, прикрепите файл с расширением .pdf или .doc')]
         )
-        
+    
     class Meta:
         model = AssignmentSubmission
         fields = ['homework_file']
-
 
 
 class AssignmentSubmissionTeacherCheckForm(forms.ModelForm):
@@ -54,12 +52,4 @@ class AssignmentSubmissionTeacherCheckForm(forms.ModelForm):
     class Meta:
         model = AssignmentSubmission
         fields = ['teacher_comment', 'earned_mark']
-        
-
-
-
-
-
-
-
 

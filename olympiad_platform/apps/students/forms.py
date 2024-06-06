@@ -2,14 +2,15 @@ from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.core.exceptions import ValidationError
-from django.forms import widgets
 from .models import User
+
 
 class UserForm(forms.ModelForm):
     email = forms.EmailField(label='Электронная почта', widget=forms.EmailInput(attrs={
        'class': 'form-control form-group',
        'placeholder': 'Email'
-    }), help_text='Любые уведомления будут приходить на эту почту', error_messages={'unique': 'Пользователь с таким email уже существует.'}) 
+    }), help_text='Любые уведомления будут приходить на эту почту',
+        error_messages={'unique': 'Пользователь с таким email уже существует.'})
     degree = forms.IntegerField(label='Класс', min_value=1, max_value=11, widget=forms.NumberInput(attrs={
         'class': 'form-control form-group mb-3',
         'placeholder': 'Класс'
@@ -45,7 +46,8 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'status', 'degree', 'degree_id', 'password1', 'password2')
+        fields = ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'status', 'degree', 'degree_id',
+                  'password1', 'password2')
 
         widgets = {
             "last_name": forms.TextInput(attrs={
@@ -73,15 +75,16 @@ class UserForm(forms.ModelForm):
                 'placeholder': 'Буква класса'
             })
         }
-    
+  
+
 class LoginForm(AuthenticationForm):
     username = forms.EmailField(widget=forms.EmailInput(attrs={
         "autofocus": True,
         'class': 'form-control form-group mb-3',
-        'placeholder': 'Email' 
+        'placeholder': 'Email'
         }))
     password = forms.CharField(
-        label= ("Password"),
+        label=("Password"),
         strip=False,
         widget=forms.PasswordInput(attrs={
             "autocomplete": "current-password",
@@ -89,17 +92,18 @@ class LoginForm(AuthenticationForm):
             'placeholder': 'Пароль'
             }))
 
+
 class ChangeInfoForm(forms.ModelForm):
     email = forms.EmailField(label='email', widget=forms.EmailInput(attrs={
        'class': 'form-control form-group',
        'placeholder': 'Email'
-    }), error_messages={'unique': 'Пользователь с таким email уже существует.'}) 
+    }), error_messages={'unique': 'Пользователь с таким email уже существует.'})
     degree = forms.IntegerField(label='Класс', min_value=1, max_value=11, widget=forms.NumberInput(attrs={
         'class': 'form-control form-group mb-3',
         'placeholder': 'Класс'
     }))
 
-    class Meta: 
+    class Meta:
         model = User
         fields = ('last_name', 'first_name', 'patronymic', 'email', 'birthday', 'status', 'degree', 'degree_id')
 

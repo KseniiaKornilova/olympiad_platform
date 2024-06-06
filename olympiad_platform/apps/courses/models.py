@@ -5,7 +5,6 @@ from django.core import validators
 from ..olympiads.models import Subject, Olympiad
 from ..students.models import User
 
-# Create your models here.
 
 class Course(models.Model):
     title = models.CharField(max_length=150, unique=True, verbose_name='Название курса')
@@ -15,9 +14,13 @@ class Course(models.Model):
     month_amount = models.SmallIntegerField(verbose_name='Продолжительность', blank=True, null=True)
     times_a_week = models.SmallIntegerField(verbose_name='Раз в неделю', blank=True, null=True)
     price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
-    participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса', related_name='course_participants')
-    teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher', verbose_name='Учитель курса', null=True, blank=True)
-    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, blank=True)
+    participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса', 
+                                          related_name='course_participants')
+    teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher', 
+                                verbose_name='Учитель курса', null=True, blank=True)
+    image = models.CharField(verbose_name='Путь до изображения от static директории', 
+                             max_length=200, null=True, blank=True)
+
     def __str__(self):
         return f'{self.title}'
 
@@ -30,40 +33,48 @@ class Course(models.Model):
 class CourseUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Имя ученика')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс')
-    is_finished = models.BooleanField(null=True, blank=True, default=False, verbose_name='Участник выполнил все задания?')
+    is_finished = models.BooleanField(null=True, blank=True, default=False,
+                                      verbose_name='Участник выполнил все задания?')
     earned_mark = models.SmallIntegerField(null=True, blank=True, default=0, verbose_name='Количество набранных баллов')
-    total_mark = models.SmallIntegerField(null=True, blank=True, default=0, verbose_name='Максимально возможное количество баллов')
-    percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0, null=True, blank=True, verbose_name='% выполнения курса')
+    total_mark = models.SmallIntegerField(null=True, blank=True, default=0, 
+                                          verbose_name='Максимально возможное количество баллов')
+    percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0,
+                                     null=True, blank=True, verbose_name='% выполнения курса')
+
     @classmethod
     def create(cls, user, course, is_finished, earned_mark, total_mark, percent_mark):
-        submission = cls(user=user, course=course, is_finished=is_finished, earned_mark=earned_mark, total_mark=total_mark, percent_mark=percent_mark)
+        submission = cls(user=user, course=course, is_finished=is_finished, earned_mark=earned_mark,
+                         total_mark=total_mark, percent_mark=percent_mark)
         submission.save()
         return submission
 
-    class Meta: 
+    class Meta:
         verbose_name = 'Прохождение курса учеником'
         verbose_name_plural = 'Прохождения курсов учениками'
 
 
 class Lesson(models.Model):
     title = models.CharField(max_length=150, unique=True, verbose_name='Название урока')
-    number = models.SmallIntegerField(verbose_name='Номер урока') 
+    number = models.SmallIntegerField(verbose_name='Номер урока')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Название курса')
+
     def __str__(self):
         return f'{self.title}'
 
-    class Meta: 
+    class Meta:
         verbose_name = 'Урок'
         verbose_name_plural = 'Уроки'
 
 
 class Assignment(models.Model):
-    assignment_num = models.SmallIntegerField(validators=[validators.MinValueValidator(1)], verbose_name='Номер задания')
+    assignment_num = models.SmallIntegerField(validators=[validators.MinValueValidator(1)],
+                                              verbose_name='Номер задания')
     title = models.CharField(max_length=100, verbose_name='Название задания')
     description = models.TextField(verbose_name='Описание задания')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс, к которому относится задание')
     total_mark = models.SmallIntegerField(verbose_name='Максимально возможное количество баллов')
-    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, blank=True)
+    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200,
+                             null=True, blank=True)
 
     def __str__(self):
         return f'{self.course} : {self.title}'
@@ -74,10 +85,11 @@ class Assignment(models.Model):
 
 
 def upload_homework(instance, filename):
-        file_extension = os.path.splitext(filename)[1]
-        new_filename = f'{instance.student.last_name}_{instance.student.first_name}_{instance.assignment.course.title}_{instance.assignment.title}{file_extension}'
-        upload_path = os.path.join('homework_files', new_filename)
-        return upload_path
+    file_extension = os.path.splitext(filename)[1]
+    new_filename = f'{instance.student.last_name}_{instance.student.first_name}_{instance.assignment.course.title}_\
+                     {instance.assignment.title}{file_extension}'
+    upload_path = os.path.join('homework_files', new_filename)
+    return upload_path
 
 
 STATUS = (
@@ -87,15 +99,17 @@ STATUS = (
         ('f', 'Выполнено'),
     )
 
+
 class AssignmentSubmission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, verbose_name='Задание курса')
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
-    earned_mark = models.SmallIntegerField(validators=[validators.MinValueValidator(0)], verbose_name='Количество полученных баллов за задание', default=0)
-    status = models.CharField(max_length=1, default='-', choices=STATUS, null=True, blank=True, verbose_name='Статус выполнения задания')
+    earned_mark = models.SmallIntegerField(validators=[validators.MinValueValidator(0)],
+                                           verbose_name='Количество полученных баллов за задание', default=0)
+    status = models.CharField(max_length=1, default='-', choices=STATUS, null=True, blank=True,
+                              verbose_name='Статус выполнения задания')
     is_finished = models.BooleanField(default=False, verbose_name='Задание засчитано?')
     homework_file = models.FileField(verbose_name='Файл с решением', null=True, blank=True, upload_to=upload_homework)
     teacher_comment = models.TextField(verbose_name='Комментарий преподавателя', null=True, blank=True)
-        
 
     @classmethod
     def create(cls, assignment, student, earned_mark, is_finished):
@@ -109,7 +123,6 @@ class AssignmentSubmission(models.Model):
     class Meta:
         verbose_name = 'Решение задания курса'
         verbose_name_plural = 'Решения заданий курсов'
-
 
 
 class MultipleChoiceQuestion(models.Model):
@@ -130,8 +143,10 @@ class MultipleChoiceQuestion(models.Model):
     f_is_correct = models.BooleanField(default=False)
     mark = models.SmallIntegerField(verbose_name='Баллы за вопрос', validators=[validators.MinValueValidator(1)])
     question_type = settings.MULTIPLECHOICE_QUESTION_TYPE
-    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Вопрос для какой олимпиады')
-    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Вопрос для какого задания')
+    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL,
+                                 verbose_name='Вопрос для какой олимпиады')
+    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL,
+                                   verbose_name='Вопрос для какого задания')
 
     def __str__(self):
         return f'{self.description}'
@@ -150,7 +165,8 @@ class MultipleChoiceSubmission(models.Model):
     f = models.BooleanField(default=False)
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE, verbose_name='Вопрос')
-    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)], verbose_name='Баллы студента за ответ')
+    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)],
+                                             verbose_name='Баллы студента за ответ')
 
     @classmethod
     def create(cls, a, b, c, d, e, f, student, question, students_mark):
@@ -180,8 +196,11 @@ class OneChoiceQuestion(models.Model):
     d_is_correct = models.BooleanField(default=False)
     mark = models.SmallIntegerField(verbose_name='Баллы за вопрос', validators=[validators.MinValueValidator(1)])
     question_type = settings.ONECHOICE_QUESTION_TYPE
-    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Вопрос для какой олимпиады')
-    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Вопрос для какого задания')
+    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL,
+                                 verbose_name='Вопрос для какой олимпиады')
+    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL,
+                                   verbose_name='Вопрос для какого задания')
+
     def __str__(self):
         return f'{self.description}'
 
@@ -197,7 +216,8 @@ class OneChoiceSubmission(models.Model):
     d = models.BooleanField(default=False)
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     question = models.ForeignKey(OneChoiceQuestion, on_delete=models.CASCADE, verbose_name='Вопрос')
-    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)], verbose_name='Баллы студента за ответ')
+    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)], 
+                                             verbose_name='Баллы студента за ответ')
 
     @classmethod
     def create(cls, a, b, c, d, student, question, students_mark):
@@ -212,19 +232,24 @@ class OneChoiceSubmission(models.Model):
         verbose_name = 'Ответ на вопрос с одним ответом'
         verbose_name_plural = 'Ответы на вопрос с одним ответом'
 
-# какое из утверждений верно
+
+# Модель описывает тип вопросов "какое из утверждений верно:"
 class TrueFalseQuestion(models.Model):
     question_num = models.SmallIntegerField(validators=[validators.MinValueValidator(1)], verbose_name='Номер вопроса')
     title = models.CharField(max_length=50, verbose_name='Название вопроса')
     description = models.CharField(max_length=150, verbose_name='Формулировка вопроса')
     true_choice = models.CharField(max_length=150, null=True, verbose_name='Правильное утверждение')
     false_choice = models.CharField(max_length=150, null=True, verbose_name='Ложное утверждение')
-    answer = models.BooleanField(default=False, 
-    verbose_name='Ответ: True - если верно утверждение в true_choice, false - если в false_choice')
-    marks = models.SmallIntegerField(validators=[validators.MinValueValidator(1)], verbose_name='Количество баллов за правильный ответ')
+    answer = models.BooleanField(default=False,
+                                 verbose_name='Ответ: True - если верно утверждение в true_choice,\
+                                               false - если в false_choice')
+    marks = models.SmallIntegerField(validators=[validators.MinValueValidator(1)],
+                                     verbose_name='Количество баллов за правильный ответ')
     question_type = settings.TRUEFALSE_QUESTION_TYPE
-    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Вопрос для какого задания')
-    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Вопрос для какой олимпиады')
+    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL, 
+                                   verbose_name='Вопрос для какого задания')
+    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL, 
+                                 verbose_name='Вопрос для какой олимпиады')
 
     def __str__(self):
         return f'{self.description}'
@@ -236,10 +261,11 @@ class TrueFalseQuestion(models.Model):
 
 class TrueFalseSubmission(models.Model):
     answer = models.BooleanField(default=False, verbose_name='Ответ студента в форме True/False')
-    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)], verbose_name='Баллы студента за ответ')
+    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)],
+                                             verbose_name='Баллы студента за ответ')
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     question = models.ForeignKey(TrueFalseQuestion, on_delete=models.CASCADE, verbose_name='Вопрос')
-    
+
     def __str__(self):
         return f'{self.student} : {self.question}'
 
@@ -260,10 +286,11 @@ class Comment(models.Model):
     student = models.CharField(max_length=100, verbose_name='Автор комментария')
     content = models.TextField(verbose_name='Текст комментария')
     created_at = models.DateField(verbose_name='Дата публикации комментария')
-    def __str__(self):
-        return f'{{ self.author }} : {{ self.content }}'
 
-    class Meta: 
+    def __str__(self):
+        return f'{self.author} : {self.content}'
+
+    class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ['created_at']

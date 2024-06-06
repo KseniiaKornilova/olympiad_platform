@@ -1,12 +1,13 @@
 from django.contrib import admin
 from .models import Olympiad, Subject, OlympiadUser, QuestionSection, Question, UserAnswer
 
-# Register your models here.
+
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
     fields = ('name',)
     list_display_links = ('name',)
+
 
 class OlympiadUserInline(admin.TabularInline):
     model = OlympiadUser
@@ -38,7 +39,6 @@ class QuestionSectionAdmin(admin.ModelAdmin):
     list_display_links = ('section',)
     search_fields = 'section',
     fields = ('section', 'points')
-    
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -60,9 +60,7 @@ class OlympiadUserAdmin(admin.ModelAdmin):
     list_display_links = ('user',)
     exclude = None
     search_fields = ('user',)
-    
-    
-    
+
 
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Olympiad, OlympiadAdmin)

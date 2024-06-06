@@ -6,14 +6,12 @@ from datetime import datetime
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
 from .forms import UserCommentForm, AssignmentSubmissionForm, AssignmentSubmissionTeacherCheckForm
 from ..olympiads.models import Subject
 from ..olympiads.forms import SearchForm
 
-# Create your views here.
 
 class UserCoursesList(ListView):
     model = Course
@@ -30,7 +28,6 @@ class UserCoursesList(ListView):
         if search_word:
             queryset = queryset.filter(title__icontains=search_word)
         return queryset
-            
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -59,13 +56,12 @@ class CourseList(ListView):
         if search_word:
             queryset = queryset.filter(title__icontains=search_word)
         return queryset
-        
+   
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subjects'] = Subject.objects.all()
         context['form'] = SearchForm(self.request.GET)
 
-        courses = Course.objects.all()
         student = self.request.user
         course_submissions = CourseUser.objects.filter(user=student)
         all_courses_id = list()
@@ -80,17 +76,15 @@ def course_main_page(request, course_id):
     course = Course.objects.get(id=course_id)
     course_teacher = course.teacher
 
-
     try:
-            assignments = Assignment.objects.filter(course=course)
+        assignments = Assignment.objects.filter(course=course)
     except Assignment.DoesNotExist:
-            assignments = None
+        assignments = None
 
     try:
-            lessons = Lesson.objects.filter(course=course).order_by('number')
+        lessons = Lesson.objects.filter(course=course).order_by('number')
     except Lesson.DoesNotExist:
-            lessons = None
-
+        lessons = None
 
     if user != course_teacher:
         try:
@@ -111,22 +105,22 @@ def course_main_page(request, course_id):
                 course_submission_earned += assignment_submission.earned_mark
             course_submission.earned_mark = course_submission_earned
             course_submission.save()
-        except:
+        except Exception:
             assignment_submissions = None
 
-        assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course, student=user, is_finished=True)
-    
+        assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course, 
+                                                                          student=user, is_finished=True)
 
-        student_context = {'student': user, 
-                    'course_teacher': course_teacher,
-                    'course': course, 
-                    'course_submission': course_submission, 
-                    'assignments': assignments, 
-                    'assignment_submissions': assignment_submissions,
-                    'assignment_submissions_done': assignment_submissions_done,
-                    'lessons': lessons}
+        student_context = {'student': user,
+                           'course_teacher': course_teacher,
+                           'course': course,
+                           'course_submission': course_submission,
+                           'assignments': assignments,
+                           'assignment_submissions': assignment_submissions,
+                           'assignment_submissions_done': assignment_submissions_done,
+                           'lessons': lessons}
 
-        return render (request, 'courses/course_main_page.html', student_context)
+        return render(request, 'courses/course_main_page.html', student_context)
 
     else:
         course_students = course.participants.all().order_by('last_name')
@@ -142,9 +136,7 @@ def course_main_page(request, course_id):
             'assignments': assignments
         }
 
-        return render (request, 'courses/course_main_page.html', teacher_context)
-
-        
+        return render(request, 'courses/course_main_page.html', teacher_context)
 
 
 def lesson_view(request, course_id, lesson_id):
@@ -165,10 +157,10 @@ def lesson_view(request, course_id, lesson_id):
     lesson = Lesson.objects.get(id=lesson_id)
     lessons = Lesson.objects.filter(course=course).order_by('number')
 
-    context = {'course': course, 
-                'lesson': lesson, 
-                'lessons': lessons,
-                'html_content': html_content_without_footer}
+    context = {'course': course,
+               'lesson': lesson,
+               'lessons': lessons,
+               'html_content': html_content_without_footer}
 
     return render(request, 'courses/lesson_page.html', context)
 
@@ -184,11 +176,11 @@ def lesson_comment_view(request, course_id, lesson_id):
 
     comments = Comment.objects.filter(lesson=lesson, course=course).order_by('-created_at')
 
-    context = {'course': course, 
-                'lesson': lesson, 
-                'form': form, 
-                'comments': comments}
-    
+    context = {'course': course,
+               'lesson': lesson,
+               'form': form,
+               'comments': comments}
+
     return render(request, 'courses/lesson_page_comments.html', context)
 
 
@@ -207,7 +199,7 @@ def submit_comment(request):
             form_data = {'course': course,
                          'lesson': lesson,
                          'student': student,
-                         'content': content, 
+                         'content': content,
                          'created_at': created_at}
 
             form = UserCommentForm(form_data)
@@ -217,16 +209,16 @@ def submit_comment(request):
                 print(form.errors)
                 return JsonResponse({'error': 'Неверные данные'})
 
-            comments = Comment.objects.filter(course=course, lesson=lesson).order_by('-created_at').values()               
+            comments = Comment.objects.filter(course=course, lesson=lesson).order_by('-created_at').values()        
             return JsonResponse(list(comments), safe=False)
-            
+
         except json.JSONDecodeError:
             response_data = {
                 'status': 'error',
                 'message': 'Ошибка при разборе данных JSON.'
             }
             return JsonResponse(response_data, status=400)
-    
+
     else:
         return JsonResponse({'error': 'Неверный метод запроса'})
 
@@ -247,7 +239,6 @@ def course_registration(request, course_id):
     return render(request, 'courses/course_registration.html', context)
 
 
-
 def assignment_view(request, course_id, assignment_id):
     course = Course.objects.get(id=course_id)
     assignment = Assignment.objects.get(id=assignment_id, course=course)
@@ -264,19 +255,19 @@ def assignment_view(request, course_id, assignment_id):
             form.save()
             messages.success(request, 'Файл успешно добавлен, Ваш преподаватель скоро его проверит.')
         else:
-            messages.error(request, 'Произошла ошибка, возможно, Вы пытались прикрепить файл с запрещенным расширением.')
+            messages.error(request,
+                           'Произошла ошибка, возможно, Вы пытались прикрепить файл с запрещенным расширением.')
         return redirect('courses:assignment_view', course_id=course_id, assignment_id=assignment_id)
 
     else:
         form = AssignmentSubmissionForm(initial={'assignment': assignment, 'student': student})
         context = {
-            'course': course, 
+            'course': course,
             'assignment': assignment,
             'assignment_submission': assignment_submission,
             'form': form
         }
         return render(request, 'courses/assignment_page.html', context)
-
 
 
 def assignment_check(request, assignment_submission_id):

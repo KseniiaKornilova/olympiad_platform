@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Course, CourseUser, Lesson, Assignment, AssignmentSubmission, MultipleChoiceQuestion, MultipleChoiceSubmission, OneChoiceQuestion, OneChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission, Comment
+from .models import Course, CourseUser, Lesson, Assignment, AssignmentSubmission, MultipleChoiceQuestion, \
+    MultipleChoiceSubmission, OneChoiceQuestion, OneChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission, Comment
 
-# Register your models here.
+
 class CourseUserInline(admin.TabularInline):
     model = CourseUser
     extra = 1
@@ -13,7 +14,8 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ('^title', '^subject')
     list_per_page = 10
     list_filter = ('subject',)
-    fields = ('title', 'subject', 'course_description', 'category', 'month_amount', 'times_a_week', 'price','teacher', 'image')
+    fields = ('title', 'subject', 'course_description', 'category', 'month_amount', 'times_a_week', 'price', 
+              'teacher', 'image')
 
     inlines = (CourseUserInline,)
     autocomplete_fields = ('participants',)
@@ -63,7 +65,8 @@ class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
             'classes': ('wide',),
         }),
         ('Варианты ответов', {
-            'fields': ('a', 'a_is_correct', 'b', 'b_is_correct', 'c', 'c_is_correct', 'd', 'd_is_correct', 'e', 'e_is_correct', 'f', 'f_is_correct'),
+            'fields': ('a', 'a_is_correct', 'b', 'b_is_correct', 'c', 'c_is_correct', 'd', 'd_is_correct', 'e', 
+                       'e_is_correct', 'f', 'f_is_correct'),
             'classes': ('wide',),
         }),
     )
@@ -149,8 +152,7 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ('lesson',)
     list_display_links = ('lesson',)
     exclude = None
-       
-
+   
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(CourseUser, CourseUserAdmin)

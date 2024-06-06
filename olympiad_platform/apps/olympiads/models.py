@@ -1,13 +1,14 @@
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from ..students.models import User
 from django.utils import timezone
 
-# Create your models here.
+
 class Subject(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name='Название дисциплины')
+
     def __str__(self):
         return f'{self.name}'
+
     class Meta:
         verbose_name = 'Школьный предмет'
         verbose_name_plural = 'Школьные предметы'
@@ -22,7 +23,9 @@ class Olympiad(models.Model):
     registration_dedline = models.DateTimeField(verbose_name='Дата окончания регистрации')
     olympiad_duration = models.DurationField(verbose_name='Продолжительность олимпиады')
     participants = models.ManyToManyField(User, through='OlympiadUser', verbose_name='Участники олимпиады')
-    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, blank=True)
+    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, 
+                             blank=True)
+    
     def __str__(self):
         return f'{self.title}'
 
@@ -39,8 +42,9 @@ class Olympiad(models.Model):
 class OlympiadUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Имя участника')
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE, verbose_name='Название олимпиады')
-    registration_date = models.DateTimeField(null = True, verbose_name='Дата регистрации')
-    is_finished = models.BooleanField(null=True, blank=True, default=False, verbose_name='Участник отправил ответы олимпиады на проверку?')
+    registration_date = models.DateTimeField(null=True, verbose_name='Дата регистрации')
+    is_finished = models.BooleanField(null=True, blank=True, default=False,
+                                      verbose_name='Участник отправил ответы олимпиады на проверку?')
     earned_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Количество набранных баллов')
     total_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Максимально возможное количество баллов')
     ranking_place = models.SmallIntegerField(null=True, blank=True, verbose_name='Место участника в рейтинге')
@@ -57,10 +61,10 @@ class OlympiadUser(models.Model):
         ordering = ['olympiad', 'user']
 
 
-
 class QuestionSection(models.Model):
     section = models.SmallIntegerField(verbose_name='Номер раздела олимпиады')
     points = models.SmallIntegerField(verbose_name='Количество баллов')
+
     def __str__(self):
         return f'{self.section}'
 
@@ -70,13 +74,13 @@ class QuestionSection(models.Model):
         ordering = ['section',]
 
 
-
 class Question(models.Model):
     question_description = models.TextField(verbose_name='Формулировка вопроса')
     section = models.ForeignKey(QuestionSection, on_delete=models.PROTECT, verbose_name='Раздел олимпиады')
     olympiad = models.ForeignKey(Olympiad, on_delete=models.CASCADE, verbose_name='Олимпиада')
     possible_answers = models.TextField(verbose_name='Варианты ответов, перечисленные через ","', blank=True, null=True)
     correct_answer = models.CharField(max_length=100, verbose_name='Правильный ответ')
+
     def __str__(self):
         return f'{self.question_description}'
 
@@ -91,9 +95,8 @@ class UserAnswer(models.Model):
     question = models.OneToOneField(Question, on_delete=models.PROTECT, verbose_name='Вопрос олимпиады')
     answer = models.CharField(max_length=100, blank=True, null=True, verbose_name='Ответ участника')
     score = models.SmallIntegerField(verbose_name='Количество баллов за ответ')
+
     class Meta:
         verbose_name = 'Решение олимпиады'
         verbose_name_plural = 'Решения олимпиад'
         ordering = ['user']
-
-    

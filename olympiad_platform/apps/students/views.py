@@ -3,15 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import UserForm, ChangeInfoForm, LoginForm, ChangePasswordForm
 from .models import User
 
-# Create your views here.
 
 class UserLogin(LoginView):
     form_class = LoginForm
@@ -51,7 +49,7 @@ class UserChangeInfo(SuccessMessageMixin, UpdateView, LoginRequiredMixin):
     success_message = 'Редактирование профиля успешно завершено'
 
 # получение записи пользователя из БД
-    def get_object(self, queryset=None): 
+    def get_object(self, queryset=None):
         return self.request.user
 
 
@@ -73,10 +71,3 @@ class UserDeleteProfile(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         logout(request)
         return super().delete(request, *args, **kwargs)
-        
-
-
-
-
-
-
