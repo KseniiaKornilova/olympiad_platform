@@ -11,6 +11,14 @@ class UserForm(forms.ModelForm):
        'placeholder': 'Email'
     }), help_text='Любые уведомления будут приходить на эту почту',
         error_messages={'unique': 'Пользователь с таким email уже существует.'})
+    birthday = forms.DateField(label='День рождения', widget=forms.DateInput(
+                                format=('%d-%m-%Y'),
+                                attrs={
+                                    'firstDay': 1, 'pattern': '\d{4}-\d{2}-\d{2}', 
+                                    'lang': 'pl', 'format': 'yyyy-mm-dd', 'type': 'date',
+                                    'class': 'form-control form-group',
+                                    'placeholder': 'День рождения'
+                                }))
     degree = forms.IntegerField(label='Класс', min_value=1, max_value=11, widget=forms.NumberInput(attrs={
         'class': 'form-control form-group mb-3',
         'placeholder': 'Класс'
@@ -62,10 +70,6 @@ class UserForm(forms.ModelForm):
                 'class': 'form-control form-group mb-3',
                 'placeholder': 'Отчество'
             }),
-            "birthday": forms.DateInput(attrs={
-                'class': 'form-control form-group mb-3, mt-3',
-                'placeholder': 'День рождения'
-            }),
             "status": forms.Select(attrs={
                 'class': 'form-control form-group mb-3 mt-3',
                 'placeholder': '--'
@@ -75,7 +79,7 @@ class UserForm(forms.ModelForm):
                 'placeholder': 'Буква класса'
             })
         }
-  
+
 
 class LoginForm(AuthenticationForm):
     username = forms.EmailField(widget=forms.EmailInput(attrs={

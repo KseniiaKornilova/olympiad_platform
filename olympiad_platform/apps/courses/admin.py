@@ -11,20 +11,19 @@ class CourseUserInline(admin.TabularInline):
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('title', 'subject')
     list_display_links = ('title',)
-    search_fields = ('^title', '^subject')
+    search_fields = ('title', 'subject__name')
     list_per_page = 10
     list_filter = ('subject',)
     fields = ('title', 'subject', 'course_description', 'category', 'month_amount', 'times_a_week', 'price', 
               'teacher', 'image')
 
     inlines = (CourseUserInline,)
-    autocomplete_fields = ('participants',)
 
 
 class LessonAdmin(admin.ModelAdmin):
     list_display = ('title', 'number', 'course')
     list_display_links = ('title',)
-    search_fields = ('^title', 'number')
+    search_fields = ('title', 'number')
     list_per_page = 10
     list_filter = ('course',)
     fields = ('number', 'title', 'course')
@@ -33,7 +32,7 @@ class LessonAdmin(admin.ModelAdmin):
 class CourseUserAdmin(admin.ModelAdmin):
     list_display = ('user', 'course', 'earned_mark', 'percent_mark')
     list_display_links = ('user',)
-    search_fields = ('^user', '^course')
+    search_fields = ('user__last_name', 'user__first_name', 'course__title')
     list_filter = ('course',)
     fields = ('user', 'course', 'is_finished', 'earned_mark')
 
@@ -41,7 +40,7 @@ class CourseUserAdmin(admin.ModelAdmin):
 class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('title', 'course', 'assignment_num')
     list_display_links = ('title',)
-    search_fields = ('^title', '^course')
+    search_fields = ('title', 'course__title')
     list_filter = ('course',)
     fields = ('assignment_num', 'title', 'description', 'course', 'total_mark', 'image')
 
@@ -49,7 +48,7 @@ class AssignmentAdmin(admin.ModelAdmin):
 class AssignmentSubmissionAdmin(admin.ModelAdmin):
     list_display = ('assignment', 'student', 'earned_mark', 'homework_file')
     list_display_links = ('assignment',)
-    search_fields = ('^assignment', '^student')
+    search_fields = ('assignment__title', 'student__first_name', 'user__last_name')
     list_filter = ('student',)
     fields = ('assignment', 'student', 'earned_mark', 'status', 'is_finished', 'homework_file')
 
@@ -58,7 +57,7 @@ class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
     list_display = ('title', 'question_num', 'olympiad', 'assignment')
     ordering = ('question_num',)
     list_display_links = ('title',)
-    search_fields = ('^olympiad', '^assignment')
+    search_fields = ('olympiad__title', 'assignment__title')
     fieldsets = (
         ('Основная информация', {
             'fields': ('question_num', 'title', 'description', 'mark', 'olympiad', 'assignment'),
@@ -76,7 +75,7 @@ class MultipleChoiceSubmissionAdmin(admin.ModelAdmin):
     list_display = ('student', 'question', 'students_mark')
     ordering = ('student',)
     list_display_links = ('student',)
-    search_fields = ('^student',)
+    search_fields = ('student__first_name', 'student__last_name')
     fieldsets = (
         ('Основная информация', {
             'fields': ('student', 'question', 'students_mark'),
@@ -93,7 +92,7 @@ class OneChoiceQuestionAdmin(admin.ModelAdmin):
     list_display = ('title', 'question_num', 'olympiad', 'assignment')
     ordering = ('question_num',)
     list_display_links = ('title',)
-    search_fields = ('^olympiad', '^assignment')
+    search_fields = ('olympiad__title', 'assignment__title')
     fieldsets = (
         ('Основная информация', {
             'fields': ('question_num', 'title', 'description', 'mark', 'olympiad', 'assignment'),
@@ -110,7 +109,7 @@ class OneChoiceSubmissionAdmin(admin.ModelAdmin):
     list_display = ('student', 'question', 'students_mark')
     ordering = ('student',)
     list_display_links = ('student',)
-    search_fields = ('^student',)
+    search_fields = ('student__first_name', 'student__last_name')
     fieldsets = (
         ('Основная информация', {
             'fields': ('student', 'question', 'students_mark'),
@@ -126,7 +125,7 @@ class OneChoiceSubmissionAdmin(admin.ModelAdmin):
 class TrueFalseQuestionAdmin(admin.ModelAdmin):
     list_display = ('title', 'question_num', 'assignment', 'olympiad')
     list_display_links = ('title',)
-    search_fields = ('^assignment', '^olympiad')
+    search_fields = ('olympiad__title', 'assignment__title')
     fieldsets = (
         ('Основная информация', {
             'fields': ('question_num', 'title', 'description', 'marks', 'olympiad', 'assignment'),
@@ -143,7 +142,7 @@ class TrueFalseSubmissionAdmin(admin.ModelAdmin):
     list_display = ('student', 'question', 'students_mark')
     ordering = ('student',)
     list_display_links = ('student',)
-    search_fields = ('^student',)
+    search_fields = ('student__first_name', 'student__last_name')
     fields = ('student', 'question', 'students_mark', 'answer')
 
 
@@ -152,7 +151,7 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ('lesson',)
     list_display_links = ('lesson',)
     exclude = None
-   
+
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(CourseUser, CourseUserAdmin)

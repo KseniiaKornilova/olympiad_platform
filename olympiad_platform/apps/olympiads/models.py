@@ -23,9 +23,9 @@ class Olympiad(models.Model):
     registration_dedline = models.DateTimeField(verbose_name='Дата окончания регистрации')
     olympiad_duration = models.DurationField(verbose_name='Продолжительность олимпиады')
     participants = models.ManyToManyField(User, through='OlympiadUser', verbose_name='Участники олимпиады')
-    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True, 
+    image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True,
                              blank=True)
-    
+
     def __str__(self):
         return f'{self.title}'
 
@@ -50,8 +50,8 @@ class OlympiadUser(models.Model):
     ranking_place = models.SmallIntegerField(null=True, blank=True, verbose_name='Место участника в рейтинге')
 
     @classmethod
-    def create(cls, user, olympiad):
-        submission = cls(user=user, olympiad=olympiad)
+    def create(cls, user, olympiad, registration_date):
+        submission = cls(user=user, olympiad=olympiad, registration_date=registration_date)
         submission.save()
         return submission
 

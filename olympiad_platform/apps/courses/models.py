@@ -16,9 +16,9 @@ class Course(models.Model):
     price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
     participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса', 
                                           related_name='course_participants')
-    teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher', 
+    teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher',
                                 verbose_name='Учитель курса', null=True, blank=True)
-    image = models.CharField(verbose_name='Путь до изображения от static директории', 
+    image = models.CharField(verbose_name='Путь до изображения от static директории',
                              max_length=200, null=True, blank=True)
 
     def __str__(self):

@@ -5,14 +5,13 @@ from ..olympiads.models import OlympiadUser
 
 class OlympiadInline(admin.TabularInline):
     model = OlympiadUser
-    exclude = ('answers', 'score')
     extra = 1
 
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'email', 'status', 'degree', 'degree_id', 'is_active')
     list_display_links = ('__str__',)
-    search_fields = ('^__str__', 'email')
+    search_fields = ('first_name', 'last_name', 'email')
     list_filter = ('status',)
     list_per_page = 15
     fieldsets = (

@@ -17,7 +17,7 @@ class OlympiadUserInline(admin.TabularInline):
 class OlympiadAdmin(admin.ModelAdmin):
     list_display = ('title', 'subject', 'degree')
     list_display_links = ('title',)
-    search_fields = ('^title', '^subject')
+    search_fields = ('title', 'subject__name')
     list_per_page = 10
     list_filter = ('subject',)
     fieldsets = (
@@ -31,13 +31,12 @@ class OlympiadAdmin(admin.ModelAdmin):
         }),
     )
     inlines = (OlympiadUserInline,)
-    autocomplete_fields = ('participants',)
 
 
 class QuestionSectionAdmin(admin.ModelAdmin):
     list_display = ('section', 'points')
     list_display_links = ('section',)
-    search_fields = 'section',
+    search_fields = ('section',)
     fields = ('section', 'points')
 
 
@@ -52,14 +51,14 @@ class QuestionAdmin(admin.ModelAdmin):
 class UserAnswerAdmin(admin.ModelAdmin):
     list_display = ('user', 'question', 'answer', 'score')
     list_display_links = ('user',)
-    search_fields = ('user', '^olympiad')
+    search_fields = ('user__first_name', 'user__last_name', 'olympiad__title')
 
 
 class OlympiadUserAdmin(admin.ModelAdmin):
     list_display = ('user', 'olympiad', 'registration_date')
     list_display_links = ('user',)
     exclude = None
-    search_fields = ('user',)
+    search_fields = ('user__first_name', 'user__last_name')
 
 
 admin.site.register(Subject, SubjectAdmin)

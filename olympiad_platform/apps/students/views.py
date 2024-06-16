@@ -16,7 +16,7 @@ class UserLogin(LoginView):
     template_name = 'students/login.html'
 
 
-@login_required  
+@login_required
 def profile(request):
     return render(request, 'students/profile.html')
 
@@ -65,7 +65,7 @@ class UserDeleteProfile(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('olympiads:index')
     template_name = 'students/delete_user.html'
 
-    def get_object(self, queryset=None): 
+    def get_object(self, queryset=None):
         return self.request.user
 
     def delete(self, request, *args, **kwargs):
