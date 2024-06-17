@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.core.exceptions import ValidationError
 from .models import User
 
@@ -170,3 +171,43 @@ class ChangePasswordForm(PasswordChangeForm):
             'class': 'form-control form-group mb-3 mt-3',
             'placeholder': 'Подтвердите новый пароль'
             }))
+
+
+class ResetPasswordForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['email'].widget.attrs = {
+            'class': 'form-control form-group mb-3 mt-3',
+            'placeholder': 'Email'
+        }
+
+
+class ResetPasswordConfirmForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['new_password1'].widget = forms.PasswordInput(attrs={
+            'class': 'form-control form-group mb-3 mt-3',
+            'placeholder': 'Новый пароль'
+        })
+        self.fields['new_password1'].help_text = 'Минимальная длина пароля - 8 символов, пароль должен включать \
+                                                    как минимум 1 буквенный символ'
+        self.fields['new_password2'].widget.attrs = {
+            'class': 'form-control form-group mb-3 mt-3',
+            'placeholder': 'Новый пароль (повторно)'
+        }
+
+    def clean_new_password1(self):
+        new_password1 = self.cleaned_data.get('new_password1')
+        if new_password1:
+            password_validation.validate_password(new_password1)
+        return new_password1
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+        if new_password1 and new_password2:
+            if new_password1 != new_password2:
+                raise ValidationError("Пароли не совпадают")

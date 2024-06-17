@@ -1,13 +1,14 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView, \
+    PasswordResetConfirmView, PasswordResetDoneView, PasswordResetCompleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import UserForm, ChangeInfoForm, LoginForm, ChangePasswordForm
+from .forms import UserForm, ChangeInfoForm, LoginForm, ChangePasswordForm, ResetPasswordForm, ResetPasswordConfirmForm
 from .models import User
 
 
@@ -71,3 +72,26 @@ class UserDeleteProfile(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         logout(request)
         return super().delete(request, *args, **kwargs)
+
+
+class PasswordReset(PasswordResetView):
+    template_name = 'students/reset_password.html'
+    form_class = ResetPasswordForm
+    email_template_name = 'students/password_reset_email.html'
+    success_url = reverse_lazy('students:password_reset_done')
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    template_name = 'students/password_reset_confirm.html'
+    form_class = ResetPasswordConfirmForm
+    success_url = reverse_lazy('students:password_reset_complete')
+    post_reset_login = True
+
+
+class PasswordResetDone(PasswordResetDoneView):
+    template_name = 'students/reset_password_done.html'
+
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    template_name = 'students/reset_password_complete.html'
+
