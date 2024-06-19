@@ -7,14 +7,13 @@ readme = "README.md"
 packages = [{include = "olympiad_platform"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.12"
 django = "^4.2.3"
 psycopg2 = "^2.9.6"
 bootstrap4 = "^0.1.0"
 django-bootstrap4 = "^23.2"
 django-oauth-toolkit = "^2.3.0"
 django-cors-headers = "^4.2.0"
-asciidoctor = ">=2.0.0, <=3.0.0"
 
 
 [build-system]
