@@ -77,7 +77,7 @@ class OlympiadList(ListView):
         if subject:
             queryset = queryset.filter(subject__exact=subject)
         return queryset
-  
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = SearchForm(self.request.GET)
@@ -366,16 +366,19 @@ def olympiad_registration(request, olympiad_id):
         olympiad = None
 
     result = olympiad.is_registrations_open()
-    if result:
-        olympiad_user = OlympiadUser.create(user=student, olympiad=olympiad, registration_date=datetime.now())
+    if olympiad not in student.olympiad_set.all():
+        allow_register = True
+        if result:
+            OlympiadUser.create(user=student, olympiad=olympiad, registration_date=datetime.now())
+        else:
+            result = False
     else:
-        result = False
-        olympiad_user = None
+        allow_register = False
 
     context = {
             'olympiad': olympiad,
             'student': student,
             'result': result,
-            'olympiad_user': olympiad_user
+            'allow_register': allow_register
         }
     return render(request, 'olympiads/olympiad_main_page.html', context)
