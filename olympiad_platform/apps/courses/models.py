@@ -14,7 +14,7 @@ class Course(models.Model):
     month_amount = models.SmallIntegerField(verbose_name='Продолжительность', blank=True, null=True)
     times_a_week = models.SmallIntegerField(verbose_name='Раз в неделю', blank=True, null=True)
     price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
-    participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса', 
+    participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса',
                                           related_name='course_participants')
     teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher',
                                 verbose_name='Учитель курса', null=True, blank=True)
@@ -36,7 +36,7 @@ class CourseUser(models.Model):
     is_finished = models.BooleanField(null=True, blank=True, default=False,
                                       verbose_name='Участник выполнил все задания?')
     earned_mark = models.SmallIntegerField(null=True, blank=True, default=0, verbose_name='Количество набранных баллов')
-    total_mark = models.SmallIntegerField(null=True, blank=True, default=0, 
+    total_mark = models.SmallIntegerField(null=True, blank=True, default=0,
                                           verbose_name='Максимально возможное количество баллов')
     percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0,
                                      null=True, blank=True, verbose_name='% выполнения курса')
@@ -216,7 +216,7 @@ class OneChoiceSubmission(models.Model):
     d = models.BooleanField(default=False)
     student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     question = models.ForeignKey(OneChoiceQuestion, on_delete=models.CASCADE, verbose_name='Вопрос')
-    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)], 
+    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)],
                                              verbose_name='Баллы студента за ответ')
 
     @classmethod
@@ -246,9 +246,9 @@ class TrueFalseQuestion(models.Model):
     marks = models.SmallIntegerField(validators=[validators.MinValueValidator(1)],
                                      verbose_name='Количество баллов за правильный ответ')
     question_type = settings.TRUEFALSE_QUESTION_TYPE
-    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL, 
+    assignment = models.ForeignKey(Assignment, null=True, blank=True, on_delete=models.SET_NULL,
                                    verbose_name='Вопрос для какого задания')
-    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL, 
+    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL,
                                  verbose_name='Вопрос для какой олимпиады')
 
     def __str__(self):
@@ -294,4 +294,3 @@ class Comment(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ['created_at']
-

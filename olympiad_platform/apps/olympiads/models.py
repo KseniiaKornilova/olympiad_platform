@@ -49,12 +49,6 @@ class OlympiadUser(models.Model):
     total_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Максимально возможное количество баллов')
     ranking_place = models.SmallIntegerField(null=True, blank=True, verbose_name='Место участника в рейтинге')
 
-    @classmethod
-    def create(cls, user, olympiad, registration_date):
-        submission = cls(user=user, olympiad=olympiad, registration_date=registration_date)
-        submission.save()
-        return submission
-
     class Meta:
         verbose_name = 'Данные о прохождении участником олимпиады'
         verbose_name_plural = 'Данные о прохождениях участниками олимпиад'

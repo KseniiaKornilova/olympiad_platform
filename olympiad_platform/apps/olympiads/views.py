@@ -39,7 +39,7 @@ class UserOlympiadList(ListView):
         return context
 
 
-class UserPreviousOlympiadList(UserOlympiadList, ListView):
+class UserPreviousOlympiadList(UserOlympiadList):
     def get_queryset(self):
         queryset = self.request.user.olympiad_set.all().filter(date_of_start__lt=date.today())
         search_word = self.request.GET.get('keyword')
@@ -49,7 +49,7 @@ class UserPreviousOlympiadList(UserOlympiadList, ListView):
         return queryset
 
 
-class UserComingOlympiadList(UserOlympiadList, ListView):
+class UserComingOlympiadList(UserOlympiadList):
     def get_queryset(self):
         queryset = self.request.user.olympiad_set.all().filter(date_of_start__gt=date.today())
         search_word = self.request.GET.get('keyword')
@@ -120,10 +120,9 @@ def olympiad_page(request, olympiad_id, user_id):
         t_submissions = TrueFalseSubmission.objects.filter(student=student, question__olympiad=olympiad)
     except TrueFalseSubmission.DoesNotExist:
         t_submissions = None
- 
-    if not submission.is_finished:
-        context = {
-            'olympiad': olympiad, 
+
+    context = {
+            'olympiad': olympiad,
             'student': student,
             'o_questions': o_questions,
             'o_submissions': o_submissions,
@@ -133,23 +132,16 @@ def olympiad_page(request, olympiad_id, user_id):
             't_submissions': t_submissions
         }
 
+    if not submission.is_finished:
         return render(request, 'olympiads/olympiad_page.html', context)
 
     else:
         all_submissions = OlympiadUser.objects.filter(olympiad=olympiad)
-        result_context = {
-            'olympiad': olympiad,
-            'student': student,
-            'o_questions': o_questions,
-            'o_submissions': o_submissions,
-            'm_questions': m_questions,
-            'm_submissions': m_submissions,
-            't_questions': t_questions,
-            't_submissions': t_submissions,
+        context.update({
             'submission': submission,
             'all_submissions': all_submissions
-        }
-        return render(request, 'olympiads/olympiad_page_results.html', result_context)
+        })
+        return render(request, 'olympiads/olympiad_page_results.html', context)
 
 
 def submit_o_question_answer(request):
@@ -369,9 +361,7 @@ def olympiad_registration(request, olympiad_id):
     if olympiad not in student.olympiad_set.all():
         allow_register = True
         if result:
-            OlympiadUser.create(user=student, olympiad=olympiad, registration_date=datetime.now())
-        else:
-            result = False
+            OlympiadUser.objects.create(user=student, olympiad=olympiad, registration_date=datetime.now())
     else:
         allow_register = False
 
