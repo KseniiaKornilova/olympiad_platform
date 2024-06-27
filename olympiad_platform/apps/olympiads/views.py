@@ -1,14 +1,11 @@
 from datetime import date, datetime
 import json
-import os
-from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from ..students.models import User
-from ..courses.models import OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, MultipleChoiceSubmission, \
-    TrueFalseQuestion, TrueFalseSubmission
-from .models import Olympiad, Subject, OlympiadUser
+from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, \
+      MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
 from .forms import SearchForm
 
 
@@ -136,7 +133,7 @@ def olympiad_page(request, olympiad_id, user_id):
         return render(request, 'olympiads/olympiad_page.html', context)
 
     else:
-        all_submissions = OlympiadUser.objects.filter(olympiad=olympiad)
+        all_submissions = OlympiadUser.objects.filter(olympiad=olympiad).order_by('ranking_place')
         context.update({
             'submission': submission,
             'all_submissions': all_submissions
@@ -159,7 +156,7 @@ def submit_o_question_answer(request):
             except OneChoiceQuestion.DoesNotExist:
                 response_data = {
                                  'status': 'error',
-                                 'message': 'Ошибка при разборе данных JSON.'
+                                 'message': 'вопрос не найден'
                 }
                 return JsonResponse(response_data, status=400)
 
@@ -211,7 +208,7 @@ def submit_t_question_answer(request):
             except TrueFalseQuestion.DoesNotExist:
                 response_data = {
                                  'status': 'error',
-                                 'message': 'ошибка в нахождении олимпиады и вопроса'
+                                 'message': 'вопрос не найден'
                 }
                 return JsonResponse(response_data, status=400)
 
@@ -238,7 +235,7 @@ def submit_t_question_answer(request):
         except Exception:
             response_data = {
                 'status': 'error',
-                'message': 'Ошибка при разборе данных JSON в конце.'
+                'message': 'Ошибка при разборе данных JSON'
             }
             return JsonResponse(response_data, status=400)
 
@@ -303,7 +300,10 @@ def submit_olympiad_answer(request):
 
         compute_score(student, olympiad, submission)
         update_olympiad_user_ranking(olympiad)
-        response_data = {'status': 'success', 'message': 'submitted'}
+        response_data = {
+                         'status': 'success',
+                         'message': 'Данные успешно обработаны'
+            }
         return JsonResponse(response_data)
 
 
@@ -339,15 +339,7 @@ def update_olympiad_user_ranking(olympiad):
 
 
 def get_template_view(request):
-    template_name = 'olympiads/page_after_sending_olympiads_answers.html'
-    template_path = os.path.join(settings.BASE_DIR, 'templates', template_name)
-
-    try:
-        with open(template_path, 'r', encoding='utf-8') as file:
-            html_template = file.read()
-        return HttpResponse(html_template, content_type='text/html')
-    except FileNotFoundError:
-        return HttpResponse("Файл не найден", status=404)
+    return render(request, 'olympiads/page_after_sending_olympiads_answers.html')
 
 
 def olympiad_registration(request, olympiad_id):

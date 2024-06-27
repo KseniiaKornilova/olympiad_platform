@@ -35,7 +35,7 @@
                     <p>Вы можете приступить к выполнению олимпиады сейчас или позже через личный кабинет</p>
                     <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
                         <div class="appointment-btn">
-                            <a href="#" class="btn btn-secondary btn-padding btn-dark-animated">Приступить к выполнению</a>
+                            <a href="{% url 'olympiads:olympiad_page' olympiad.id student.id %}" class="btn btn-secondary btn-padding btn-dark-animated">Приступить к выполнению</a>
                         </div>
                     </div>
                 </div>

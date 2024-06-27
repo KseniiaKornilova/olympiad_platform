@@ -3,33 +3,33 @@
 <input
                             type="radio"
                             name="t{{ t_question.id }}"
-                            value="true"
+                            value="1"
                     {% for t_submission in t_submissions %}
                     {% if t_submission.question == t_question %}
 
-                    {% if t_submission.answer == True %}
+                    {% if t_submission.answer == '1' %}
                         checked
                     {% endif %}
                     {% endif %}
                     {% endfor %}
                     disabled>
-                    {{ t_question.true_choice }}
+                    {{ t_question.first_statement }}
 </p>
 <span>
     <input 
                                 type="radio"
                                 name="t{{ t_question.id }}"
-                                value="false"
+                                value="2"
                         {% for t_submission in t_submissions %}
                         {% if t_submission.question == t_question %}
     
-                        {% if t_submission.answer == False %}
+                        {% if t_submission.answer == '2' %}
                             checked
                         {% endif %}
                         {% endif %}
                         {% endfor %}
                         disabled>
-                        {{ t_question.false_choice }}
+                        {{ t_question.second_statement }}
     </span>
     <span>
         {% for t_submission in t_submissions %} 

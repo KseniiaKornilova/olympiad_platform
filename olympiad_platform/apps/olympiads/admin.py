@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Olympiad, Subject, OlympiadUser, QuestionSection, Question, UserAnswer
+from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, \
+                    MultipleChoiceQuestion, MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
 
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -33,27 +34,6 @@ class OlympiadAdmin(admin.ModelAdmin):
     inlines = (OlympiadUserInline,)
 
 
-class QuestionSectionAdmin(admin.ModelAdmin):
-    list_display = ('section', 'points')
-    list_display_links = ('section',)
-    search_fields = ('section',)
-    fields = ('section', 'points')
-
-
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question_description', 'section', 'olympiad', 'correct_answer')
-    list_display_links = ('question_description',)
-    search_fields = ('question_description',)
-    list_filter = ('olympiad',)
-    fields = ('question_description', 'section', 'olympiad', 'correct_answer')
-
-
-class UserAnswerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'question', 'answer', 'score')
-    list_display_links = ('user',)
-    search_fields = ('user__first_name', 'user__last_name', 'olympiad__title')
-
-
 class OlympiadUserAdmin(admin.ModelAdmin):
     list_display = ('user', 'olympiad', 'registration_date')
     list_display_links = ('user',)
@@ -61,9 +41,105 @@ class OlympiadUserAdmin(admin.ModelAdmin):
     search_fields = ('user__first_name', 'user__last_name')
 
 
+class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'question_num', 'olympiad')
+    ordering = ('question_num',)
+    list_display_links = ('title',)
+    search_fields = ('olympiad__title', 'assignment__title')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('question_num', 'title', 'description', 'mark', 'olympiad'),
+            'classes': ('wide',),
+        }),
+        ('Варианты ответов', {
+            'fields': ('a', 'a_is_correct', 'b', 'b_is_correct', 'c', 'c_is_correct', 'd', 'd_is_correct', 'e',
+                       'e_is_correct', 'f', 'f_is_correct'),
+            'classes': ('wide',),
+        }),
+    )
+
+
+class MultipleChoiceSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('student', 'question', 'students_mark')
+    ordering = ('student',)
+    list_display_links = ('student',)
+    search_fields = ('student__first_name', 'student__last_name')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('student', 'question', 'students_mark'),
+            'classes': ('wide',),
+        }),
+        ('Варианты ответов', {
+            'fields': ('a', 'b', 'c', 'd', 'e', 'f'),
+            'classes': ('wide',),
+        }),
+    )
+
+
+class OneChoiceQuestionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'question_num', 'olympiad')
+    ordering = ('question_num',)
+    list_display_links = ('title',)
+    search_fields = ('olympiad__title', 'assignment__title')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('question_num', 'title', 'description', 'mark', 'olympiad'),
+            'classes': ('wide',),
+        }),
+        ('Варианты ответов', {
+            'fields': ('a', 'a_is_correct', 'b', 'b_is_correct', 'c', 'c_is_correct', 'd', 'd_is_correct'),
+            'classes': ('wide',),
+        }),
+    )
+
+
+class OneChoiceSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('student', 'question', 'students_mark')
+    ordering = ('student',)
+    list_display_links = ('student',)
+    search_fields = ('student__first_name', 'student__last_name')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('student', 'question', 'students_mark'),
+            'classes': ('wide',),
+        }),
+        ('Варианты ответов', {
+            'fields': ('a', 'b', 'c', 'd'),
+            'classes': ('wide',),
+        }),
+    )
+
+
+class TrueFalseQuestionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'question_num', 'olympiad')
+    list_display_links = ('title',)
+    search_fields = ('olympiad__title', 'assignment__title')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('question_num', 'title', 'description', 'marks', 'olympiad'),
+            'classes': ('wide',),
+        }),
+        ('Варианты ответов', {
+            'fields': ('first_statement', 'second_statement', 'answer'),
+            'classes': ('wide',),
+        }),
+    )
+
+
+class TrueFalseSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('student', 'question', 'students_mark')
+    ordering = ('student',)
+    list_display_links = ('student',)
+    search_fields = ('student__first_name', 'student__last_name')
+    fields = ('student', 'question', 'students_mark', 'answer')
+
+
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Olympiad, OlympiadAdmin)
-admin.site.register(QuestionSection, QuestionSectionAdmin)
-admin.site.register(Question, QuestionAdmin)
-admin.site.register(UserAnswer, UserAnswerAdmin)
 admin.site.register(OlympiadUser, OlympiadUserAdmin)
+admin.site.register(OneChoiceQuestion, OneChoiceQuestionAdmin)
+admin.site.register(OneChoiceSubmission, OneChoiceSubmissionAdmin)
+admin.site.register(MultipleChoiceQuestion, MultipleChoiceQuestionAdmin)
+admin.site.register(MultipleChoiceSubmission, MultipleChoiceSubmissionAdmin)
+admin.site.register(TrueFalseQuestion, TrueFalseQuestionAdmin)
+admin.site.register(TrueFalseSubmission, TrueFalseSubmissionAdmin)

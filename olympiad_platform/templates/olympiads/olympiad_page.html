@@ -92,8 +92,10 @@
         })
         .then(response => response.json())
         .then(data => {
+            if (data.status !== 'success') {
             // Обработка ответа от сервера, если необходимо
             console.log(data);
+            }
         })
         .catch(error => {
             // Обработка ошибок, если запрос не удался
@@ -122,8 +124,10 @@
         })
         .then(response => response.json())
         .then(data => {
+            if (data.status !== 'success') {
             // Обработка ответа от сервера, если необходимо
-            console.log(data);
+            alert('Ошибка' + data.message);
+            }
         })
         .catch(error => {
             // Обработка ошибок, если запрос не удался

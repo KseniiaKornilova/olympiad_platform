@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Course, CourseUser, Lesson, Assignment, AssignmentSubmission, MultipleChoiceQuestion, \
-    MultipleChoiceSubmission, OneChoiceQuestion, OneChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission, Comment
+from .models import Course, CourseUser, Lesson, Assignment, AssignmentSubmission, Comment
 
 
 class CourseUserInline(admin.TabularInline):
@@ -53,99 +52,6 @@ class AssignmentSubmissionAdmin(admin.ModelAdmin):
     fields = ('assignment', 'student', 'earned_mark', 'status', 'is_finished', 'homework_file')
 
 
-class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'question_num', 'olympiad', 'assignment')
-    ordering = ('question_num',)
-    list_display_links = ('title',)
-    search_fields = ('olympiad__title', 'assignment__title')
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('question_num', 'title', 'description', 'mark', 'olympiad', 'assignment'),
-            'classes': ('wide',),
-        }),
-        ('Варианты ответов', {
-            'fields': ('a', 'a_is_correct', 'b', 'b_is_correct', 'c', 'c_is_correct', 'd', 'd_is_correct', 'e', 
-                       'e_is_correct', 'f', 'f_is_correct'),
-            'classes': ('wide',),
-        }),
-    )
-
-
-class MultipleChoiceSubmissionAdmin(admin.ModelAdmin):
-    list_display = ('student', 'question', 'students_mark')
-    ordering = ('student',)
-    list_display_links = ('student',)
-    search_fields = ('student__first_name', 'student__last_name')
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('student', 'question', 'students_mark'),
-            'classes': ('wide',),
-        }),
-        ('Варианты ответов', {
-            'fields': ('a', 'b', 'c', 'd', 'e', 'f'),
-            'classes': ('wide',),
-        }),
-    )
-
-
-class OneChoiceQuestionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'question_num', 'olympiad', 'assignment')
-    ordering = ('question_num',)
-    list_display_links = ('title',)
-    search_fields = ('olympiad__title', 'assignment__title')
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('question_num', 'title', 'description', 'mark', 'olympiad', 'assignment'),
-            'classes': ('wide',),
-        }),
-        ('Варианты ответов', {
-            'fields': ('a', 'a_is_correct', 'b', 'b_is_correct', 'c', 'c_is_correct', 'd', 'd_is_correct'),
-            'classes': ('wide',),
-        }),
-    )
-
-
-class OneChoiceSubmissionAdmin(admin.ModelAdmin):
-    list_display = ('student', 'question', 'students_mark')
-    ordering = ('student',)
-    list_display_links = ('student',)
-    search_fields = ('student__first_name', 'student__last_name')
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('student', 'question', 'students_mark'),
-            'classes': ('wide',),
-        }),
-        ('Варианты ответов', {
-            'fields': ('a', 'b', 'c', 'd'),
-            'classes': ('wide',),
-        }),
-    )
-
-
-class TrueFalseQuestionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'question_num', 'assignment', 'olympiad')
-    list_display_links = ('title',)
-    search_fields = ('olympiad__title', 'assignment__title')
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('question_num', 'title', 'description', 'marks', 'olympiad', 'assignment'),
-            'classes': ('wide',),
-        }),
-        ('Варианты ответов', {
-            'fields': ('true_choice', 'false_choice', 'answer'),
-            'classes': ('wide',),
-        }),
-    )
-
-
-class TrueFalseSubmissionAdmin(admin.ModelAdmin):
-    list_display = ('student', 'question', 'students_mark')
-    ordering = ('student',)
-    list_display_links = ('student',)
-    search_fields = ('student__first_name', 'student__last_name')
-    fields = ('student', 'question', 'students_mark', 'answer')
-
-
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('lesson', 'student', 'content')
     ordering = ('lesson',)
@@ -158,10 +64,4 @@ admin.site.register(CourseUser, CourseUserAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Assignment, AssignmentAdmin)
 admin.site.register(AssignmentSubmission, AssignmentSubmissionAdmin)
-admin.site.register(MultipleChoiceQuestion, MultipleChoiceQuestionAdmin)
-admin.site.register(MultipleChoiceSubmission, MultipleChoiceSubmissionAdmin)
-admin.site.register(OneChoiceQuestion, OneChoiceQuestionAdmin)
-admin.site.register(OneChoiceSubmission, OneChoiceSubmissionAdmin)
-admin.site.register(TrueFalseQuestion, TrueFalseQuestionAdmin)
-admin.site.register(TrueFalseSubmission, TrueFalseSubmissionAdmin)
 admin.site.register(Comment, CommentAdmin)
