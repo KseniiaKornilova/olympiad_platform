@@ -56,7 +56,7 @@ class CourseList(ListView):
         if search_word:
             queryset = queryset.filter(title__icontains=search_word)
         return queryset
-   
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subjects'] = Subject.objects.all()
@@ -77,7 +77,7 @@ def course_main_page(request, course_id):
     course_teacher = course.teacher
 
     try:
-        assignments = Assignment.objects.filter(course=course)
+        assignments = Assignment.objects.filter(course=course).order_by('assignment_num')
     except Assignment.DoesNotExist:
         assignments = None
 
@@ -105,10 +105,10 @@ def course_main_page(request, course_id):
                 course_submission_earned += assignment_submission.earned_mark
             course_submission.earned_mark = course_submission_earned
             course_submission.save()
-        except Exception:
+        except AssignmentSubmission.DoesNotExist:
             assignment_submissions = None
 
-        assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course, 
+        assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course,
                                                                           student=user, is_finished=True)
 
         student_context = {'student': user,
@@ -130,7 +130,7 @@ def course_main_page(request, course_id):
             'user': user,
             'course_teacher': course_teacher,
             'course_students': course_students,
-            'course': course, 
+            'course': course,
             'assignment_submissions_all': assignment_submissions_all,
             'lessons': lessons,
             'assignments': assignments
@@ -140,27 +140,14 @@ def course_main_page(request, course_id):
 
 
 def lesson_view(request, course_id, lesson_id):
-    asciidoc_filename = f'course{course_id}_lesson{lesson_id}.adoc'
-    asciidoc_directory = os.path.join(os.path.dirname(__file__), 'adoc_files')
-    asciidoc_file_path = os.path.join(asciidoc_directory, asciidoc_filename)
-
-    if not os.path.exists(asciidoc_file_path):
-        return HttpResponse("Материал урока еще не создан", status=404)
-
-    command = ['asciidoctor', '-o', '-', asciidoc_file_path]
-    html_content = subprocess.check_output(command, universal_newlines=True)
-
-    footer_pattern = r'<div id="footer">.*?</div>'
-    html_content_without_footer = re.sub(footer_pattern, '', html_content, flags=re.DOTALL)
-
     course = Course.objects.get(id=course_id)
     lesson = Lesson.objects.get(id=lesson_id)
     lessons = Lesson.objects.filter(course=course).order_by('number')
 
     context = {'course': course,
                'lesson': lesson,
-               'lessons': lessons,
-               'html_content': html_content_without_footer}
+               'lessons': lessons
+               }
 
     return render(request, 'courses/lesson_page.html', context)
 
@@ -209,7 +196,7 @@ def submit_comment(request):
                 print(form.errors)
                 return JsonResponse({'error': 'Неверные данные'})
 
-            comments = Comment.objects.filter(course=course, lesson=lesson).order_by('-created_at').values()        
+            comments = Comment.objects.filter(course=course, lesson=lesson).order_by('-created_at').values()
             return JsonResponse(list(comments), safe=False)
 
         except json.JSONDecodeError:
@@ -227,13 +214,11 @@ def course_registration(request, course_id):
     course = Course.objects.get(id=course_id)
     user = request.user
     course_teacher = course.teacher
-    assignments = Assignment.objects.filter(course=course)
     if user != course_teacher:
-        course_submission = CourseUser.objects.create(user=user, course=course)
-        course_submission.save()
+        CourseUser.objects.create(user=user, course=course)
+        assignments = Assignment.objects.filter(course=course)
         for assignment in assignments:
-            assignment_submission = AssignmentSubmission.objects.create(assignment=assignment, student=user)
-            assignment_submission.save()
+            AssignmentSubmission.objects.create(assignment=assignment, student=user)
 
     context = {'course': course}
     return render(request, 'courses/course_registration.html', context)

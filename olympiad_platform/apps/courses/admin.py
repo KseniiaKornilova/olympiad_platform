@@ -25,7 +25,7 @@ class LessonAdmin(admin.ModelAdmin):
     search_fields = ('title', 'number')
     list_per_page = 10
     list_filter = ('course',)
-    fields = ('number', 'title', 'course')
+    fields = ('number', 'title', 'course', 'content')
 
 
 class CourseUserAdmin(admin.ModelAdmin):

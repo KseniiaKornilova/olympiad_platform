@@ -10,8 +10,8 @@ class Course(models.Model):
     course_description = models.TextField(verbose_name='Описание курса', blank=True, null=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='Название дисциплины')
     category = models.CharField(verbose_name='Категория учащихся', max_length=150, blank=True, null=True)
-    month_amount = models.SmallIntegerField(verbose_name='Продолжительность', blank=True, null=True)
-    times_a_week = models.SmallIntegerField(verbose_name='Раз в неделю', blank=True, null=True)
+    month_amount = models.SmallIntegerField(verbose_name='Продолжительность курса', blank=True, null=True)
+    times_a_week = models.SmallIntegerField(verbose_name='Количество уроков в неделю', blank=True, null=True)
     price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
     participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса',
                                           related_name='course_participants')
@@ -40,13 +40,6 @@ class CourseUser(models.Model):
     percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0,
                                      null=True, blank=True, verbose_name='% выполнения курса')
 
-    @classmethod
-    def create(cls, user, course, is_finished, earned_mark, total_mark, percent_mark):
-        submission = cls(user=user, course=course, is_finished=is_finished, earned_mark=earned_mark,
-                         total_mark=total_mark, percent_mark=percent_mark)
-        submission.save()
-        return submission
-
     class Meta:
         verbose_name = 'Прохождение курса учеником'
         verbose_name_plural = 'Прохождения курсов учениками'
@@ -56,6 +49,7 @@ class Lesson(models.Model):
     title = models.CharField(max_length=150, unique=True, verbose_name='Название урока')
     number = models.SmallIntegerField(verbose_name='Номер урока')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Название курса')
+    content = models.TextField(blank=True, null=True, verbose_name='Содержание урока')
 
     def __str__(self):
         return f'{self.title}'

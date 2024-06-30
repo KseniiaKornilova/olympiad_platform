@@ -31,10 +31,10 @@ class UserCommentForm(forms.ModelForm):
 class AssignmentSubmissionForm(forms.ModelForm):
     homework_file = forms.FileField(widget=forms.FileInput(attrs={
         'class': 'form-control form-group mb-3'}),
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'docx'], 
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'docx'],
                                            message='Пожалуйста, прикрепите файл с расширением .pdf или .doc')]
         )
-    
+
     class Meta:
         model = AssignmentSubmission
         fields = ['homework_file']
@@ -52,4 +52,3 @@ class AssignmentSubmissionTeacherCheckForm(forms.ModelForm):
     class Meta:
         model = AssignmentSubmission
         fields = ['teacher_comment', 'earned_mark']
-
