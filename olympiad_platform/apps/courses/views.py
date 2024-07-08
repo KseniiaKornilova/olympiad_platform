@@ -139,7 +139,7 @@ def course_main_page(request, course_id):
 
 def lesson_view(request, course_id, lesson_id):
     course = Course.objects.get(id=course_id)
-    lesson = Lesson.objects.get(id=lesson_id)
+    lesson = get_object_or_404(Lesson, id=lesson_id)
     lessons = Lesson.objects.filter(course=course).order_by('number')
 
     context = {'course': course,

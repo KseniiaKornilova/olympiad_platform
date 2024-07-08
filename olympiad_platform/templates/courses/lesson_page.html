@@ -1,6 +1,7 @@
 {% extends 'basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load course_tags %} 
 
 {% block title %} EduBuddy school - урок {{ lesson_id }} {% endblock %} 
 
@@ -41,7 +42,11 @@
         </div>
 
         <div class="col-sm-12 col-md-9 col-lg-9 col-padding-y">
-                        {{ lesson.content }}
+            {% if lesson.content %} 
+                        {{ lesson.content|markdown }}
+            {% else %} 
+                        <h5>Материал этого урока скоро будет добавлен</h5>
+            {% endif %} 
         </div>
 
     
