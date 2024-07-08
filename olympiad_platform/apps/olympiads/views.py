@@ -1,7 +1,7 @@
 from datetime import date, datetime
 import json
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from ..students.models import User
 from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, \
@@ -344,11 +344,7 @@ def get_template_view(request):
 
 def olympiad_registration(request, olympiad_id):
     student = request.user
-    try:
-        olympiad = Olympiad.objects.get(id=olympiad_id)
-    except Olympiad.DoesNotExist:
-        olympiad = None
-
+    olympiad = get_object_or_404(Olympiad, id=olympiad_id)
     result = olympiad.is_registrations_open()
     if olympiad not in student.olympiad_set.all():
         allow_register = True

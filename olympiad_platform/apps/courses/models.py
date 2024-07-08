@@ -79,8 +79,8 @@ class Assignment(models.Model):
 
 def upload_homework(instance, filename):
     file_extension = os.path.splitext(filename)[1]
-    new_filename = f'{instance.student.last_name}_{instance.student.first_name}_{instance.assignment.course.title}_\
-                     {instance.assignment.title}{file_extension}'
+    new_filename = (f'{instance.student.last_name}_{instance.student.first_name}_'
+                    f'{instance.assignment.course.title}_{instance.assignment.title}{file_extension}')
     upload_path = os.path.join('homework_files', new_filename)
     return upload_path
 
@@ -103,12 +103,6 @@ class AssignmentSubmission(models.Model):
     is_finished = models.BooleanField(default=False, verbose_name='Задание засчитано?')
     homework_file = models.FileField(verbose_name='Файл с решением', null=True, blank=True, upload_to=upload_homework)
     teacher_comment = models.TextField(verbose_name='Комментарий преподавателя', null=True, blank=True)
-
-    @classmethod
-    def create(cls, assignment, student, earned_mark, is_finished):
-        submission = cls(assignment=assignment, student=student, earned_mark=earned_mark, is_finished=is_finished)
-        submission.save()
-        return submission
 
     def __str__(self):
         return f'{self.assignment} : {self.student}'

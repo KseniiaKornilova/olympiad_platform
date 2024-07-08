@@ -1,9 +1,6 @@
-import subprocess
-import os
-import re
 import json
 from datetime import datetime
-from django.http.response import HttpResponse, JsonResponse
+from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.views.generic.list import ListView
@@ -99,7 +96,8 @@ def course_main_page(request, course_id):
         course_submission.save()
 
         try:
-            assignment_submissions = AssignmentSubmission.objects.filter(student=user, assignment__course=course)
+            assignment_submissions = AssignmentSubmission.objects.filter(
+                        student=user, assignment__course=course).order_by('assignment__assignment_num')
             course_submission_earned = 0
             for assignment_submission in assignment_submissions:
                 course_submission_earned += assignment_submission.earned_mark
@@ -228,7 +226,10 @@ def assignment_view(request, course_id, assignment_id):
     course = Course.objects.get(id=course_id)
     assignment = Assignment.objects.get(id=assignment_id, course=course)
     student = request.user
-    assignment_submission = AssignmentSubmission.objects.get(student=student, assignment=assignment)
+    try:
+        assignment_submission = AssignmentSubmission.objects.get(student=student, assignment=assignment)
+    except AssignmentSubmission.DoesNotExist:
+        assignment_submission = AssignmentSubmission.objects.create(assignment=assignment, student=student)
 
     if request.method == 'POST':
         form = AssignmentSubmissionForm(request.POST, request.FILES, instance=assignment_submission)
