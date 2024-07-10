@@ -2,6 +2,7 @@
 {% load static %} 
 {% load bootstrap4 %}
 
+
 {% block title %} EduBuddy school - Войти {% endblock %} 
 
 {% block content %} 
@@ -35,7 +36,15 @@
                 <button class="btn btn-primary" type="submit">Войти</button>
             </div>
         </form>
-        <a href="{% url 'students:password_reset' %}">Не помню пароль</a>
+        <div>
+            <a href="{% url 'students:password_reset' %}">Не помню пароль</a>
+        </div>
+
+
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="mt-2 btn btn-secondary">
+        Войти через Google
+        </a> 
+
     </div>
 </div>
 {% endblock %}

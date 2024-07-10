@@ -3,6 +3,7 @@ from datetime import datetime
 from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank, TrigramSimilarity
 from django.views.generic.list import ListView
 from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
 from .forms import UserCommentForm, AssignmentSubmissionForm, AssignmentSubmissionTeacherCheckForm
@@ -51,7 +52,8 @@ class CourseList(ListView):
         if school_subject:
             queryset = queryset.filter(subject__exact=school_subject)
         if search_word:
-            queryset = queryset.filter(title__icontains=search_word)
+            queryset = Course.objects.annotate(similarity=TrigramSimilarity('title', search_word)
+                                               ).filter(similarity__gt=0.1).order_by('-similarity')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -141,10 +143,26 @@ def lesson_view(request, course_id, lesson_id):
     course = Course.objects.get(id=course_id)
     lesson = get_object_or_404(Lesson, id=lesson_id)
     lessons = Lesson.objects.filter(course=course).order_by('number')
+    search_word = request.GET.get('keyword')
+
+    if search_word:
+        form = SearchForm(request.GET)
+        search_vector = SearchVector('title', 'content', config='russian')
+        search_query = SearchQuery(search_word, config='russian')
+        relevant_lessons = Lesson.objects.annotate(
+            search=search_vector,
+            rank=SearchRank(search_vector, search_query)).filter(search=search_query).order_by('-rank')
+
+    else:
+        form = SearchForm()
+        relevant_lessons = None
 
     context = {'course': course,
                'lesson': lesson,
-               'lessons': lessons
+               'lessons': lessons,
+               'form': form,
+               'relevant_lessons': relevant_lessons,
+               'search_word': search_word
                }
 
     return render(request, 'courses/lesson_page.html', context)

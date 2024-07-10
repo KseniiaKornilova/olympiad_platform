@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
+from django.contrib.postgres.search import TrigramSimilarity
 from ..students.models import User
 from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, \
       MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
@@ -68,7 +69,9 @@ class OlympiadList(ListView):
         subject = self.request.GET.get('subject', None)
 
         if search_word:
-            queryset = queryset.filter(title__icontains=search_word)
+            queryset = Olympiad.objects.annotate(similarity=TrigramSimilarity('title', search_word)
+                                                 ).filter(similarity__gt=0.1, date_of_start__gt=date.today()
+                                                          ).order_by('-similarity')
         if stage:
             queryset = queryset.filter(stage__exact=stage)
         if subject:

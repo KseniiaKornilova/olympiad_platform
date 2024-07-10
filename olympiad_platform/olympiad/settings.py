@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,9 +44,9 @@ INSTALLED_APPS = [
     'apps.olympiads.apps.OlympiadsConfig',
     'apps.students.apps.StudentsConfig',
     'bootstrap4',
-    # 'oauth2_provider',
-    # 'corsheaders',
     'apps.courses.apps.CoursesConfig',
+    'django.contrib.postgres',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +148,12 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ksyu.kornilova2809@gmail.com'
 EMAIL_HOST_PASSWORD = 'wyrf xswv znzl qqie'
 EMAIL_USE_TLS = True
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '174467453336-j50h0cpho2tkru98vcc0ih50qfvl2ddv.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')

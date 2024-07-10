@@ -94,4 +94,3 @@ class PasswordResetDone(PasswordResetDoneView):
 
 class PasswordResetComplete(PasswordResetCompleteView):
     template_name = 'students/reset_password_complete.html'
-
