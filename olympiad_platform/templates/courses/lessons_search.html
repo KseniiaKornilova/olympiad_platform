@@ -1,0 +1,12 @@
+{% load course_tags %} 
+
+<h1 class="mb-5">Уроки, в которых вы можете найти информацию о "{{ search_word }}"</h1>
+
+{% if relevant_lessons %}  
+{% for relevant_lesson in relevant_lessons %} 
+<div class="mb-5">
+    <h3><a href="{% url 'courses:lesson_view' course.id relevant_lesson.id %}">{{ relevant_lesson.title }}</a></h3>
+    {{ relevant_lesson.content|markdown|truncatewords_html:30 }}
+</div>
+{% endfor %} 
+{% endif %} 

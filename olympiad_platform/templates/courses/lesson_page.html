@@ -27,7 +27,12 @@
 
         <div class="col-sm-12 col-md-3 col-lg-3 col-padding-y">
 
-            <a href="{% url 'courses:lesson_comment_page' course.id lesson.id %}" class="btn btn-light btn-dark-animated">Обсуждения</a>
+            <a href="{% url 'courses:lesson_comment_page' course.id lesson.id %}" class="btn btn-light btn-dark-animated mb-5">Обсуждения</a>
+
+            <form method="GET">
+                {{ form }}
+                <button type="submit" class="btn btn-light"><i class="fas fa-chevron-right"></i></button>
+            </form>
 
             <div class="widget side-bar border-btm">
                 <h6>Содержание курса</h6>
@@ -42,10 +47,15 @@
         </div>
 
         <div class="col-sm-12 col-md-9 col-lg-9 col-padding-y">
-            {% if lesson.content %} 
-                        {{ lesson.content|markdown }}
-            {% else %} 
-                        <h5>Материал этого урока скоро будет добавлен</h5>
+            {% if search_word %} 
+                {% include 'courses/lessons_search.html' %} 
+            {% else %}
+                <h3>{{ lesson.title }}</h3>
+                {% if lesson.content %} 
+                            {{ lesson.content|markdown }}
+                {% else %} 
+                            <h5>Материал этого урока скоро будет добавлен</h5>
+                {% endif %} 
             {% endif %} 
         </div>
 
@@ -59,4 +69,53 @@
     </div>
 </div>
 
+<!-- <script>
+    function searchLessons(course_id) {
+        var lessonContent = document.getElementById('lesson_content_or_searched_list');
+        var keyword = document.getElementById('searchKeyword').value;
+        var submissionUrl = `/courses/search/${course_id}/?keyword=${keyword}`;
+        var templateUrl = '/courses/get_relevant_lessons/';
+
+        fetch(submissionUrl, {
+            method: GET,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка');
+            }
+            return response.json();
+        })
+        .then(result => {
+            if (result.status === 'success') {
+                return fetch(templateUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: JSON.stringify(result)
+                });
+            } else {
+                alert(result.message);
+                throw new Error(result.message);
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка');
+            }
+            return response.text();
+        })
+        .then(htmlTemplate => {
+            lessonContent.innerHTML = htmlTemplate;
+        })
+        .catch(error => {
+            console.error('Ошибка', error);
+        });
+    }
+
+</script> -->
 {% endblock %}
