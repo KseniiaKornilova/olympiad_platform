@@ -1,5 +1,6 @@
 from django.db import models
-from django.db.models.signals import pre_delete
+from django.db.models.signals import pre_delete, post_save
+from django.dispatch import receiver
 from ..students.models import User
 from django.utils import timezone
 from django.core import validators
@@ -24,6 +25,8 @@ class Olympiad(models.Model):
     date_of_start = models.DateTimeField(verbose_name='Начало проведения олимпиады')
     registration_dedline = models.DateTimeField(verbose_name='Дата окончания регистрации')
     olympiad_duration = models.DurationField(verbose_name='Продолжительность олимпиады')
+    total_mark = models.SmallIntegerField(null=True, blank=True, default=0,
+                                          verbose_name='Максимально возможное количество баллов')
     participants = models.ManyToManyField(User, through='OlympiadUser', verbose_name='Участники олимпиады')
     image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True,
                              blank=True)
@@ -48,7 +51,6 @@ class OlympiadUser(models.Model):
     is_finished = models.BooleanField(null=True, blank=True, default=False,
                                       verbose_name='Участник отправил ответы олимпиады на проверку?')
     earned_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Количество набранных баллов')
-    total_mark = models.SmallIntegerField(null=True, blank=True, verbose_name='Максимально возможное количество баллов')
     ranking_place = models.SmallIntegerField(null=True, blank=True, verbose_name='Место участника в рейтинге')
 
     class Meta:
@@ -169,8 +171,8 @@ class TrueFalseQuestion(models.Model):
     first_statement = models.CharField(max_length=150, null=True, verbose_name='Первое утверждение')
     second_statement = models.CharField(max_length=150, null=True, verbose_name='Второе утверждение')
     answer = models.CharField(max_length=3, choices=OPTION, verbose_name='номер верного утверждения')
-    marks = models.SmallIntegerField(validators=[validators.MinValueValidator(1)],
-                                     verbose_name='Количество баллов за правильный ответ')
+    mark = models.SmallIntegerField(validators=[validators.MinValueValidator(1)],
+                                    verbose_name='Количество баллов за правильный ответ')
     olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL,
                                  verbose_name='Вопрос для какой олимпиады')
 
@@ -195,3 +197,12 @@ class TrueFalseSubmission(models.Model):
     class Meta:
         verbose_name = 'Ответ на вопрос "Какое из утверждений верно'
         verbose_name_plural = 'Ответы на вопросы "Какое из утверждений верно'
+
+
+@receiver(post_save, sender=MultipleChoiceQuestion)
+@receiver(post_save, sender=OneChoiceQuestion)
+@receiver(post_save, sender=TrueFalseQuestion)
+def post_save_dispatcher(sender, instance, **kwargs):
+    olympiad = instance.olympiad
+    olympiad.total_mark += instance.mark
+    olympiad.save()

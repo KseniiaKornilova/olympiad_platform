@@ -139,7 +139,8 @@ def olympiad_page(request, olympiad_id, user_id):
         all_submissions = OlympiadUser.objects.filter(olympiad=olympiad).order_by('ranking_place')
         context.update({
             'submission': submission,
-            'all_submissions': all_submissions
+            'all_submissions': all_submissions,
+            'olympiad': olympiad
         })
         return render(request, 'olympiads/olympiad_page_results.html', context)
 
@@ -312,22 +313,18 @@ def submit_olympiad_answer(request):
 
 def compute_score(student, olympiad, submission):
     submission.earned_mark = 0
-    submission.total_mark = 0
 
     o_submissions = OneChoiceSubmission.objects.filter(student=student, question__olympiad=olympiad)
     for o_submission in o_submissions:
         submission.earned_mark += o_submission.students_mark
-        submission.total_mark += o_submission.question.mark
 
     m_submissions = MultipleChoiceSubmission.objects.filter(student=student, question__olympiad=olympiad)
     for m_submission in m_submissions:
         submission.earned_mark += m_submission.students_mark
-        submission.total_mark += m_submission.question.mark
 
     t_submissions = TrueFalseSubmission.objects.filter(student=student, question__olympiad=olympiad)
     for t_submission in t_submissions:
         submission.earned_mark += t_submission.students_mark
-        submission.total_mark += t_submission.question.marks
 
     submission.save()
 

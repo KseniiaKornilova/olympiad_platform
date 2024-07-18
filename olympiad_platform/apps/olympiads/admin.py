@@ -116,7 +116,7 @@ class TrueFalseQuestionAdmin(admin.ModelAdmin):
     search_fields = ('olympiad__title', 'assignment__title')
     fieldsets = (
         ('Основная информация', {
-            'fields': ('question_num', 'title', 'description', 'marks', 'olympiad'),
+            'fields': ('question_num', 'title', 'description', 'mark', 'olympiad'),
             'classes': ('wide',),
         }),
         ('Варианты ответов', {
