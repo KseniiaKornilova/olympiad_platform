@@ -225,7 +225,7 @@ def submit_t_question_answer(request):
             submission.save()
 
             if submission.answer == t_question.answer:
-                submission.students_mark = t_question.marks
+                submission.students_mark = t_question.mark
             else:
                 submission.students_mark = 0
             submission.save()

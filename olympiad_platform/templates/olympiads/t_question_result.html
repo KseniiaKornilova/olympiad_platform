@@ -36,16 +36,16 @@
     
         {% if t_submission.question == t_question %}
         {% if t_submission.students_mark == 1 %} 
-        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} балл из {{ t_question.marks }}</b>
+        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} балл из {{ t_question.mark }}</b>
         {% endif %} 
         {% if t_submission.students_mark > 1 and  t_submission.students_mark < 5 %} 
-        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} балла из {{ t_question.marks }}</b>
+        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} балла из {{ t_question.mark }}</b>
         {% endif %} 
         {% if t_submission.students_mark > 4 %} 
-        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} баллов из {{ t_question.marks }}</b>
+        <b class="fixed-good-mark-position">{{ t_submission.students_mark }} баллов из {{ t_question.mark }}</b>
         {% endif %}   
         {% if t_submission.students_mark == 0 %} 
-        <b class="fixed-bad-mark-position">{{ t_submission.students_mark }} баллов из {{ t_question.marks }}</b>
+        <b class="fixed-bad-mark-position">{{ t_submission.students_mark }} баллов из {{ t_question.mark }}</b>
         {% endif %}   
         {% endif %} 
         {% endfor %} 
