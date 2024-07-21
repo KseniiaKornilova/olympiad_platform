@@ -13,6 +13,7 @@ class Course(models.Model):
     month_amount = models.SmallIntegerField(verbose_name='Продолжительность курса', blank=True, null=True)
     times_a_week = models.SmallIntegerField(verbose_name='Количество уроков в неделю', blank=True, null=True)
     price = models.IntegerField(verbose_name='Стоимость курса', blank=True, null=True)
+    total_mark = models.IntegerField(default=0, verbose_name='Максимально возможное количество баллов')
     participants = models.ManyToManyField(User, through='CourseUser', verbose_name='Ученики курса',
                                           related_name='course_participants')
     teacher = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course_teacher',
@@ -35,8 +36,6 @@ class CourseUser(models.Model):
     is_finished = models.BooleanField(null=True, blank=True, default=False,
                                       verbose_name='Участник выполнил все задания?')
     earned_mark = models.SmallIntegerField(null=True, blank=True, default=0, verbose_name='Количество набранных баллов')
-    total_mark = models.SmallIntegerField(null=True, blank=True, default=0,
-                                          verbose_name='Максимально возможное количество баллов')
     percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0,
                                      null=True, blank=True, verbose_name='% выполнения курса')
 
