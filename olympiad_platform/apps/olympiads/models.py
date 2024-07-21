@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models.signals import pre_delete, post_save
-from django.dispatch import receiver
 from ..students.models import User
 from django.utils import timezone
 from django.core import validators
@@ -25,8 +23,7 @@ class Olympiad(models.Model):
     date_of_start = models.DateTimeField(verbose_name='Начало проведения олимпиады')
     registration_dedline = models.DateTimeField(verbose_name='Дата окончания регистрации')
     olympiad_duration = models.DurationField(verbose_name='Продолжительность олимпиады')
-    total_mark = models.SmallIntegerField(null=True, blank=True, default=0,
-                                          verbose_name='Максимально возможное количество баллов')
+    total_mark = models.SmallIntegerField(default=0, verbose_name='Максимально возможное количество баллов')
     participants = models.ManyToManyField(User, through='OlympiadUser', verbose_name='Участники олимпиады')
     image = models.CharField(verbose_name='Путь до изображения от static директории', max_length=200, null=True,
                              blank=True)
@@ -57,15 +54,6 @@ class OlympiadUser(models.Model):
         verbose_name = 'Данные о прохождении участником олимпиады'
         verbose_name_plural = 'Данные о прохождениях участниками олимпиад'
         ordering = ['olympiad', 'user']
-
-
-def pre_delete_dispatcher(sender, instance, **kwargs):
-    MultipleChoiceSubmission.objects.filter(student=instance.user, question__olympiad=instance.olympiad).delete()
-    OneChoiceSubmission.objects.filter(student=instance.user, question__olympiad=instance.olympiad).delete()
-    TrueFalseSubmission.objects.filter(student=instance.user, question__olympiad=instance.olympiad).delete()
-
-
-pre_delete.connect(pre_delete_dispatcher, sender=OlympiadUser)
 
 
 class MultipleChoiceQuestion(models.Model):
@@ -197,12 +185,3 @@ class TrueFalseSubmission(models.Model):
     class Meta:
         verbose_name = 'Ответ на вопрос "Какое из утверждений верно'
         verbose_name_plural = 'Ответы на вопросы "Какое из утверждений верно'
-
-
-@receiver(post_save, sender=MultipleChoiceQuestion)
-@receiver(post_save, sender=OneChoiceQuestion)
-@receiver(post_save, sender=TrueFalseQuestion)
-def post_save_dispatcher(sender, instance, **kwargs):
-    olympiad = instance.olympiad
-    olympiad.total_mark += instance.mark
-    olympiad.save()
