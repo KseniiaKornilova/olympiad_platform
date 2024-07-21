@@ -36,8 +36,6 @@ class CourseUser(models.Model):
     is_finished = models.BooleanField(null=True, blank=True, default=False,
                                       verbose_name='Участник выполнил все задания?')
     earned_mark = models.SmallIntegerField(null=True, blank=True, default=0, verbose_name='Количество набранных баллов')
-    percent_mark = models.FloatField(validators=[validators.MinValueValidator(0)], default=0,
-                                     null=True, blank=True, verbose_name='% выполнения курса')
 
     class Meta:
         verbose_name = 'Прохождение курса учеником'

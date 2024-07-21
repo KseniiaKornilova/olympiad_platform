@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.contrib.postgres.search import TrigramSimilarity
+from django.core.cache import cache
 from ..students.models import User
 from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, \
       MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
@@ -72,10 +73,23 @@ class OlympiadList(ListView):
             queryset = Olympiad.objects.annotate(similarity=TrigramSimilarity('title', search_word)
                                                  ).filter(similarity__gt=0.1, date_of_start__gt=date.today()
                                                           ).order_by('-similarity')
+            return queryset
+
         if stage:
-            queryset = queryset.filter(stage__exact=stage)
+            key_stage = f'olympiad_stage{stage}'
+            cached_queryset = cache.get(key_stage)
+            if not cached_queryset:
+                cached_queryset = queryset.filter(stage__exact=stage)
+                cache.set(key_stage, cached_queryset)
+            return cached_queryset
+
         if subject:
-            queryset = queryset.filter(subject__exact=subject)
+            key_subject = f'olympiad_subject{subject}'
+            cached_queryset = cache.get(key_subject)
+            if not cached_queryset:
+                cached_queryset = queryset.filter(subject__exact=subject)
+                cache.set(key_subject, cached_queryset)
+            return cached_queryset
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -86,61 +100,74 @@ class OlympiadList(ListView):
         return context
 
 
-def olympiad_page(request, olympiad_id, user_id):
+def olympiad_page(request, olympiad_id):
     olympiad = Olympiad.objects.get(id=olympiad_id)
-    student = User.objects.get(id=user_id)
+    student = User.objects.get(id=request.user.id)
+    key = f'olympiad_page{olympiad.id}'
+    context = cache.get(key)
+    if not context:
+        try:
+            o_questions = OneChoiceQuestion.objects.filter(olympiad=olympiad)
+        except OneChoiceQuestion.DoesNotExist:
+            o_questions = None
+
+        try:
+            m_questions = MultipleChoiceQuestion.objects.filter(olympiad=olympiad)
+        except MultipleChoiceQuestion.DoesNotExist:
+            m_questions = None
+
+        try:
+            t_questions = TrueFalseQuestion.objects.filter(olympiad=olympiad)
+        except TrueFalseQuestion.DoesNotExist:
+            t_questions = None
+
+        context = {
+            'olympiad': olympiad,
+            'o_questions': o_questions,
+            'm_questions': m_questions,
+            't_questions': t_questions
+        }
+        cache.set(key, context)
+
     try:
         submission = OlympiadUser.objects.get(user=student, olympiad=olympiad)
     except OlympiadUser.DoesNotExist:
         submission = OlympiadUser.objects.create(user=student, olympiad=olympiad)
 
     try:
-        o_questions = OneChoiceQuestion.objects.filter(olympiad=olympiad)
-    except OneChoiceQuestion.DoesNotExist:
-        o_questions = None
-    try:
         o_submissions = OneChoiceSubmission.objects.filter(student=student, question__olympiad=olympiad)
     except OneChoiceSubmission.DoesNotExist:
         o_submissions = None
 
-    try:
-        m_questions = MultipleChoiceQuestion.objects.filter(olympiad=olympiad)
-    except MultipleChoiceQuestion.DoesNotExist:
-        m_questions = None
     try:
         m_submissions = MultipleChoiceSubmission.objects.filter(student=student, question__olympiad=olympiad)
     except MultipleChoiceSubmission.DoesNotExist:
         m_submissions = None
 
     try:
-        t_questions = TrueFalseQuestion.objects.filter(olympiad=olympiad)
-    except TrueFalseQuestion.DoesNotExist:
-        t_questions = None
-    try:
         t_submissions = TrueFalseSubmission.objects.filter(student=student, question__olympiad=olympiad)
     except TrueFalseSubmission.DoesNotExist:
         t_submissions = None
 
-    context = {
-            'olympiad': olympiad,
+    extra_context = {
             'student': student,
-            'o_questions': o_questions,
             'o_submissions': o_submissions,
-            'm_questions': m_questions,
             'm_submissions': m_submissions,
-            't_questions': t_questions,
-            't_submissions': t_submissions
+            't_submissions': t_submissions,
         }
-
+    context.update(extra_context)
     if not submission.is_finished:
         return render(request, 'olympiads/olympiad_page.html', context)
 
     else:
-        all_submissions = OlympiadUser.objects.filter(olympiad=olympiad).order_by('ranking_place')
+        key_result = f'olympiad_page_result{olympiad.id}'
+        all_submissions = cache.get(key_result)
+        if not all_submissions:
+            all_submissions = OlympiadUser.objects.filter(olympiad=olympiad).order_by('ranking_place')
+            cache.set(key_result, all_submissions)
         context.update({
             'submission': submission,
-            'all_submissions': all_submissions,
-            'olympiad': olympiad
+            'all_submissions': all_submissions
         })
         return render(request, 'olympiads/olympiad_page_results.html', context)
 

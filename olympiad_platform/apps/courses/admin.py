@@ -29,7 +29,7 @@ class LessonAdmin(admin.ModelAdmin):
 
 
 class CourseUserAdmin(admin.ModelAdmin):
-    list_display = ('user', 'course', 'earned_mark', 'percent_mark')
+    list_display = ('user', 'course', 'earned_mark')
     list_display_links = ('user',)
     search_fields = ('user__last_name', 'user__first_name', 'course__title')
     list_filter = ('course',)

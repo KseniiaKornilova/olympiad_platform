@@ -47,9 +47,11 @@ INSTALLED_APPS = [
     'apps.courses.apps.CoursesConfig',
     'django.contrib.postgres',
     'social_django',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -157,3 +159,9 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '174467453336-j50h0cpho2tkru98vcc0ih50qfvl2ddv.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+
+CACHES = {'default': {
+    'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+    'LOCATION': '127.0.0.1:11211',
+                }}

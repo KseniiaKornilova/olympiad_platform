@@ -89,7 +89,7 @@ def course_main_page(request, course_id):
         try:
             course_submission = CourseUser.objects.get(user=user, course=course)
         except CourseUser.DoesNotExist:
-            course_submission = None
+            course_submission = CourseUser.objects.create(user=user, course=course)
 
         course_submission_total = 0
         for assignment in assignments:
