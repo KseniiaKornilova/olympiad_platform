@@ -3,6 +3,7 @@ from datetime import datetime
 from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.core.cache import cache
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank, TrigramSimilarity
 from django.views.generic.list import ListView
 from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
@@ -47,10 +48,23 @@ class CourseList(ListView):
         school_subject = self.request.GET.get('subject', None)
         search_word = self.request.GET.get('keyword')
         queryset = Course.objects.all()
+
         if category:
-            queryset = queryset.filter(category__exact=category)
+            key_category = f'courses_category_{category}'
+            cached_queryset = cache.get(key_category)
+            if not cached_queryset:
+                cached_queryset = queryset.filter(category__exact=category)
+                cache.set(key_category, cached_queryset)
+            return cached_queryset
+
         if school_subject:
-            queryset = queryset.filter(subject__exact=school_subject)
+            key_subject = f'courses_subject_{school_subject}'
+            cached_queryset = cache.get(key_subject)
+            if not cached_queryset:
+                cached_queryset = queryset.filter(subject__exact=school_subject)
+                cache.set(key_subject, cached_queryset)
+            return cached_queryset
+
         if search_word:
             queryset = Course.objects.annotate(similarity=TrigramSimilarity('title', search_word)
                                                ).filter(similarity__gt=0.1).order_by('-similarity')
@@ -72,70 +86,64 @@ class CourseList(ListView):
 
 def course_main_page(request, course_id):
     user = request.user
-    course = Course.objects.get(id=course_id)
-    course_teacher = course.teacher
+    key = f'course_main_page_{course_id}'
+    context = cache.get(key)
+    if not context:
+        course = Course.objects.get(id=course_id)
+        course_teacher = course.teacher
 
-    try:
-        assignments = Assignment.objects.filter(course=course).order_by('assignment_num')
-    except Assignment.DoesNotExist:
-        assignments = None
+        try:
+            assignments = Assignment.objects.filter(course=course).order_by('assignment_num')
+        except Assignment.DoesNotExist:
+            assignments = None
 
-    try:
-        lessons = Lesson.objects.filter(course=course).order_by('number')
-    except Lesson.DoesNotExist:
-        lessons = None
+        try:
+            lessons = Lesson.objects.filter(course=course).order_by('number')
+        except Lesson.DoesNotExist:
+            lessons = None
 
-    if user != course_teacher:
+        context = {
+            'course': course,
+            'course_teacher': course_teacher,
+            'assignments': assignments,
+            'lessons': lessons
+        }
+        cache.set(key, context)
+    course = context['course']
+
+    if user != context['course_teacher']:
         try:
             course_submission = CourseUser.objects.get(user=user, course=course)
         except CourseUser.DoesNotExist:
             course_submission = CourseUser.objects.create(user=user, course=course)
 
-        course_submission_total = 0
-        for assignment in assignments:
-            course_submission_total += assignment.total_mark
-        course_submission.total_mark = course_submission_total
-        course_submission.save()
-
         try:
             assignment_submissions = AssignmentSubmission.objects.filter(
                         student=user, assignment__course=course).order_by('assignment__assignment_num')
-            course_submission_earned = 0
-            for assignment_submission in assignment_submissions:
-                course_submission_earned += assignment_submission.earned_mark
-            course_submission.earned_mark = course_submission_earned
-            course_submission.save()
         except AssignmentSubmission.DoesNotExist:
             assignment_submissions = None
 
         assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course,
                                                                           student=user, is_finished=True)
 
-        student_context = {'student': user,
-                           'course_teacher': course_teacher,
-                           'course': course,
-                           'course_submission': course_submission,
-                           'assignments': assignments,
-                           'assignment_submissions': assignment_submissions,
-                           'assignment_submissions_done': assignment_submissions_done,
-                           'lessons': lessons}
-
+        extra_context = {'student': user,
+                         'course_submission': course_submission,
+                         'assignment_submissions': assignment_submissions,
+                         'assignment_submissions_done': assignment_submissions_done,
+                         }
+        student_context = {**context, **extra_context}
         return render(request, 'courses/course_main_page.html', student_context)
 
     else:
         course_students = course.participants.all().order_by('last_name')
-        assignment_submissions_all = AssignmentSubmission.objects.filter(assignment__in=assignments)
+        assignment_submissions_all = AssignmentSubmission.objects.filter(assignment__in=context['assignments'])
 
-        teacher_context = {
+        extra_context = {
             'user': user,
-            'course_teacher': course_teacher,
             'course_students': course_students,
-            'course': course,
             'assignment_submissions_all': assignment_submissions_all,
-            'lessons': lessons,
-            'assignments': assignments
         }
-
+        teacher_context = {**context, **extra_context}
         return render(request, 'courses/course_main_page.html', teacher_context)
 
 

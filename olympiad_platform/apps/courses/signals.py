@@ -10,6 +10,13 @@ def update_course_mark(sender, instance, **kwargs):
     course.save()
 
 
+@receiver(pre_delete, sender=Assignment)
+def decrease_course_mark(sender, instance, **kwargs):
+    course = instance.course
+    course.total_mark -= instance.total_mark
+    course.save()
+
+
 @receiver(post_save, sender=AssignmentSubmission)
 def update_user_course_mark(sender, instance, **kwargs):
     if instance.earned_mark > 0:

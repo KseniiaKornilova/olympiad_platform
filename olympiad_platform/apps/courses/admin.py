@@ -13,8 +13,8 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ('title', 'subject__name')
     list_per_page = 10
     list_filter = ('subject',)
-    fields = ('title', 'subject', 'course_description', 'category', 'month_amount', 'times_a_week', 'price',
-              'teacher', 'image')
+    fields = ('title', 'subject', 'course_description', 'category', 'total_mark', 'month_amount',
+              'times_a_week', 'price', 'teacher', 'image')
 
     inlines = (CourseUserInline,)
 
