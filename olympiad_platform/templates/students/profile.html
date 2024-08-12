@@ -1,4 +1,5 @@
 {% extends 'basic.html' %} 
+{% load cache %}
 {% load static %} 
 {% load bootstrap4 %}
 
@@ -12,7 +13,7 @@
     {% endfor %} 
  
 
-
+    {% cache 600 logout %}
     <div class="title-section dark-bg grey-bg">
         <div class="container">
             <div class="row">
@@ -100,5 +101,5 @@
                     </div><!-- Container /-->
                 </div>
                 <!-- Request Appointment /-->          
-
+    {% endcache %}           
     {% endblock %}
