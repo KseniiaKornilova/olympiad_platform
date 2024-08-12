@@ -1,12 +1,10 @@
 {% extends 'basic.html' %} 
-{% load cache %}
 {% load static %} 
 {% load bootstrap4 %}
 
 {% block title %} EduBuddy school - Выйти {% endblock %} 
 
 {% block content %} 
-{% cache 600 logout %}
 <div class="title-section dark-bg grey-bg">
     <div class="container">
         <div class="row">
@@ -22,5 +20,4 @@
     </div><!-- Grid Container /-->
 </div>
 <!-- Title Section /-->
-{% endcache %}
 {% endblock %}

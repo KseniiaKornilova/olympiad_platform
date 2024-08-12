@@ -15,6 +15,10 @@ def index(request):
     return render(request, 'olympiads/index.html')
 
 
+def is_not_ready(request):
+    return render(request, 'is_not_ready.html')
+
+
 class UserOlympiadList(ListView):
     model = Olympiad
     template_name = 'olympiads/olympiads_list.html'

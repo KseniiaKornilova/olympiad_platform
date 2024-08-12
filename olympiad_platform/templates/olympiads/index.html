@@ -46,9 +46,9 @@
                             	<img src="{% static 'assets/images/help/information-boxes/courses.jpg' %}" alt="Information-Img">
                             </div>
                             <div class="featured-text">
-                            	<h5><a href="about-us.html">Курсы для школьников</a></h5>
+                            	<h5><a href="{% url 'courses:courses' %}">Курсы для школьников</a></h5>
                                 <p>Программы занятий разработаны с использованием методом мнемотехники для максимально эффективного обучения.</p>
-                                <a href="about-us.html">Подробнее →</a>
+                                <a href="{% url 'courses:courses' %}">Подробнее →</a>
                             </div>
                         </div><!-- Featured Box /-->
                     </div><!-- Columns /-->
@@ -59,9 +59,9 @@
                             	<img src="{% static 'assets/images/help/information-boxes/olympiads.jpg' %}" alt="Information-Img">
                             </div>
                             <div class="featured-text">
-                            	<h5><a href="about-us.html">Олимпиады</a></h5>
+                            	<h5><a href="{% url 'olympiads:olympiads' %}">Олимпиады</a></h5>
                                 <p>Подготовка к олимпиадам любого уровня, которые могут гарантировать твое поступление в университет даже без ЕГЭ!</p>
-                                <a href="about-us.html">Подробнее →</a>
+                                <a href="{% url 'olympiads:olympiads' %}">Подробнее →</a>
                             </div>
                         </div><!-- Featured Box /-->
                     </div><!-- Columns /-->
@@ -70,24 +70,24 @@
                     	<div class="events-block">
                         	<div class="events-head">
                             	<h5>Последние события</h5>
-                                <h5><a href="all-events.html">Все события →</a></h5>
+                                <h5><a href="{% url 'olympiads:is_not_ready' %}">Все события →</a></h5>
                             </div>
                             <div class="events">
                             	<div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>18 сентября 2023</h6>
-                                    <a href="all-events.html">Стартовала Всероссийская олимпиада школьников</a>
+                                    <a href="{% url 'olympiads:is_not_ready' %}">Стартовала Всероссийская олимпиада школьников</a>
                                 </div>
                                 <div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>2 сентября 2023</h6>
-                                    <a href="all-events.html">Вебинар "Как выбрать университет и направление"</a>
+                                    <a href="{% url 'olympiads:is_not_ready' %}">Вебинар "Как выбрать университет и направление"</a>
                                 </div>
                                 <div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>31 июля 2023</h6>
-                                    <a href="all-events.html">Начинаем готовиться к ЕГЭ!</a>
+                                    <a href="{% url 'olympiads:is_not_ready' %}">Начинаем готовиться к ЕГЭ!</a>
                                 </div>
                                 <div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>1 июня 2023</h6>
-                                    <a href="all-events.html">Начало программы для дошкольников.</a>
+                                    <a href="{% url 'olympiads:is_not_ready' %}">Начало программы для дошкольников.</a>
                                 </div>
                             </div><!-- Events /-->
                         </div><!-- Events Block /-->
@@ -131,8 +131,8 @@
                                 <li><i class="fas fa-check"></i> Актуальность: наши курсы постоянно обновляются и содержат самую полезную и актуальную информацию.</li>
                                 <li><i class="fas fa-check"></i> Сообщество: присоединяясь к нам, вы становитесь частью образовательного сообщества, где можно обмениваться опытом и находить поддержку.</li>
                             </ul>
-                            <a href="about-us.html" class="btn btn-primary btn-padding btn-animated">О нас</a>
-                            <a href="about-us.html" class="btn btn-secondary btn-padding btn-dark-animated">Связаться с нами</a>
+                            <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-primary btn-padding btn-animated">О нас</a>
+                            <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-secondary btn-padding btn-dark-animated">Связаться с нами</a>
                         </div><!-- About Text /-->
                     </div><!-- columns /-->
                     
@@ -162,13 +162,13 @@
                                 </div>
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Готовимся к ЕГЭ по физике</a></h5>
+                            	<h5><a href="{% url 'courses:courses' %}">Готовимся к ЕГЭ по физике</a></h5>
                                 <p>Гарантированно сдашь ЕГЭ по физике на высокий балл.</p>
                                 <ul class="menu">
                                     <li><i class="fas fa-check"></i> 12 месяцев</li>
                                     <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
                                 </ul>
-                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -186,13 +186,13 @@
                                 </div>
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Программирование на Python</a></h5>
+                            	<h5><a href="{% url 'courses:courses' %}">Программирование на Python</a></h5>
                                 <p>Освоите один из самых популярных языков программирования</p>
                                 <ul class="menu">
                                     <li><i class="fas fa-check"></i> 12 месяцев</li>
                                     <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
                                 </ul>
-                                <a href="#" class="btn btn-dark btn-animated">Присоединиться</a>
+                                <a href="{% url 'courses:courses' %}" class="btn btn-dark btn-animated">Присоединиться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -210,13 +210,13 @@
                                 </div>
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Готовимся к 1 классу!</a></h5>
+                            	<h5><a href="{% url 'courses:courses' %}">Готовимся к 1 классу!</a></h5>
                                 <p>Поможем легко освоить основы чтения, письма и математики.</p>
                                 <ul class="menu">
                                     <li><i class="fas fa-check"></i> 3 месяца</li>
                                     <li><i class="fas fa-check"></i> 4 занятия в неделю</li>
                                 </ul>
-                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -234,13 +234,13 @@
                                 </div>
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#"></a>Профильная математика ЕГЭ</h5>
+                            	<h5><a href="{% url 'courses:courses' %}"></a>Профильная математика ЕГЭ</h5>
                                 <p>Без труда сдашь один из самых сложных экзаменов ЕГЭ на высокий балл.</p>
                                 <ul class="menu">
                                     <li><i class="fas fa-check"></i> 12 месяцев</li>
                                     <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
                                 </ul>
-                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -258,13 +258,13 @@
                                 </div>
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Введение в биоинженерию</a></h5>
+                            	<h5><a href="{% url 'courses:courses' %}">Введение в биоинженерию</a></h5>
                                 <p>Узнаете о самых иновационных технологиях для развития медицины и промышленности</p>
                                 <ul class="menu">
                                     <li><i class="fas fa-check"></i> 12 месяцев</li>
                                     <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
                                 </ul>
-                                <a href="#" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -282,13 +282,13 @@
                                 </div>
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Выбор будущей специальности</a></h5>
+                            	<h5><a href="{% url 'courses:courses' %}">Выбор будущей специальности</a></h5>
                                 <p>Расскажем как определиться с направлением и вузом</p>
                                 <ul class="menu">
                                     <li><i class="fas fa-check"></i> 1 месяц</li>
                                     <li><i class="fas fa-check"></i> 1 занятие в неделю + материалы</li>
                                 </ul>
-                                <a href="#" class="btn btn-dark btn-animated">Присоединиться</a>
+                                <a href="{% url 'courses:courses' %}" class="btn btn-dark btn-animated">Присоединиться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -310,12 +310,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-1.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="#">Корнилова Ксения</a></h5>
+                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Корнилова Ксения</a></h5>
                             	<p>Биология, биоинженерия, химия</p>
                             </div>
                         </div>
@@ -327,12 +327,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-2.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="#">Литов Владимир</a></h5>
+                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Литов Владимир</a></h5>
                             	<p>Программирование</p>
                             </div>
                         </div>
@@ -344,12 +344,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-3.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="#">Корнилов Кирилл</a></h5>
+                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Корнилов Кирилл</a></h5>
                             	<p>Физика, математика</p>
                             </div>
                         </div>
@@ -361,12 +361,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-4.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="single-teacher.html" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="#">Ростова Мария</a></h5>
+                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Ростова Мария</a></h5>
                             	<p>Обучение детей</p>
                             </div>
                         </div>
@@ -392,9 +392,9 @@
                                 <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img1.jpg' %}" alt="Our Olympiads">
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Олимпиада Ломоносова</a></h5>
+                            	<h5><a href="{% url 'olympiads:olympiads' %}">Олимпиада Ломоносова</a></h5>
                                 <p>Хороший результат в этой олимпиаде может избавить тебя от необходимости сдачи вступительных экзаменов в университеты.</p>
-                                <a href="#" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
+                                <a href="{% url 'olympiads:olympiads' %}" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -405,9 +405,9 @@
                                 <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img2.jpg' %}" alt="Our Olympiads">
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Олимпиада "Высшая проба" от Вышки</a></h5>
+                            	<h5><a href="{% url 'olympiads:olympiads' %}">Олимпиада "Высшая проба" от Вышки</a></h5>
                                 <p>Главная олимпиада Вышки, позволяющая абитуриентам поступать в университет без конкурса!</p>
-                                <a href="#" class="btn btn-dark btn-animated">Зарегистрироваться</a>
+                                <a href="{% url 'olympiads:olympiads' %}" class="btn btn-dark btn-animated">Зарегистрироваться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -418,9 +418,9 @@
                                 <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img3.jpg' %}" alt="Our Olympiads">
                             </div>
                             <div class="course-text">
-                            	<h5><a href="#">Всероссийская олимпиада школьников</a></h5>
+                            	<h5><a href="{% url 'olympiads:olympiads' %}">Всероссийская олимпиада школьников</a></h5>
                                 <p>Дойди до финала и получили привилегии для поступления в университеты страны.</p>
-                                <a href="#" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
+                                <a href="{% url 'olympiads:olympiads' %}" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
@@ -507,7 +507,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="call-box">
                             <img src="{% static 'assets/images/help/icons/book-icon.png' %}" alt="book Icon">
-                            <h3><a href="#">Выбери курс</a></h3>
+                            <h3><a href="{% url 'courses:courses' %}">Выбери курс</a></h3>
                             <p>Ты точно найдешь свой идеальный курс, соответствующий твоим запросам!</p>
                         </div><!-- call Box /-->
                     </div><!-- Columns /-->
@@ -515,7 +515,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="call-box">
                             <img src="{% static 'assets/images/help/icons/light-bulb.png' %}" alt="Light Bulb">
-                            <h3><a href="#">Присоединяйся к семинарам</a></h3>
+                            <h3><a href="{% url 'olympiads:is_not_ready' %}">Присоединяйся к семинарам</a></h3>
                             <p>Наши профессиональные кураторы во всех деталях объяснят сложные моменты.     </p>
                         </div><!-- call Box /-->
                     </div><!-- Columns /-->
@@ -523,7 +523,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="call-box">
                             <img src="{% static 'assets/images/help/icons/hat-college.png' %}" alt="Hat College">
-                            <h3><a href="#">Построй свое будущее</a></h3>
+                            <h3><a href="{% url 'olympiads:is_not_ready' %}">Построй свое будущее</a></h3>
                             <p>Прямо сейчас ты можешь сделать шаг на пути к своему успеху!</p>
                         </div><!-- call Box /-->
                     </div><!-- Columns /-->
@@ -547,13 +547,13 @@
                             	<img src="{% static 'assets/images/help/blog/blog-img1.jpg' %}" alt="Blog Img">
                             </div>
                             <div class="blog-text">
-                            	<h5><a href="blog.html">Вебинар о компьютерной грамотности.</a></h5>
+                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Вебинар о компьютерной грамотности.</a></h5>
                                 <div class="meta-tags">
                                     <i class="far fa-user"> <span>От:</span><a href="single-post-page.html">Владимир</a></i>
-                                    <i class="far fa-comment"> <a href="single-post-page.html">0</a></i>
+                                    <i class="far fa-comment"> <a href="{% url 'olympiads:is_not_ready' %}">0</a></i>
                                 </div>
                             	<p>24 сентября в 13:00 по Москве пройдет вебинар о базовой компьютерной грамотности. Длительность вебинара - 1,5 часа.</p>
-                                <a href="#" class="btn btn-light btn-dark-animated">Подробнее</a>
+                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-light btn-dark-animated">Подробнее</a>
                             </div>
                         </div><!-- Post Box /-->
                     </div><!-- Columns /-->
@@ -564,14 +564,14 @@
                             	<img src="{% static 'assets/images/help/blog/blog-img2.jpg' %}" alt="Blog Img">
                             </div>
                             <div class="blog-text">
-                            	<h5><a href="blog.html">Статья: как не потерять мотивацию учиться?</a></h5>
+                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Статья: как не потерять мотивацию учиться?</a></h5>
                                 <div class="meta-tags">
-                                    <i class="far fa-user"> <span>От:</span><a href="single-post-page.html">Ксения</a></i>
-                                    <i class="far fa-comment"> <a href="single-post-page.html">0</a></i>
+                                    <i class="far fa-user"> <span>От:</span><a href="{% url 'olympiads:is_not_ready' %}">Ксения</a></i>
+                                    <i class="far fa-comment"> <a href="{% url 'olympiads:is_not_ready' %}">0</a></i>
                                 </div>
                             	<p><i>Длительность чтения - 15 минут.</i>
                                 Впереди экзамены и олимпиады, поэтому нельзя сбавлять темп обучения, чтобы обучение не было в тягость...</p>
-                                <a href="#" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div><!-- Post Box /-->
                     </div><!-- Columns /-->
@@ -582,13 +582,13 @@
                             	<img src="{% static 'assets/images/help/blog/blog-img3.jpg' %}" alt="Blog Img">
                             </div>
                             <div class="blog-text">
-                            	<h5><a href="blog.html">Расскажем о процессе подачи документов в университеты.</a></h5>
+                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Расскажем о процессе подачи документов в университеты.</a></h5>
                                 <div class="meta-tags">
-                                    <i class="far fa-user"> <span>От:</span><a href="single-post-page.html">Кирилл</a></i>
-                                    <i class="far fa-comment"> <a href="single-post-page.html">0</a></i>
+                                    <i class="far fa-user"> <span>От:</span><a href="{% url 'olympiads:is_not_ready' %}">Кирилл</a></i>
+                                    <i class="far fa-comment"> <a href="{% url 'olympiads:is_not_ready' %}">0</a></i>
                                 </div>
                             	<p>Присоединяйся к вебинару 2 октября в 20:00 по Москве. Узнаешь о пакете необходимых документов, привилегиях...</p>
-                                <a href="#" class="btn btn-light btn-dark-animated">Подробнее</a>
+                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-light btn-dark-animated">Подробнее</a>
                             </div>
                         </div><!-- Post Box /-->
                     </div><!-- Columns /-->

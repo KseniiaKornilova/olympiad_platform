@@ -131,7 +131,7 @@
                                         <a class="nav-link" href="{% url 'olympiads:index' %}">Главная</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="about-us.html">Курсы</a>
+                                        <a class="nav-link dropdown-toggle" href="{% url 'courses:courses' %}">Курсы</a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="{% url 'courses:courses' %}">Все курсы</a>
                                             <a class="dropdown-item" href="{% url 'courses:courses' %}?category=preschoolers">Дошкольникам</a>
@@ -145,13 +145,13 @@
                                         <a class="nav-link" href="{% url 'olympiads:olympiads' %}">Олимпиады</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="our-staff.html">Наши учителя</a>
+                                        <a class="nav-link" href="{% url 'olympiads:is_not_ready' %}">Наши учителя</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="appointment.html">О нас</a>
+                                        <a class="nav-link" href="{% url 'olympiads:is_not_ready' %}">О нас</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="blog.html">Контакты</a>
+                                        <a class="nav-link" href="{% url 'olympiads:is_not_ready' %}">Контакты</a>
                                     </li>
                                 </ul>
                             </div>
@@ -174,12 +174,12 @@
                 <div class="footer-box Courses">
                     <ul class="links  col-padding-y">
                         <li><h6>О школе EduBuddy</h6></li>
-                        <li><a href="#">О нас</a></li>
-                        <li><a href="#">Наши учителя</a></li>
-                        <li><a href="#">Отзывы о EduBuddy</a></li>
-                        <li><a href="#">Контакты</a></li>
-                        <li><a href="#">Обратная связь</a></li>
-                        <li><a href="#">Сведения об образовательной организации</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">О нас</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">Наши учителя</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">Отзывы о EduBuddy</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">Контакты</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">Обратная связь</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">Сведения об образовательной организации</a></li>
                     </ul>
                     
                 </div><!-- Footer Box /-->
@@ -189,10 +189,10 @@
                 <div class="footer-box Privacy">
                     <ul class="links">
                         <li><h6>Учеба в EduBuddy</h6></li>
-                        <li><a href="#">Наши курсы</a></li>
-                        <li><a href="#">Олимпиады</a></li>
-                        <li><a href="#">Блог</a></li>
-                        <li><a href="#">События</a></li>
+                        <li><a href="{% url 'courses:courses' %}">Наши курсы</a></li>
+                        <li><a href="{% url 'olympiads:olympiads' %}">Олимпиады</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">Блог</a></li>
+                        <li><a href="{% url 'olympiads:is_not_ready' %}">События</a></li>
                     </ul>
                 </div><!-- Footer Box /-->
             </div><!-- Columns /-->
@@ -202,10 +202,10 @@
                     <h6>Наши социальные сети</h6>
                     <div class="social-icons">
                         <ul class="menu">
-                            <li><a href="404-error-page.html"><i class="fab fa-vk"></i></a></li>
-                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fab fa-telegram"></i></a></li>                                     
+                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-vk"></i></a></li>
+                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-telegram"></i></a></li>                                     
                         </ul>
                     </div>
                     <div class="subscribe-us">
