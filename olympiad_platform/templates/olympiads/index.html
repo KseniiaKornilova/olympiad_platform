@@ -149,150 +149,36 @@
             <div class="container">
             	<div class="row">
                 	
+                    {% for course in courses %}
                     <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
                     	<div class="course-warp">
                         	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-courses/our-courses-img1.jpg' %}" alt="Our Courses">
+                                <img src="{{ course.image.url }}" alt="Our Courses">
                                 <div class="course-price">
-                                    <h6>40 000</h6>
-                                </div>
-                                <div class="course-teacher">
-                                    <img src="{% static 'assets/images/help/our-courses/teacher-1.png' %}" alt="teacher">
-                                    <h6>Корнилов Кирилл</h6>
-                                </div>
-                            </div>
-                            <div class="course-text">
-                            	<h5><a href="{% url 'courses:courses' %}">Готовимся к ЕГЭ по физике</a></h5>
-                                <p>Гарантированно сдашь ЕГЭ по физике на высокий балл.</p>
-                                <ul class="menu">
-                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
-                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
-                                </ul>
-                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
-                            </div>
-                        </div><!-- Courses warp /-->
-                    </div><!-- columns /-->
-                    
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-                    	<div class="course-warp">
-                        	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-courses/our-courses-img2.jpg' %}" alt="Our Courses">
-                                <div class="course-price">
-                                    <h6>50 000</h6>
-                                </div>
-                                <div class="course-teacher">
-                                    <img src="{% static 'assets/images/help/our-courses/teacher-2.png' %}" alt="teacher">
-                                    <h6>Литов Владимир</h6>
-                                </div>
-                            </div>
-                            <div class="course-text">
-                            	<h5><a href="{% url 'courses:courses' %}">Программирование на Python</a></h5>
-                                <p>Освоите один из самых популярных языков программирования</p>
-                                <ul class="menu">
-                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
-                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
-                                </ul>
-                                <a href="{% url 'courses:courses' %}" class="btn btn-dark btn-animated">Присоединиться</a>
-                            </div>
-                        </div><!-- Courses warp /-->
-                    </div><!-- columns /-->
-                    
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-                    	<div class="course-warp">
-                        	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-courses/our-courses-img3.jpg' %}" alt="Our Courses">
-                                <div class="course-price">
+                                    {% if course.price == 0 %}
                                     <h6>БЕСПЛАТНО</h6>
+                                    {% else %} 
+                                    <h6>{{ course.price }}</h6>
+                                    {% endif %} 
                                 </div>
                                 <div class="course-teacher">
-                                    <img src="{% static 'assets/images/help/our-courses/teacher-3.png' %}" alt="teacher">
-                                    <h6>Ростова Мария</h6>
+                                    <img src="{{ course.teacher.image.url }}" alt="teacher">
+                                    <h6>{{ course.teacher.last_name }} {{ course.teacher.first_name }}</h6>
                                 </div>
                             </div>
                             <div class="course-text">
-                            	<h5><a href="{% url 'courses:courses' %}">Готовимся к 1 классу!</a></h5>
-                                <p>Поможем легко освоить основы чтения, письма и математики.</p>
+                            	<h5><a href="{% url 'courses:courses_registration' course.id %}">{{ course.title }}</a></h5>
+                                <p>{{ course.course_description }}</p>
                                 <ul class="menu">
-                                    <li><i class="fas fa-check"></i> 3 месяца</li>
-                                    <li><i class="fas fa-check"></i> 4 занятия в неделю</li>
+                                    <li><i class="fas fa-check"></i> {{ course.month_amount }} месяцев</li>
+                                    <li><i class="fas fa-check"></i> {{course.times_a_week }} занятия в неделю</li>
                                 </ul>
-                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                                <a href="{% url 'courses:courses_registration' course.id %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
+                    {% endfor %}
                     
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-                    	<div class="course-warp">
-                        	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-courses/our-courses-img4.jpg' %}" alt="Our Courses">
-                                <div class="course-price">
-                                    <h6>63 000</h6>
-                                </div>
-                                <div class="course-teacher">
-                                    <img src="{% static 'assets/images/help/our-courses/teacher-1.png' %}" alt="teacher">
-                                    <h6>Корнилов Кирилл</h6>
-                                </div>
-                            </div>
-                            <div class="course-text">
-                            	<h5><a href="{% url 'courses:courses' %}"></a>Профильная математика ЕГЭ</h5>
-                                <p>Без труда сдашь один из самых сложных экзаменов ЕГЭ на высокий балл.</p>
-                                <ul class="menu">
-                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
-                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
-                                </ul>
-                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
-                            </div>
-                        </div><!-- Courses warp /-->
-                    </div><!-- columns /-->
-                    
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-                    	<div class="course-warp">
-                        	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-courses/our-courses-img5.jpg' %}" alt="Our Courses">
-                                <div class="course-price">
-                                    <h6>55 000</h6>
-                                </div>
-                                <div class="course-teacher">
-                                    <img src="{% static 'assets/images/help/our-courses/teacher-4.png' %}" alt="teacher">
-                                    <h6>Корнилова Ксения</h6>
-                                </div>
-                            </div>
-                            <div class="course-text">
-                            	<h5><a href="{% url 'courses:courses' %}">Введение в биоинженерию</a></h5>
-                                <p>Узнаете о самых иновационных технологиях для развития медицины и промышленности</p>
-                                <ul class="menu">
-                                    <li><i class="fas fa-check"></i> 12 месяцев</li>
-                                    <li><i class="fas fa-check"></i> 3 занятия в неделю</li>
-                                </ul>
-                                <a href="{% url 'courses:courses' %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
-                            </div>
-                        </div><!-- Courses warp /-->
-                    </div><!-- columns /-->
-                    
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-                    	<div class="course-warp">
-                        	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-courses/our-courses-img6.jpg' %}" alt="Our Courses">
-                                <div class="course-price">
-                                    <h6>БЕСПЛАТНО</h6>
-                                </div>
-                                <div class="course-teacher">
-                                    <img src="{% static 'assets/images/help/our-courses/teacher-4.png' %}" alt="teacher">
-                                    <h6>Корнилова Ксения</h6>
-                                </div>
-                            </div>
-                            <div class="course-text">
-                            	<h5><a href="{% url 'courses:courses' %}">Выбор будущей специальности</a></h5>
-                                <p>Расскажем как определиться с направлением и вузом</p>
-                                <ul class="menu">
-                                    <li><i class="fas fa-check"></i> 1 месяц</li>
-                                    <li><i class="fas fa-check"></i> 1 занятие в неделю + материалы</li>
-                                </ul>
-                                <a href="{% url 'courses:courses' %}" class="btn btn-dark btn-animated">Присоединиться</a>
-                            </div>
-                        </div><!-- Courses warp /-->
-                    </div><!-- columns /-->
-                
                 </div><!-- Row /-->
             </div><!-- Container -->
         </div>
@@ -386,45 +272,21 @@
             <div class="container">
             	<div class="row">
                 	
+                    {% for olympiad in olympiads %} 
+
                     <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
                     	<div class="course-warp">
                         	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img1.jpg' %}" alt="Our Olympiads">
+                                <img src="{{ olympiad.image.url }}" alt="Our Olympiads">
                             </div>
                             <div class="course-text">
-                            	<h5><a href="{% url 'olympiads:olympiads' %}">Олимпиада Ломоносова</a></h5>
-                                <p>Хороший результат в этой олимпиаде может избавить тебя от необходимости сдачи вступительных экзаменов в университеты.</p>
-                                <a href="{% url 'olympiads:olympiads' %}" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
+                            	<h5><a href="{% url 'olympiads:olympiad_registration' olympiad.id %}">{{ olympiad.title }}</a></h5>
+                                <p>{{ olympiad.description }}</p>
+                                <a href="{% url 'olympiads:olympiad_registration' olympiad.id %}" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
                             </div>
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->
-                    
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-                    	<div class="course-warp">
-                        	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img2.jpg' %}" alt="Our Olympiads">
-                            </div>
-                            <div class="course-text">
-                            	<h5><a href="{% url 'olympiads:olympiads' %}">Олимпиада "Высшая проба" от Вышки</a></h5>
-                                <p>Главная олимпиада Вышки, позволяющая абитуриентам поступать в университет без конкурса!</p>
-                                <a href="{% url 'olympiads:olympiads' %}" class="btn btn-dark btn-animated">Зарегистрироваться</a>
-                            </div>
-                        </div><!-- Courses warp /-->
-                    </div><!-- columns /-->
-                    
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
-                    	<div class="course-warp">
-                        	<div class="course-img">
-                                <img src="{% static 'assets/images/help/our-olympiads/our-olympiads-img3.jpg' %}" alt="Our Olympiads">
-                            </div>
-                            <div class="course-text">
-                            	<h5><a href="{% url 'olympiads:olympiads' %}">Всероссийская олимпиада школьников</a></h5>
-                                <p>Дойди до финала и получили привилегии для поступления в университеты страны.</p>
-                                <a href="{% url 'olympiads:olympiads' %}" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
-                            </div>
-                        </div><!-- Courses warp /-->
-                    </div><!-- columns /-->
-                    
+                    {% endfor %}
                     
                         </div><!-- Courses warp /-->
                     </div><!-- columns /-->

@@ -35,7 +35,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-6 col-padding-y">
                     <div class="course-warp">
                         <div class="course-img">
-                            <img src="{% static olympiad.image %}" alt="Our Olympiads">
+                            <img src="{{ olympiad.image.url }}" alt="Our Olympiads">
                             
                             <div class="course-teacher">
                                 <h6>{{ olympiad.date_of_start }}</h6>

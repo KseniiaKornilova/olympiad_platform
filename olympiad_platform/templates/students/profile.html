@@ -39,7 +39,7 @@
                             <img src="{% static 'assets/images/help/profile/profile-img1.jpg' %}" alt="Blog Img">
                         </div>
                         <div class="blog-text">
-                            <h5><a href="blog.html">Мои курсы</a></h5>
+                            <h5><a href="{% url 'courses:courses_list' %}">Мои курсы</a></h5>
                             
                             <p>Здесь ты найдешь список изучаемых тобой курсов, все материалы, а также увидишь свой прогресс.</p>
                             <a href="{% url 'courses:courses_list' %}" class="btn btn-light btn-dark-animated">Далее</a>
@@ -53,7 +53,7 @@
                             <img src="{% static 'assets/images/help/profile/profile-img2.jpg' %}" alt="Blog Img">
                         </div>
                         <div class="blog-text">
-                            <h5><a href="blog.html">Олимпиады</a></h5>
+                            <h5><a href="{% url 'olympiads:olympiads_list' %}">Олимпиады</a></h5>
                             <p>Здесь вся твоя олимпиадная история, твои результаты, разборы заданий и материалы для подготовки.</p>
                             <a href="{% url 'olympiads:olympiads_list' %}" class="btn btn-dark btn-animated">Далее</a>
                         </div>
@@ -66,9 +66,9 @@
                             <img src="{% static 'assets/images/help/profile/profile-img3.jpg' %}" alt="Blog Img">
                         </div>
                         <div class="blog-text">
-                            <h5><a href="blog.html">Мои домашние задания</a></h5>
+                            <h5><a href="{% url 'olympiads:is_not_ready' %}">Мои домашние задания</a></h5>
                             <p>Здесь ты найдешь свои проверенные домашки с указанием всех ошибок и рекомендациями кураторов.</p>
-                            <a href="#" class="btn btn-light btn-dark-animated">Далее</a>
+                            <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-light btn-dark-animated">Далее</a>
                         </div>
                     </div><!-- Post Box /-->
                 </div><!-- Columns /-->

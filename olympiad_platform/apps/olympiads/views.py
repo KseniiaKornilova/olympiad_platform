@@ -5,14 +5,22 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.contrib.postgres.search import TrigramSimilarity
 from django.core.cache import cache
+from django.db.models import Count
 from ..students.models import User
+from ..courses.models import Course
 from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, \
       MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
 from .forms import SearchForm
 
 
 def index(request):
-    return render(request, 'olympiads/index.html')
+    courses = Course.objects.annotate(participant_count=Count('participants')).order_by('-participant_count')[:6]
+    olympiads = Olympiad.objects.annotate(participant_count=Count('participants')).order_by('-participant_count')[:3]
+    context = {
+        'courses': courses,
+        'olympiads': olympiads
+    }
+    return render(request, 'olympiads/index.html', context)
 
 
 def is_not_ready(request):

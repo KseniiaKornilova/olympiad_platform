@@ -35,7 +35,7 @@
                 <div class="col-sm-12 col-md-6 col-lg-4 col-padding-y">
                     <div class="course-warp">
                         <div class="course-img">
-                            <img src="{% static course.image %}" alt="Our Courses">
+                            <img src="{{ course.image.url }}" alt="Our Courses">
                             <div class="course-price">
                                 {% if course.price == 0 %}
                                 <h6>БЕСПЛАТНО</h6>
@@ -44,7 +44,7 @@
                                 {% endif %} 
                             </div>
                             <div class="course-teacher">
-                                <img src="{% static course.teacher.image %}" alt="teacher">
+                                <img src="{{ course.teacher.image.url }}" alt="teacher">
                                 <h6>{{ course.teacher.last_name }} {{ course.teacher.first_name }}</h6>
                             </div>
                         </div>
