@@ -14,7 +14,9 @@ from .forms import SearchForm
 
 
 def index(request):
-    courses = Course.objects.annotate(participant_count=Count('participants')).order_by('-participant_count')[:6]
+    courses = Course.objects.annotate(participant_count=Count('participants')) \
+        .select_related('teacher') \
+        .order_by('-participant_count')[:6]
     olympiads = Olympiad.objects.annotate(participant_count=Count('participants')).order_by('-participant_count')[:3]
     context = {
         'courses': courses,
@@ -34,7 +36,7 @@ class UserOlympiadList(ListView):
     context_object_name = 'olympiads'
 
     def get_queryset(self):
-        queryset = self.request.user.olympiad_set.all()
+        queryset = self.request.user.olympiad_set.select_related('subject').all()
         search_word = self.request.GET.get('keyword')
 
         if search_word:
@@ -52,7 +54,7 @@ class UserOlympiadList(ListView):
 
 class UserPreviousOlympiadList(UserOlympiadList):
     def get_queryset(self):
-        queryset = self.request.user.olympiad_set.all().filter(date_of_start__lt=date.today())
+        queryset = self.request.user.olympiad_set.select_related('subject').all().filter(date_of_start__lt=date.today())
         search_word = self.request.GET.get('keyword')
 
         if search_word:
@@ -62,7 +64,7 @@ class UserPreviousOlympiadList(UserOlympiadList):
 
 class UserComingOlympiadList(UserOlympiadList):
     def get_queryset(self):
-        queryset = self.request.user.olympiad_set.all().filter(date_of_start__gt=date.today())
+        queryset = self.request.user.olympiad_set.select_related('subject').all().filter(date_of_start__gt=date.today())
         search_word = self.request.GET.get('keyword')
 
         if search_word:
@@ -76,15 +78,16 @@ class OlympiadList(ListView):
     context_object_name = 'olympiads'
 
     def get_queryset(self):
-        queryset = Olympiad.objects.all().filter(date_of_start__gt=date.today())
+        queryset = Olympiad.objects.all().select_related('subject').filter(date_of_start__gt=date.today())
         search_word = self.request.GET.get('keyword', None)
         stage = self.request.GET.get('stage', None)
         subject = self.request.GET.get('subject', None)
 
         if search_word:
-            queryset = Olympiad.objects.annotate(similarity=TrigramSimilarity('title', search_word)
-                                                 ).filter(similarity__gt=0.1, date_of_start__gt=date.today()
-                                                          ).order_by('-similarity')
+            queryset = (Olympiad.objects.annotate(similarity=TrigramSimilarity('title', search_word))
+                        .filter(similarity__gt=0.1, date_of_start__gt=date.today())
+                        .select_related('subject')
+                        .order_by('-similarity'))
             return queryset
 
         if stage:
@@ -107,8 +110,17 @@ class OlympiadList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = SearchForm(self.request.GET)
-        context['subjects'] = Subject.objects.all()
-        context['stages'] = Olympiad.objects.values_list('stage', flat=True).distinct()
+        subjects = cache.get('subjects')
+        if not subjects:
+            subjects = Subject.objects.all()
+            cache.set('subjects', subjects)
+        context['subjects'] = subjects
+
+        stages = cache.get('stages')
+        if not stages:
+            stages = Olympiad.objects.values_list('stage', flat=True).distinct()
+            cache.set('stages', stages)
+        context['stages'] = stages
         return context
 
 
@@ -172,11 +184,8 @@ def olympiad_page(request, olympiad_id):
         return render(request, 'olympiads/olympiad_page.html', context)
 
     else:
-        key_result = f'olympiad_page_result{olympiad.id}'
-        all_submissions = cache.get(key_result)
-        if not all_submissions:
-            all_submissions = OlympiadUser.objects.filter(olympiad=olympiad).order_by('ranking_place')
-            cache.set(key_result, all_submissions)
+        all_submissions = (OlympiadUser.objects.filter(olympiad=olympiad)
+                           .select_related('user').order_by('ranking_place'))
         context.update({
             'submission': submission,
             'all_submissions': all_submissions
@@ -293,45 +302,46 @@ def submit_olympiad_answer(request):
         multipleanswers = data.get('user_answers')
 
         for id_question in multipleanswers:
-            try:
-                question = MultipleChoiceQuestion.objects.get(id=id_question, olympiad__id=olympiad_id)
-            except MultipleChoiceQuestion.DoesNotExist:
-                response_data = {
-                                 'status': 'error',
-                                 'message': 'Ошибка при разборе данных JSON.'
-                }
-                return JsonResponse(response_data, status=400)
+            if id_question:
+                try:
+                    question = MultipleChoiceQuestion.objects.get(id=id_question, olympiad__id=olympiad_id)
+                except MultipleChoiceQuestion.DoesNotExist:
+                    response_data = {
+                                    'status': 'error',
+                                    'message': 'Ошибка при разборе данных JSON.'
+                    }
+                    return JsonResponse(response_data, status=400)
 
-            try:
-                question_submission = MultipleChoiceSubmission.objects.get(question=question, student=student)
-            except MultipleChoiceSubmission.DoesNotExist:
-                question_submission = MultipleChoiceSubmission.objects.create(student=student, question=question)
+                try:
+                    question_submission = MultipleChoiceSubmission.objects.get(question=question, student=student)
+                except MultipleChoiceSubmission.DoesNotExist:
+                    question_submission = MultipleChoiceSubmission.objects.create(student=student, question=question)
 
-            for answer in multipleanswers[id_question]:
-                if answer in ['A', 'B', 'C', 'D', 'E', 'F']:
-                    setattr(question_submission, answer.lower(), True)
-            question_submission.save()
+                for answer in multipleanswers[id_question]:
+                    if answer in ['A', 'B', 'C', 'D', 'E', 'F']:
+                        setattr(question_submission, answer.lower(), True)
+                question_submission.save()
 
-            total = 6
-            correct = 0
-            if question_submission.a == question_submission.question.a_is_correct:
-                correct += 1
-            if question_submission.b == question_submission.question.b_is_correct:
-                correct += 1
-            if question_submission.c == question_submission.question.c_is_correct:
-                correct += 1
-            if question_submission.d == question_submission.question.d_is_correct:
-                correct += 1
-            if question_submission.e == question_submission.question.e_is_correct:
-                correct += 1
-            if question_submission.f == question_submission.question.f_is_correct:
-                correct += 1
+                total = 6
+                correct = 0
+                if question_submission.a == question_submission.question.a_is_correct:
+                    correct += 1
+                if question_submission.b == question_submission.question.b_is_correct:
+                    correct += 1
+                if question_submission.c == question_submission.question.c_is_correct:
+                    correct += 1
+                if question_submission.d == question_submission.question.d_is_correct:
+                    correct += 1
+                if question_submission.e == question_submission.question.e_is_correct:
+                    correct += 1
+                if question_submission.f == question_submission.question.f_is_correct:
+                    correct += 1
 
-            if total == correct:
-                question_submission.students_mark = question.mark
-            else:
-                question_submission.students_mark = 0
-            question_submission.save()
+                if total == correct:
+                    question_submission.students_mark = question.mark
+                else:
+                    question_submission.students_mark = 0
+                question_submission.save()
 
         try:
             submission = OlympiadUser.objects.get(olympiad=olympiad, user=student)

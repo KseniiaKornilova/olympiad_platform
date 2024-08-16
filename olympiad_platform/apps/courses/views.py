@@ -20,7 +20,7 @@ class UserCoursesList(ListView):
     def get_queryset(self):
         user = self.request.user
         if len(user.course_teacher.all()) == 0:
-            queryset = user.course_participants.all()
+            queryset = user.course_participants.select_related('teacher').all()
         else:
             queryset = user.course_teacher.all()
         search_word = self.request.GET.get('keyword')
@@ -47,7 +47,7 @@ class CourseList(ListView):
         category = self.request.GET.get('category', None)
         school_subject = self.request.GET.get('subject', None)
         search_word = self.request.GET.get('keyword')
-        queryset = Course.objects.all()
+        queryset = Course.objects.select_related('teacher').all()
 
         if category:
             key_category = f'courses_category_{category}'
@@ -76,7 +76,7 @@ class CourseList(ListView):
         context['form'] = SearchForm(self.request.GET)
 
         student = self.request.user
-        course_submissions = CourseUser.objects.filter(user=student)
+        course_submissions = CourseUser.objects.select_related('course').filter(user=student)
         all_courses_id = list()
         for course_submission in course_submissions:
             all_courses_id.append(course_submission.course.id)
@@ -118,13 +118,13 @@ def course_main_page(request, course_id):
             course_submission = CourseUser.objects.create(user=user, course=course)
 
         try:
-            assignment_submissions = AssignmentSubmission.objects.filter(
+            assignment_submissions = AssignmentSubmission.objects.select_related('assignment').filter(
                         student=user, assignment__course=course).order_by('assignment__assignment_num')
         except AssignmentSubmission.DoesNotExist:
             assignment_submissions = None
 
-        assignment_submissions_done = AssignmentSubmission.objects.filter(assignment__course=course,
-                                                                          student=user, is_finished=True)
+        assignment_submissions_done = AssignmentSubmission.objects.select_related('assignment').filter(
+            assignment__course=course, student=user, is_finished=True)
 
         extra_context = {'student': user,
                          'course_submission': course_submission,
