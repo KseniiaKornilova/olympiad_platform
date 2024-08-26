@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'social_django',
     'debug_toolbar',
-    'rest_framework'
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
