@@ -14,14 +14,14 @@ class User(AbstractUser):
         ('s', 'Ученик'),
         ('t', 'Учитель'),
     )
-    email = models.EmailField(max_length=50, unique=True, blank=False, verbose_name='Электронная почта')
+    email = models.EmailField(max_length=50, unique=True, verbose_name='Электронная почта')
     username = models.CharField(max_length=50, unique=False, null=True, blank=True)
-    last_name = models.CharField(max_length=150, blank=False, verbose_name='Фамилия')
-    first_name = models.CharField(max_length=150, blank=False, verbose_name='Имя')
+    last_name = models.CharField(max_length=150, verbose_name='Фамилия')
+    first_name = models.CharField(max_length=150, verbose_name='Имя')
     patronymic = models.CharField(max_length=150, null=True, blank=True, verbose_name='Отчество')
     birthday = models.DateField(null=True, verbose_name='Дата рождения')
     status = models.CharField(max_length=1, choices=STATUS, null=True, verbose_name='Должность')
-    degree = models.SmallIntegerField(null=True, blank=False, verbose_name='Класс')
+    degree = models.SmallIntegerField(null=True, verbose_name='Класс')
     degree_id = models.CharField(max_length=1, choices=LETTER, null=True, verbose_name='Буква класса')
     image = models.ImageField(upload_to='images/users/', blank=True, null=True, verbose_name='Фото')
 
