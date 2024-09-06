@@ -1,0 +1,11 @@
+version: "2"
+checks:
+  argument-count:
+    enabled: true
+  file-lines:
+    enabled: true
+ratings:
+  paths:
+    - "**.py"
+exclude_patterns:
+  - "tests/**"
