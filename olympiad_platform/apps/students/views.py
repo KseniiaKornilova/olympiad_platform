@@ -1,14 +1,15 @@
-from django.contrib.auth import logout, login
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView, \
-    PasswordResetConfirmView, PasswordResetDoneView, PasswordResetCompleteView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetCompleteView, \
+    PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import UserForm, ChangeInfoForm, LoginForm, ChangePasswordForm, ResetPasswordForm, ResetPasswordConfirmForm
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from .forms import ChangeInfoForm, ChangePasswordForm, LoginForm, ResetPasswordConfirmForm, ResetPasswordForm, UserForm
 from .models import User
 
 

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Course, CourseUser, Lesson, Assignment, AssignmentSubmission, Comment
+
+from .models import Assignment, AssignmentSubmission, Comment, Course, CourseUser, Lesson
 
 
 class CourseUserInline(admin.TabularInline):

@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, \
-                    MultipleChoiceQuestion, MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
+
+from .models import MultipleChoiceQuestion, MultipleChoiceSubmission, Olympiad, OlympiadUser, OneChoiceQuestion, \
+    OneChoiceSubmission, Subject, TrueFalseQuestion, TrueFalseSubmission
 
 
 class SubjectAdmin(admin.ModelAdmin):

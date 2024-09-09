@@ -1,10 +1,12 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
+
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from .serializers import UserRegistrationsSerializer, UserProfileSerializer
-from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .serializers import UserProfileSerializer, UserRegistrationsSerializer
 
 
 class UserRegistrationView(APIView):

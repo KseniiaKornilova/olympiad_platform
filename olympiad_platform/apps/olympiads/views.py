@@ -1,16 +1,18 @@
-from datetime import date, datetime
 import json
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
-from django.views.generic.list import ListView
+from datetime import date, datetime
+
 from django.contrib.postgres.search import TrigramSimilarity
 from django.core.cache import cache
 from django.db.models import Count
-from ..students.models import User
-from ..courses.models import Course
-from .models import Olympiad, Subject, OlympiadUser, OneChoiceQuestion, OneChoiceSubmission, MultipleChoiceQuestion, \
-      MultipleChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.views.generic.list import ListView
+
 from .forms import SearchForm
+from .models import MultipleChoiceQuestion, MultipleChoiceSubmission, Olympiad, OlympiadUser, OneChoiceQuestion, \
+    OneChoiceSubmission, Subject, TrueFalseQuestion, TrueFalseSubmission
+from ..courses.models import Course
+from ..students.models import User
 
 
 def index(request):

@@ -1,7 +1,8 @@
-from django.db.models.signals import pre_delete, post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
-from .models import OlympiadUser, MultipleChoiceSubmission, OneChoiceSubmission, \
-    TrueFalseSubmission, MultipleChoiceQuestion, OneChoiceQuestion, TrueFalseQuestion
+
+from .models import MultipleChoiceQuestion, MultipleChoiceSubmission, OlympiadUser, \
+    OneChoiceQuestion, OneChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
 
 
 @receiver(pre_delete, sender=OlympiadUser)

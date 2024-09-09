@@ -1,7 +1,8 @@
-from django.db import models
-from ..students.models import User
-from django.utils import timezone
 from django.core import validators
+from django.db import models
+from django.utils import timezone
+
+from ..students.models import User
 
 
 class Subject(models.Model):

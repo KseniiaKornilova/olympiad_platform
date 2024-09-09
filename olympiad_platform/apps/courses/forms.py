@@ -1,6 +1,7 @@
 from django import forms
 from django.core.validators import FileExtensionValidator
-from .models import Comment, AssignmentSubmission
+
+from .models import AssignmentSubmission, Comment
 
 
 class UserCommentForm(forms.ModelForm):

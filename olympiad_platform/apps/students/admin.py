@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import User
 from ..olympiads.models import OlympiadUser
 

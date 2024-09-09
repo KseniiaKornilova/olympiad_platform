@@ -1,13 +1,15 @@
-from ..models import Course, CourseUser, Assignment, AssignmentSubmission, Lesson
-from .serializers import CourseSerializer, LessonSerializer
-from .permissions import IsEnrolledOrAdmin
 from drf_yasg.utils import swagger_auto_schema
+
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import action
 from rest_framework.authentication import BasicAuthentication
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from .permissions import IsEnrolledOrAdmin
+from .serializers import CourseSerializer, LessonSerializer
+from ..models import Assignment, AssignmentSubmission, Course, CourseUser, Lesson
 
 
 class CourseViewSet(viewsets.ReadOnlyModelViewSet):

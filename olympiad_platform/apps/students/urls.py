@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import UserLogin, profile, UserLogout, UserRegister, UserRegisterDone, UserChangeInfo, UserChangePassword, \
-    UserDeleteProfile, PasswordReset, PasswordResetConfirm, PasswordResetDone, PasswordResetComplete
+
+from .views import PasswordReset, PasswordResetComplete, PasswordResetConfirm, PasswordResetDone, UserChangeInfo, \
+      UserChangePassword, UserDeleteProfile, UserLogin, UserLogout, UserRegister, UserRegisterDone, profile
 
 app_name = 'students'
 

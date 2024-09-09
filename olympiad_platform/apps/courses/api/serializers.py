@@ -1,6 +1,8 @@
-from rest_framework import serializers
-from ..models import Course, Lesson
 from apps.students.api.serializers import UserSerializer
+
+from rest_framework import serializers
+
+from ..models import Course, Lesson
 
 
 class CourseSerializer(serializers.ModelSerializer):

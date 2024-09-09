@@ -1,6 +1,8 @@
-from rest_framework import serializers
-from ..models import Olympiad
 from apps.students.api.serializers import UserSerializer
+
+from rest_framework import serializers
+
+from ..models import Olympiad
 
 
 class OlympiadSerializer(serializers.ModelSerializer):

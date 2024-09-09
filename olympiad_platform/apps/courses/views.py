@@ -1,15 +1,17 @@
 import json
 from datetime import datetime
-from django.http.response import JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
+
 from django.contrib import messages
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
 from django.core.cache import cache
-from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank, TrigramSimilarity
+from django.http.response import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
-from .models import Course, Lesson, CourseUser, Assignment, AssignmentSubmission, Comment
-from .forms import UserCommentForm, AssignmentSubmissionForm, AssignmentSubmissionTeacherCheckForm
-from ..olympiads.models import Subject
+
+from .forms import AssignmentSubmissionForm, AssignmentSubmissionTeacherCheckForm, UserCommentForm
+from .models import Assignment, AssignmentSubmission, Comment, Course, CourseUser, Lesson
 from ..olympiads.forms import SearchForm
+from ..olympiads.models import Subject
 
 
 class UserCoursesList(ListView):
