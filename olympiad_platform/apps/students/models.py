@@ -1,5 +1,28 @@
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('поле email является обязательным к заполнению')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        if password:
+            user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Суперпользователь должен иметь поле is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Суперпользователь должен иметь поле is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
@@ -24,6 +47,8 @@ class User(AbstractUser):
     degree = models.SmallIntegerField(null=True, verbose_name='Класс')
     degree_id = models.CharField(max_length=1, choices=LETTER, null=True, verbose_name='Буква класса')
     image = models.ImageField(upload_to='images/users/', blank=True, null=True, verbose_name='Фото')
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.patronymic}'
