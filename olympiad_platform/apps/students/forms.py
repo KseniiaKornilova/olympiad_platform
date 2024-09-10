@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.core.exceptions import ValidationError
+
 from .models import User
 
 
@@ -15,7 +15,7 @@ class UserForm(forms.ModelForm):
     birthday = forms.DateField(label='День рождения', widget=forms.DateInput(
                                 format=('%d-%m-%Y'),
                                 attrs={
-                                    'firstDay': 1, 'pattern': '\d{4}-\d{2}-\d{2}', 
+                                    'firstDay': 1, 'pattern': '\d{4}-\d{2}-\d{2}',
                                     'lang': 'pl', 'format': 'yyyy-mm-dd', 'type': 'date',
                                     'class': 'form-control form-group',
                                     'placeholder': 'День рождения'
@@ -44,7 +44,7 @@ class UserForm(forms.ModelForm):
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise ValidationError('Пароли не совпадают!')
+            raise ValidationError('Пароли не совпадают')
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -146,7 +146,7 @@ class ChangePasswordForm(PasswordChangeForm):
         strip=False,
         widget=forms.PasswordInput(
             attrs={
-                "autocomplete": "current-password", 
+                "autocomplete": "current-password",
                 "autofocus": True,
                 'class': 'form-control form-group mb-3',
                 'placeholder': 'Старый пароль'

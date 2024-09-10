@@ -87,7 +87,12 @@ class PasswordResetConfirm(PasswordResetConfirmView):
     template_name = 'students/password_reset_confirm.html'
     form_class = ResetPasswordConfirmForm
     success_url = reverse_lazy('students:password_reset_complete')
-    post_reset_login = True
+
+    def form_valid(self, form):
+        user = form.save()
+        backend = 'django.contrib.auth.backends.ModelBackend'
+        login(self.request, user, backend=backend)
+        return super().form_valid(form)
 
 
 class PasswordResetDone(PasswordResetDoneView):
