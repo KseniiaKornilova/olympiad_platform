@@ -120,7 +120,7 @@ class OlympiadList(ListView):
 
         stages = cache.get('stages')
         if not stages:
-            stages = Olympiad.objects.values_list('stage', flat=True).distinct()
+            stages = set(Olympiad.objects.values_list('stage', flat=True))
             cache.set('stages', stages)
         context['stages'] = stages
         return context
