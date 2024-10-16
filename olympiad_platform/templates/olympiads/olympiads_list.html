@@ -44,7 +44,6 @@
                             <ul class="menu">
                                 <li><i class="fas fa-check"></i> Предмет: {{ olympiad.subject }}</li> 
                                 <li><i class="fas fa-check"></i> Этап: {{ olympiad.stage }}</li>
-                                <li><i class="fas fa-check"></i> Продолжительность олимпиады: {{ olympiad.olympiad_duration }}</li>
                             </ul>
                             {% for user_submission in user_submissions %} 
                             {% if user_submission.olympiad == olympiad %} 

@@ -24,7 +24,6 @@ class Olympiad(models.Model):
     degree = models.SmallIntegerField(verbose_name='Рекомендуемый класс обучения')
     date_of_start = models.DateTimeField(verbose_name='Начало проведения олимпиады')
     registration_dedline = models.DateTimeField(verbose_name='Дата окончания регистрации')
-    olympiad_duration = models.DurationField(verbose_name='Продолжительность олимпиады')
     total_mark = models.SmallIntegerField(default=0, verbose_name='Максимально возможное количество баллов')
     participants = models.ManyToManyField(User, through='OlympiadUser', verbose_name='Участники олимпиады')
     image = models.ImageField(upload_to='images/olympiads/', blank=True, null=True, verbose_name='Изображение')

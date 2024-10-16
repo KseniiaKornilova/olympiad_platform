@@ -28,7 +28,7 @@ class OlympiadAdmin(admin.ModelAdmin):
             'classes': ('wide',),
         }),
         ('Временные данные', {
-            'fields': ('date_of_start', 'registration_dedline', 'olympiad_duration'),
+            'fields': ('date_of_start', 'registration_dedline'),
             'classes': ('wide',),
         }),
     )
