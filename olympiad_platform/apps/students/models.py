@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
@@ -27,26 +28,26 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     LETTER = (
-        (None, 'Выберите букву Вашего класса'),
+        (None, _('Выберите букву Вашего класса')),
         ('a', 'A'),
         ('b', 'Б'),
         ('v', 'В'),
     )
     STATUS = (
-        (None, 'Вы ученик или учитель?'),
-        ('s', 'Ученик'),
-        ('t', 'Учитель'),
+        (None, _('Вы ученик или учитель?')),
+        ('s', _('Ученик')),
+        ('t', _('Учитель')),
     )
-    email = models.EmailField(max_length=50, unique=True, verbose_name='Электронная почта')
+    email = models.EmailField(max_length=50, unique=True, verbose_name=_('Электронная почта'))
     username = None
-    last_name = models.CharField(max_length=150, verbose_name='Фамилия')
-    first_name = models.CharField(max_length=150, verbose_name='Имя')
-    patronymic = models.CharField(max_length=150, null=True, blank=True, verbose_name='Отчество')
-    birthday = models.DateField(null=True, verbose_name='Дата рождения')
-    status = models.CharField(max_length=1, choices=STATUS, null=True, verbose_name='Должность')
-    degree = models.SmallIntegerField(null=True, verbose_name='Класс')
-    degree_id = models.CharField(max_length=1, choices=LETTER, null=True, verbose_name='Буква класса')
-    image = models.ImageField(upload_to='images/users/', blank=True, null=True, verbose_name='Фото')
+    last_name = models.CharField(max_length=150, verbose_name=_('Фамилия'))
+    first_name = models.CharField(max_length=150, verbose_name=_('Имя'))
+    patronymic = models.CharField(max_length=150, null=True, blank=True, verbose_name=_('Отчество'))
+    birthday = models.DateField(null=True, verbose_name=_('Дата рождения'))
+    status = models.CharField(max_length=1, choices=STATUS, null=True, verbose_name=_('Должность'))
+    degree = models.SmallIntegerField(null=True, verbose_name=_('Класс'))
+    degree_id = models.CharField(max_length=1, choices=LETTER, null=True, verbose_name=_('Буква класса'))
+    image = models.ImageField(upload_to='images/users/', blank=True, null=True, verbose_name=_('Фото'))
 
     objects = CustomUserManager()
 

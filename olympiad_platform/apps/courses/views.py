@@ -7,6 +7,7 @@ from django.core.cache import cache
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
+from django.utils.translation import gettext_lazy as _
 
 from .forms import AssignmentSubmissionForm, AssignmentSubmissionTeacherCheckForm, UserCommentForm
 from .models import Assignment, AssignmentSubmission, Comment, Course, CourseUser, Lesson
@@ -267,10 +268,10 @@ def assignment_view(request, course_id, assignment_id):
             form.instance.student = student
             form.instance.status = 's'
             form.save()
-            messages.success(request, 'Файл успешно добавлен, Ваш преподаватель скоро его проверит.')
+            messages.success(request, _('Файл успешно добавлен, Ваш преподаватель скоро его проверит.'))
         else:
             messages.error(request,
-                           'Произошла ошибка, возможно, Вы пытались прикрепить файл с запрещенным расширением.')
+                           _('Произошла ошибка, возможно, Вы пытались прикрепить файл с запрещенным расширением.'))
         return redirect('courses:assignment_view', course_id=course_id, assignment_id=assignment_id)
 
     else:
@@ -299,9 +300,9 @@ def assignment_check(request, assignment_submission_id):
                 form.instance.status = 'f'
                 form.instance.is_finished = True
             form.save()
-            messages.success(request, 'Комментарий к работе студента успешно создан.')
+            messages.success(request, _('Комментарий к работе студента успешно создан.'))
         else:
-            messages.error(request, 'Упс, что-то пошло не так!')
+            messages.error(request, _('Упс, что-то пошло не так!'))
         return redirect('courses:course_main_page', course_id=course.id)
 
     else:

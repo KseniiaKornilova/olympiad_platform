@@ -1,5 +1,6 @@
 from django import forms
 from django.core.validators import FileExtensionValidator
+from django.utils.translation import gettext_lazy as _
 
 from .models import AssignmentSubmission, Comment
 
@@ -16,16 +17,16 @@ class UserCommentForm(forms.ModelForm):
                     }),
                    "student": forms.TextInput(attrs={
                         'class': 'form-control form-group mb-3',
-                        'placeholder': 'Автор комментария',
+                        'placeholder': _('Автор комментария'),
                         'readonly': 'readonly'
                     }),
                    "content": forms.TextInput(attrs={
                         'class': 'form-control form-group mb-3',
-                        'placeholder': 'Текст комментария'
+                        'placeholder': _('Текст комментария')
                     }),
                    "created_at": forms.DateInput(attrs={
                         'class': 'form-control form-group mb-3',
-                        'placeholder': 'Дата отправки комментария'
+                        'placeholder': _('Дата отправки комментария')
                     })}
 
 
@@ -33,7 +34,7 @@ class AssignmentSubmissionForm(forms.ModelForm):
     homework_file = forms.FileField(widget=forms.FileInput(attrs={
         'class': 'form-control form-group mb-3'}),
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'docx'],
-                                           message='Пожалуйста, прикрепите файл с расширением .pdf или .doc')]
+                                           message=_('Пожалуйста, прикрепите файл с расширением .pdf или .doc'))]
         )
 
     class Meta:
@@ -44,11 +45,11 @@ class AssignmentSubmissionForm(forms.ModelForm):
 class AssignmentSubmissionTeacherCheckForm(forms.ModelForm):
     teacher_comment = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control form-group mb-3',
-        'placeholder': 'Комментарий'}))
+        'placeholder': _('Комментарий')}))
 
-    earned_mark = forms.IntegerField(label='Баллы за работу', min_value=0, widget=forms.NumberInput(attrs={
+    earned_mark = forms.IntegerField(label=_('Баллы за работу'), min_value=0, widget=forms.NumberInput(attrs={
         'class': 'form-control form-group mb-3',
-        'placeholder': 'Баллы за работу'}))
+        'placeholder': _('Баллы за работу')}))
 
     class Meta:
         model = AssignmentSubmission

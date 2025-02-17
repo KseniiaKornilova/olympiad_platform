@@ -220,7 +220,7 @@ def test_delete_profile_view(client, test_user):
     response = client.post(url)
 
     assert response.status_code == 302
-    assert response.url == reverse_lazy('olympiads:index')
+    assert response.url == reverse_lazy('home:index')
 
     with pytest.raises(User.DoesNotExist):
         User.objects.get(email=test_user.email)

@@ -1,6 +1,7 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load i18n %}
 
 {% block title %} EduBuddy school - Выйти {% endblock %} 
 
@@ -11,8 +12,8 @@
             
             <div class="col-sm-12 col-padding-y">
                 <div class="title-section-text">
-                    <h2>Мы уже скучаем</h2>
-                    <h1>Возвращайтесь скорее!</h1>
+                    <h2>{% trans 'Мы уже скучаем' %}</h2>
+                    <h1>{% trans 'Возвращайтесь скорее!' %}</h1>
                 </div>
             </div><!-- Top Columns /-->
             

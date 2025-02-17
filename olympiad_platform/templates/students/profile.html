@@ -1,6 +1,7 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load i18n %}
 
     
     {% block title %} EduBuddy school - Профиль пользователя {% endblock %}
@@ -20,7 +21,7 @@
                 <div class="col-sm-12 col-padding-y">
                     <div class="title-section-text">
                         
-                        <h1>Мой профиль</h1>
+                        <h1>{% trans 'Мой профиль' %}</h1>
                     </div>
                 </div><!-- Top Columns /-->
                 
@@ -39,7 +40,7 @@
                             <img src="{% static 'assets/images/help/profile/profile-img1.jpg' %}" alt="Blog Img">
                         </div>
                         <div class="blog-text">
-                            <h5><a href="{% url 'courses:courses_list' %}">Мои курсы</a></h5>
+                            <h5><a href="{% url 'courses:courses_list' %}">{% trans 'Мои курсы' %}</a></h5>
                             
                             <p>Здесь ты найдешь список изучаемых тобой курсов, все материалы, а также увидишь свой прогресс.</p>
                             <a href="{% url 'courses:courses_list' %}" class="btn btn-light btn-dark-animated">Далее</a>
@@ -53,7 +54,7 @@
                             <img src="{% static 'assets/images/help/profile/profile-img2.jpg' %}" alt="Blog Img">
                         </div>
                         <div class="blog-text">
-                            <h5><a href="{% url 'olympiads:olympiads_list' %}">Олимпиады</a></h5>
+                            <h5><a href="{% url 'olympiads:olympiads_list' %}">{% trans 'Олимпиады' %}</a></h5>
                             <p>Здесь вся твоя олимпиадная история, твои результаты, разборы заданий и материалы для подготовки.</p>
                             <a href="{% url 'olympiads:olympiads_list' %}" class="btn btn-dark btn-animated">Далее</a>
                         </div>
@@ -66,9 +67,9 @@
                             <img src="{% static 'assets/images/help/profile/profile-img3.jpg' %}" alt="Blog Img">
                         </div>
                         <div class="blog-text">
-                            <h5><a href="{% url 'olympiads:is_not_ready' %}">Мои домашние задания</a></h5>
+                            <h5><a href="{% url 'home:is_not_ready' %}">{% trans 'Мои домашние задания' %}</a></h5>
                             <p>Здесь ты найдешь свои проверенные домашки с указанием всех ошибок и рекомендациями кураторов.</p>
-                            <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-light btn-dark-animated">Далее</a>
+                            <a href="{% url 'home:is_not_ready' %}" class="btn btn-light btn-dark-animated">Далее</a>
                         </div>
                     </div><!-- Post Box /-->
                 </div><!-- Columns /-->
@@ -82,17 +83,17 @@
                             
                             <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
                                 <div class="appointment-text">
-                                    <h2>Редактировать профиль</h2>
+                                    <h2>{% trans 'Редактировать профиль' %}</h2>
                                     <p>Пожалуйста, вводи актуальные данные, это поможет тебе избежать трудностей!</p>
                                 </div><!-- Appointment Text /-->
                             </div><!-- Columns /-->
                             
                             <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
                                 <div class="appointment-btn">
-                                    <a href="{% url 'students:profile_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Редактировать профиль</a>
+                                    <a href="{% url 'students:profile_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">{% trans 'Редактировать профиль' %}</a>
                                 </div><!-- Appointment Btn /-->
                                 <div class="appointment-btn">
-                                    <a href="{% url 'students:password_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">Изменить пароль</a>
+                                    <a href="{% url 'students:password_change' %}" class="btn btn-secondary btn-padding btn-dark-animated">{% trans 'Изменить пароль' %}</a>
                                 </div><!-- Appointment Btn /-->
                             </div><!-- Columns /-->
                             

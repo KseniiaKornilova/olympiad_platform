@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from .models import User
 
@@ -10,43 +11,46 @@ from .models import User
 class BaseUserForm(forms.ModelForm):
     degree = forms.IntegerField(label='Класс', min_value=1, max_value=11, widget=forms.NumberInput(attrs={
         'class': 'form-control form-group mb-3',
-        'placeholder': 'Класс'
+        'placeholder': _('Класс')
     }))
 
     class Meta:
         model = User
         fields = ("last_name", "first_name", "patronymic", "email", "birthday", "status", "degree", "degree_id")
         labels = {
-            "email": "Электронная почта",
-            "birthday": "День рождения",
+            "email": _("Электронная почта"),
+            "birthday": _("День рождения"),
         }
         help_texts = {
-            "email": "Любые уведомления будут приходить на эту почту",
+            "email": _("Любые уведомления будут приходить на эту почту"),
         }
         error_messages = {
-            "email": {"unique": "Пользователь с таким email уже существует."},
+            "email": {"unique": _("Пользователь с таким email уже существует.")},
         }
         widgets = {
-            "last_name": forms.TextInput(attrs={"class": "form-control form-group mb-3", "placeholder": "Фамилия"}),
-            "first_name": forms.TextInput(attrs={"class": "form-control form-group mb-3", "placeholder": "Имя"}),
-            "patronymic": forms.TextInput(attrs={"class": "form-control form-group mb-3", "placeholder": "Отчество"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control form-group mb-3", "placeholder": _("Фамилия")}),
+            "first_name": forms.TextInput(attrs={"class": "form-control form-group mb-3", "placeholder": _("Имя")}),
+            "patronymic": forms.TextInput(attrs={"class": "form-control form-group mb-3",
+                                                 "placeholder": _("Отчество")}),
             "email": forms.EmailInput(attrs={"class": "form-control form-group", "placeholder": "Email"}),
             "birthday": forms.DateInput(attrs={"class": "form-control form-group", "type": "date",
-                                               "placeholder": "День рождения"}),
+                                               "placeholder": _("День рождения")}),
             "status": forms.Select(attrs={"class": "form-control form-group mb-3 mt-3"}),
-            "degree_id": forms.Select(attrs={"class": "form-control form-group mb-3", "placeholder": "Буква класса"}),
+            "degree_id": forms.Select(attrs={"class": "form-control form-group mb-3",
+                                             "placeholder": _("Буква класса")}),
         }
 
 
 class UserForm(BaseUserForm):
     password1 = forms.CharField(
         label="Пароль",
-        widget=forms.PasswordInput(attrs={"class": "form-control form-group", "placeholder": "Пароль"}),
-        help_text="Минимальная длина пароля - 8 символов, должен включать хотя бы 1 букву"
+        widget=forms.PasswordInput(attrs={"class": "form-control form-group", "placeholder": _("Пароль")}),
+        help_text=_("Минимальная длина пароля - 8 символов, должен включать хотя бы 1 букву")
     )
     password2 = forms.CharField(
         label="Подтвердите пароль",
-        widget=forms.PasswordInput(attrs={"class": "form-control form-group mb-3 mt-3", "placeholder": "Повтор пароля"})
+        widget=forms.PasswordInput(attrs={"class": "form-control form-group mb-3 mt-3",
+                                          "placeholder": _("Повтор пароля")})
     )
 
     class Meta(BaseUserForm.Meta):
@@ -63,7 +67,7 @@ class UserForm(BaseUserForm):
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Пароли не совпадают")
+            raise ValidationError(_("Пароли не совпадают"))
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -85,7 +89,7 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={
             "autocomplete": "current-password",
             "class": "form-control form-group mb-3",
-            "placeholder": "Пароль"
+            "placeholder": _("Пароль")
         })
     )
 
@@ -97,7 +101,7 @@ class LoginForm(forms.Form):
         if email and password:
             user = authenticate(email=email, password=password)
             if user is None:
-                raise ValidationError("Неверный email или пароль")
+                raise ValidationError(_("Неверный email или пароль"))
         return cleaned_data
 
 
@@ -114,7 +118,7 @@ class ChangePasswordForm(PasswordChangeForm):
                 "autocomplete": "current-password",
                 "autofocus": True,
                 'class': 'form-control form-group mb-3',
-                'placeholder': 'Старый пароль'
+                'placeholder': _('Старый пароль')
                 }))
 
     new_password1 = forms.CharField(
@@ -122,7 +126,7 @@ class ChangePasswordForm(PasswordChangeForm):
         widget=forms.PasswordInput(attrs={
             "autocomplete": "new-password",
             'class': 'form-control form-group',
-            'placeholder': 'Новый пароль'
+            'placeholder': _('Новый пароль')
             }),
         strip=False,
         help_text=password_validation.password_validators_help_text_html(),
@@ -134,7 +138,7 @@ class ChangePasswordForm(PasswordChangeForm):
         widget=forms.PasswordInput(attrs={
             "autocomplete": "new-password",
             'class': 'form-control form-group mb-3 mt-3',
-            'placeholder': 'Подтвердите новый пароль'
+            'placeholder': _('Подтвердите новый пароль')
             }))
 
 
@@ -154,13 +158,13 @@ class ResetPasswordConfirmForm(SetPasswordForm):
 
         self.fields['new_password1'].widget = forms.PasswordInput(attrs={
             'class': 'form-control form-group mb-3 mt-3',
-            'placeholder': 'Новый пароль'
+            'placeholder': _('Новый пароль')
         })
-        self.fields['new_password1'].help_text = 'Минимальная длина пароля - 8 символов, пароль должен включать \
-                                                    как минимум 1 буквенный символ'
+        self.fields['new_password1'].help_text = _('Минимальная длина пароля - 8 символов, пароль должен включать \
+                                                    как минимум 1 буквенный символ')
         self.fields['new_password2'].widget.attrs = {
             'class': 'form-control form-group mb-3 mt-3',
-            'placeholder': 'Новый пароль (повторно)'
+            'placeholder': _('Новый пароль (повторно)')
         }
 
     def clean_new_password1(self):
@@ -175,4 +179,4 @@ class ResetPasswordConfirmForm(SetPasswordForm):
         new_password2 = cleaned_data.get('new_password2')
         if new_password1 and new_password2:
             if new_password1 != new_password2:
-                raise ValidationError("Пароли не совпадают")
+                raise ValidationError(_("Пароли не совпадают"))

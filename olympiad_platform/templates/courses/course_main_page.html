@@ -1,6 +1,7 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load i18n %}
 
 {% block title %} EduBuddy school - {{ course.title }} {% endblock %} 
 
@@ -30,9 +31,9 @@
 <div class="module col-padding-y">
     <div class="section-title">
     {% if user != course_teacher %}
-            <h2>Мой прогресс</h2>
-            <p>Заработано баллов: {{ course_submission.earned_mark }} из {{ course.total_mark }}</p>
-            <p>Выполнено заданий: {{ assignment_submissions_done.count }} из {{ assignments.count }}</p>
+            <h2>{% trans 'Мой прогресс' %}</h2>
+            <p>{% trans 'Заработано баллов' %}: {{ course_submission.earned_mark }} из {{ course.total_mark }}</p>
+            <p>{% trans 'Выполнено заданий' %}: {{ assignment_submissions_done.count }} из {{ assignments.count }}</p>
             <br>
             <p>Преподаватель: {{ course_teacher }}     ({{ course_teacher.email }})</p>
     </div>

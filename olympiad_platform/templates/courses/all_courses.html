@@ -1,6 +1,7 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load i18n %}
 
 {% block title %} EduBuddy school - Список курсов {% endblock %} 
 
@@ -12,7 +13,7 @@
             <div class="col-sm-12 col-padding-y">
                 <div class="title-section-text">
                     
-                    <h1>Наши курсы</h1>
+                    <h1>{% trans 'Наши курсы' %}</h1>
                 </div>
             </div><!-- Top Columns /-->
             
@@ -38,7 +39,7 @@
                             <img src="{{ course.image.url }}" alt="Our Courses">
                             <div class="course-price">
                                 {% if course.price == 0 %}
-                                <h6>БЕСПЛАТНО</h6>
+                                <h6>{% trans 'БЕСПЛАТНО' %}</h6>
                                 {% else %} 
                                 <h6>{{ course.price }}</h6>
                                 {% endif %} 
@@ -52,14 +53,14 @@
                             <h5><a href="#">{{ course.title }}</a></h5>
                             <p>{{ course.course_description }}</p>
                             <ul class="menu">
-                                <li><i class="fas fa-check"></i> {{ course.month_amount }} месяцев</li>
-                                <li><i class="fas fa-check"></i> {{course.times_a_week }} занятия в неделю</li>
+                                <li><i class="fas fa-check"></i> {{ course.month_amount }} {% trans 'месяцев' %}</li>
+                                <li><i class="fas fa-check"></i> {{course.times_a_week }} {% trans 'занятия в неделю' %}</li>
                             </ul>
     
                             {% if course.id in all_courses_id %}
-                                <a href="{% url 'courses:course_main_page' course.id %}" class="btn btn-light btn-dark-animated">Продолжить</a>
+                                <a href="{% url 'courses:course_main_page' course.id %}" class="btn btn-light btn-dark-animated">{% trans 'Продолжить' %}</a>
                             {% else %} 
-                            <a href="{% url 'courses:courses_registration' course.id %}" class="btn btn-light btn-dark-animated">Присоединиться</a>
+                            <a href="{% url 'courses:courses_registration' course.id %}" class="btn btn-light btn-dark-animated">{% trans 'Присоединиться' %}</a>
                             {% endif %}  
                         </div>
                     </div><!-- Courses warp /-->

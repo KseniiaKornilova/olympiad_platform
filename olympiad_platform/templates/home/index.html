@@ -1,4 +1,4 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
 
@@ -70,24 +70,24 @@
                     	<div class="events-block">
                         	<div class="events-head">
                             	<h5>Последние события</h5>
-                                <h5><a href="{% url 'olympiads:is_not_ready' %}">Все события →</a></h5>
+                                <h5><a href="{% url 'home:is_not_ready' %}">Все события →</a></h5>
                             </div>
                             <div class="events">
                             	<div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>18 сентября 2023</h6>
-                                    <a href="{% url 'olympiads:is_not_ready' %}">Стартовала Всероссийская олимпиада школьников</a>
+                                    <a href="{% url 'home:is_not_ready' %}">Стартовала Всероссийская олимпиада школьников</a>
                                 </div>
                                 <div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>2 сентября 2023</h6>
-                                    <a href="{% url 'olympiads:is_not_ready' %}">Вебинар "Как выбрать университет и направление"</a>
+                                    <a href="{% url 'home:is_not_ready' %}">Вебинар "Как выбрать университет и направление"</a>
                                 </div>
                                 <div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>31 июля 2023</h6>
-                                    <a href="{% url 'olympiads:is_not_ready' %}">Начинаем готовиться к ЕГЭ!</a>
+                                    <a href="{% url 'home:is_not_ready' %}">Начинаем готовиться к ЕГЭ!</a>
                                 </div>
                                 <div class="events-date">
                                 	<h6><i class="far fa-calendar-check"></i>1 июня 2023</h6>
-                                    <a href="{% url 'olympiads:is_not_ready' %}">Начало программы для дошкольников.</a>
+                                    <a href="{% url 'home:is_not_ready' %}">Начало программы для дошкольников.</a>
                                 </div>
                             </div><!-- Events /-->
                         </div><!-- Events Block /-->
@@ -131,8 +131,8 @@
                                 <li><i class="fas fa-check"></i> Актуальность: наши курсы постоянно обновляются и содержат самую полезную и актуальную информацию.</li>
                                 <li><i class="fas fa-check"></i> Сообщество: присоединяясь к нам, вы становитесь частью образовательного сообщества, где можно обмениваться опытом и находить поддержку.</li>
                             </ul>
-                            <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-primary btn-padding btn-animated">О нас</a>
-                            <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-secondary btn-padding btn-dark-animated">Связаться с нами</a>
+                            <a href="{% url 'home:is_not_ready' %}" class="btn btn-primary btn-padding btn-animated">О нас</a>
+                            <a href="{% url 'home:is_not_ready' %}" class="btn btn-secondary btn-padding btn-dark-animated">Связаться с нами</a>
                         </div><!-- About Text /-->
                     </div><!-- columns /-->
                     
@@ -196,12 +196,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-1.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'home:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Корнилова Ксения</a></h5>
+                            	<h5><a href="{% url 'home:is_not_ready' %}">Корнилова Ксения</a></h5>
                             	<p>Биология, биоинженерия, химия</p>
                             </div>
                         </div>
@@ -213,12 +213,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-2.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'home:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Литов Владимир</a></h5>
+                            	<h5><a href="{% url 'home:is_not_ready' %}">Литов Владимир</a></h5>
                             	<p>Программирование</p>
                             </div>
                         </div>
@@ -230,12 +230,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-3.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'home:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Корнилов Кирилл</a></h5>
+                            	<h5><a href="{% url 'home:is_not_ready' %}">Корнилов Кирилл</a></h5>
                             	<p>Физика, математика</p>
                             </div>
                         </div>
@@ -247,12 +247,12 @@
                         <div class="hover-img">
                             <img src="{% static 'assets/images/help/our-staff/staff-img-4.png' %}" alt="Staff Images">
                             <div class="staff-detail hover-info">
-                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'home:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div>
                         <div class="staff-text hover-bottom">
                         	<div class="staff-name">
-                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Ростова Мария</a></h5>
+                            	<h5><a href="{% url 'home:is_not_ready' %}">Ростова Мария</a></h5>
                             	<p>Обучение детей</p>
                             </div>
                         </div>
@@ -377,7 +377,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="call-box">
                             <img src="{% static 'assets/images/help/icons/light-bulb.png' %}" alt="Light Bulb">
-                            <h3><a href="{% url 'olympiads:is_not_ready' %}">Присоединяйся к семинарам</a></h3>
+                            <h3><a href="{% url 'home:is_not_ready' %}">Присоединяйся к семинарам</a></h3>
                             <p>Наши профессиональные кураторы во всех деталях объяснят сложные моменты.     </p>
                         </div><!-- call Box /-->
                     </div><!-- Columns /-->
@@ -385,7 +385,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="call-box">
                             <img src="{% static 'assets/images/help/icons/hat-college.png' %}" alt="Hat College">
-                            <h3><a href="{% url 'olympiads:is_not_ready' %}">Построй свое будущее</a></h3>
+                            <h3><a href="{% url 'home:is_not_ready' %}">Построй свое будущее</a></h3>
                             <p>Прямо сейчас ты можешь сделать шаг на пути к своему успеху!</p>
                         </div><!-- call Box /-->
                     </div><!-- Columns /-->
@@ -409,13 +409,13 @@
                             	<img src="{% static 'assets/images/help/blog/blog-img1.jpg' %}" alt="Blog Img">
                             </div>
                             <div class="blog-text">
-                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Вебинар о компьютерной грамотности.</a></h5>
+                            	<h5><a href="{% url 'home:is_not_ready' %}">Вебинар о компьютерной грамотности.</a></h5>
                                 <div class="meta-tags">
                                     <i class="far fa-user"> <span>От:</span><a href="single-post-page.html">Владимир</a></i>
-                                    <i class="far fa-comment"> <a href="{% url 'olympiads:is_not_ready' %}">0</a></i>
+                                    <i class="far fa-comment"> <a href="{% url 'home:is_not_ready' %}">0</a></i>
                                 </div>
                             	<p>24 сентября в 13:00 по Москве пройдет вебинар о базовой компьютерной грамотности. Длительность вебинара - 1,5 часа.</p>
-                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-light btn-dark-animated">Подробнее</a>
+                                <a href="{% url 'home:is_not_ready' %}" class="btn btn-light btn-dark-animated">Подробнее</a>
                             </div>
                         </div><!-- Post Box /-->
                     </div><!-- Columns /-->
@@ -426,14 +426,14 @@
                             	<img src="{% static 'assets/images/help/blog/blog-img2.jpg' %}" alt="Blog Img">
                             </div>
                             <div class="blog-text">
-                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Статья: как не потерять мотивацию учиться?</a></h5>
+                            	<h5><a href="{% url 'home:is_not_ready' %}">Статья: как не потерять мотивацию учиться?</a></h5>
                                 <div class="meta-tags">
-                                    <i class="far fa-user"> <span>От:</span><a href="{% url 'olympiads:is_not_ready' %}">Ксения</a></i>
-                                    <i class="far fa-comment"> <a href="{% url 'olympiads:is_not_ready' %}">0</a></i>
+                                    <i class="far fa-user"> <span>От:</span><a href="{% url 'home:is_not_ready' %}">Ксения</a></i>
+                                    <i class="far fa-comment"> <a href="{% url 'home:is_not_ready' %}">0</a></i>
                                 </div>
                             	<p><i>Длительность чтения - 15 минут.</i>
                                 Впереди экзамены и олимпиады, поэтому нельзя сбавлять темп обучения, чтобы обучение не было в тягость...</p>
-                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
+                                <a href="{% url 'home:is_not_ready' %}" class="btn btn-dark btn-animated">Подробнее</a>
                             </div>
                         </div><!-- Post Box /-->
                     </div><!-- Columns /-->
@@ -444,13 +444,13 @@
                             	<img src="{% static 'assets/images/help/blog/blog-img3.jpg' %}" alt="Blog Img">
                             </div>
                             <div class="blog-text">
-                            	<h5><a href="{% url 'olympiads:is_not_ready' %}">Расскажем о процессе подачи документов в университеты.</a></h5>
+                            	<h5><a href="{% url 'home:is_not_ready' %}">Расскажем о процессе подачи документов в университеты.</a></h5>
                                 <div class="meta-tags">
-                                    <i class="far fa-user"> <span>От:</span><a href="{% url 'olympiads:is_not_ready' %}">Кирилл</a></i>
-                                    <i class="far fa-comment"> <a href="{% url 'olympiads:is_not_ready' %}">0</a></i>
+                                    <i class="far fa-user"> <span>От:</span><a href="{% url 'home:is_not_ready' %}">Кирилл</a></i>
+                                    <i class="far fa-comment"> <a href="{% url 'home:is_not_ready' %}">0</a></i>
                                 </div>
                             	<p>Присоединяйся к вебинару 2 октября в 20:00 по Москве. Узнаешь о пакете необходимых документов, привилегиях...</p>
-                                <a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-light btn-dark-animated">Подробнее</a>
+                                <a href="{% url 'home:is_not_ready' %}" class="btn btn-light btn-dark-animated">Подробнее</a>
                             </div>
                         </div><!-- Post Box /-->
                     </div><!-- Columns /-->

@@ -6,6 +6,7 @@ from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordRe
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -24,7 +25,7 @@ def user_login(request):
                 login(request, user)
                 return redirect('students:profile')
             else:
-                form.add_error(None, 'Неверный email или пароль')
+                form.add_error(None, _('Неверный email или пароль'))
     else:
         form = LoginForm()
     return render(request, 'students/login.html', {'form': form})
@@ -61,9 +62,8 @@ class UserChangeInfo(SuccessMessageMixin, UpdateView, LoginRequiredMixin):
     form_class = ChangeInfoForm
     template_name = 'students/change_info.html'
     success_url = reverse_lazy('students:profile')
-    success_message = 'Редактирование профиля успешно завершено'
+    success_message = _('Редактирование профиля успешно завершено')
 
-# получение записи пользователя из БД
     def get_object(self, queryset=None):
         return self.request.user
 
@@ -72,12 +72,12 @@ class UserChangePassword(SuccessMessageMixin, PasswordChangeView, LoginRequiredM
     template_name = 'students/password_change.html'
     form_class = ChangePasswordForm
     success_url = reverse_lazy('students:profile')
-    success_message = 'Пароль успешно изменен'
+    success_message = _('Пароль успешно изменен')
 
 
 class UserDeleteProfile(LoginRequiredMixin, DeleteView):
     model = User
-    success_url = reverse_lazy('olympiads:index')
+    success_url = reverse_lazy('home:index')
     template_name = 'students/delete_user.html'
 
     def get_object(self, queryset=None):

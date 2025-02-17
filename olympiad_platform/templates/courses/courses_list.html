@@ -1,6 +1,7 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load i18n %}
 
 {% block title %} EduBuddy school - Список курсов {% endblock %} 
 
@@ -12,12 +13,12 @@
             <div class="col-sm-12 col-padding-y">
                 <div class="title-section-text">
                     {% if status == 'student' %} 
-                    <h1>Курсы,</h1>
-                    <h2>которые Вы изучаете</h2>
+                    <h1>{% trans 'Курсы' %},</h1>
+                    <h2>{% trans 'которые Вы изучаете' %}</h2>
                     {% endif %} 
                     {% if status == 'teacher' %} 
-                    <h1>Курсы,</h1>
-                    <h2>преподавателем которых Вы являетесь</h2>
+                    <h1>{% trans 'Курсы' %},</h1>
+                    <h2>{% trans 'преподавателем которых Вы являетесь' %}</h2>
                     {% endif %} 
                 </div>
             </div><!-- Top Columns /-->
@@ -49,10 +50,10 @@
                             <h5><a href="{% url 'courses:course_main_page' course.id %}">{{ course.title }}</a></h5>
                             <p>{{ course.course_description }}</p>
                             <ul class="menu">
-                                <li><i class="fas fa-check"></i> {{ course.month_amount }} месяцев</li>
-                                <li><i class="fas fa-check"></i> {{course.times_a_week }} занятия в неделю</li>
+                                <li><i class="fas fa-check"></i> {{ course.month_amount }} {% trans 'месяцев' %}</li>
+                                <li><i class="fas fa-check"></i> {{course.times_a_week }} {% trans 'занятия в неделю' %}</li>
                             </ul>
-                            <a href="{% url 'courses:course_main_page' course.id %}" class="btn btn-light btn-dark-animated">Продолжить</a>
+                            <a href="{% url 'courses:course_main_page' course.id %}" class="btn btn-light btn-dark-animated">{% trans 'Продолжить' %}</a>
                         </div>
                     </div><!-- Courses warp /-->
                 </div><!-- columns /-->

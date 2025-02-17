@@ -1,5 +1,6 @@
 {% load static %} 
-{% load bootstrap4 %} 
+{% load bootstrap4 %}
+{% load i18n %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,8 +38,8 @@
                     <div class="col-sm-12 col-md-12 col-lg-8">
                     	<div class="left-side">
                         	<ul class="menu">
-                            	<li><i class="fas fa-map-marker-alt"></i> Пресненская набережная, 4с2</li>
-                                <li><a href="index.html"> <i class="fas fa-envelope"></i>focuschool@mail.ru</a></li>
+                            	<li><i class="fas fa-map-marker-alt"></i>Пресненская набережная, 4с2</li>
+                                <li><a href="home/index.html"> <i class="fas fa-envelope"></i>focuschool@mail.ru</a></li>
                             </ul>
                         </div><!-- Left Side /-->
                     </div><!-- Columns /-->
@@ -46,19 +47,26 @@
                     <div class="col-sm-12 col-md-12 col-lg-4 text-right">
                     	<div class="right-side">
                             <ul class="menu">
-                                <li><a href="{% url 'students:register' %}"><i class="fas fa-user"></i> Зарегистироваться</a></li>
+                                <li><a href="{% url 'students:register' %}"><i class="fas fa-user"></i>{% trans 'Зарегистироваться' %}</a></li>
                                 {% if user.is_authenticated %} 
                                 <li class="nav-item dropdown">
                                     <a href="#"><i class="fas fa-sign-in-alt"></i> {{user.first_name}}</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown_login dropdown-item" href="{% url 'students:profile' %}">Мой профиль</a>
-                                        <a class="dropdown_login dropdown-item" href="{% url 'students:logout' %}">Выйти</a>
-                                        <a class="dropdown_login dropdown-item" href="{% url 'students:profile_delete' %}">Удалить профиль</a>
+                                        <a class="dropdown_login dropdown-item" href="{% url 'students:profile' %}">{% trans 'Мой профиль' %}</a>
+                                        <a class="dropdown_login dropdown-item" href="{% url 'students:logout' %}">{% trans 'Выйти' %}</a>
+                                        <a class="dropdown_login dropdown-item" href="{% url 'students:profile_delete' %}">{% trans 'Удалить профиль' %}</a>
                                     </div>
                                 </li>
                                 {% else %} 
-                                <li><a href="{% url 'students:login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+                                <li><a href="{% url 'students:login' %}"><i class="fas fa-sign-in-alt"></i>{% trans 'Войти' %}</a></li>
                                 {% endif %} 
+                                <li class="nav-item dropdown">
+                                    <a href="#"><i class="fas fa-sign-in-alt"></i>{% trans 'Язык' %}</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{% url 'home:set_language' 'ru' %}">Русский</a>
+                                        <a class="dropdown-item" href="{% url 'home:set_language' 'en' %}">English</a>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div><!-- Columns /-->
@@ -74,7 +82,7 @@
                 	
                     <div class=" col-sm-12 col-lg-4 col-md-4">
                     	<div class="logo">
-                        	<a href="index.html">
+                        	<a href="home/index.html">
                             	<img src="{% static 'assets/images/logo.png' %}" alt="Logo">
                             </a>
                         </div>
@@ -89,7 +97,7 @@
                                 </div><!-- Icon Side /-->
                                 <div class="info-side">
                                     <p><strong>8 (495) 248-15-84</strong><br>
-                                    Связаться с нами
+                                        {% trans 'Связаться с нами' %}
                                     </p>
                                 </div><!-- Info Side /-->
                             </div>
@@ -128,30 +136,30 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="{% url 'olympiads:index' %}">Главная</a>
+                                        <a class="nav-link" href="{% url 'home:index' %}">{% trans 'Главная' %}</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="{% url 'courses:courses' %}">Курсы</a>
+                                        <a class="nav-link dropdown-toggle" href="{% url 'courses:courses' %}">{% trans 'Курсы' %}</a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{% url 'courses:courses' %}">Все курсы</a>
-                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=preschoolers">Дошкольникам</a>
-                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=elementary">1-4 классы</a>
-                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=middle">5-9 классы</a>
-                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=ege">10-11 классы</a>
-                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=it">Программирование</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}">{% trans 'Все курсы' %}</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=preschoolers">{% trans 'Дошкольникам' %}</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=elementary">{% trans '1-4 классы' %}</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=middle">{% trans '5-9 классы' %}</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=ege">{% trans '10-11 классы' %}</a>
+                                            <a class="dropdown-item" href="{% url 'courses:courses' %}?category=it">{% trans 'Программирование' %}</a>
                                         </div>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="{% url 'olympiads:olympiads' %}">Олимпиады</a>
+                                        <a class="nav-link" href="{% url 'olympiads:olympiads' %}">{% trans 'Олимпиады' %}</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="{% url 'olympiads:is_not_ready' %}">Наши учителя</a>
+                                        <a class="nav-link" href="{% url 'home:is_not_ready' %}">{% trans 'Наши учителя' %}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{% url 'olympiads:is_not_ready' %}">О нас</a>
+                                        <a class="nav-link" href="{% url 'home:is_not_ready' %}">{% trans 'О нас' %}</a>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link" href="{% url 'olympiads:is_not_ready' %}">Контакты</a>
+                                        <a class="nav-link" href="{% url 'home:is_not_ready' %}">{% trans 'Контакты' %}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -174,12 +182,12 @@
                 <div class="footer-box Courses">
                     <ul class="links  col-padding-y">
                         <li><h6>О школе EduBuddy</h6></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">О нас</a></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">Наши учителя</a></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">Отзывы о EduBuddy</a></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">Контакты</a></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">Обратная связь</a></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">Сведения об образовательной организации</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">О нас</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">Наши учителя</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">Отзывы о EduBuddy</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">Контакты</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">Обратная связь</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">Сведения об образовательной организации</a></li>
                     </ul>
                     
                 </div><!-- Footer Box /-->
@@ -191,8 +199,8 @@
                         <li><h6>Учеба в EduBuddy</h6></li>
                         <li><a href="{% url 'courses:courses' %}">Наши курсы</a></li>
                         <li><a href="{% url 'olympiads:olympiads' %}">Олимпиады</a></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">Блог</a></li>
-                        <li><a href="{% url 'olympiads:is_not_ready' %}">События</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">Блог</a></li>
+                        <li><a href="{% url 'home:is_not_ready' %}">События</a></li>
                     </ul>
                 </div><!-- Footer Box /-->
             </div><!-- Columns /-->
@@ -202,10 +210,10 @@
                     <h6>Наши социальные сети</h6>
                     <div class="social-icons">
                         <ul class="menu">
-                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-vk"></i></a></li>
-                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-youtube"></i></a></li>
-                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="{% url 'olympiads:is_not_ready' %}"><i class="fab fa-telegram"></i></a></li>                                     
+                            <li><a href="{% url 'home:is_not_ready' %}"><i class="fab fa-vk"></i></a></li>
+                            <li><a href="{% url 'home:is_not_ready' %}"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="{% url 'home:is_not_ready' %}"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="{% url 'home:is_not_ready' %}"><i class="fab fa-telegram"></i></a></li>                                     
                         </ul>
                     </div>
                     <div class="subscribe-us">

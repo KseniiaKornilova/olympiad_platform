@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('apps.olympiads.urls')),
     path('', include('apps.students.urls')),
     path('', include('apps.courses.urls')),
+    path('', include('apps.home.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('__debug__/', include('debug_toolbar.urls')),
     path('api/olympiads/', include('apps.olympiads.api.urls', namespace='api-olympiads')),
@@ -41,7 +42,6 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler404 = "olympiad.views.page_not_found"
 
 if settings.DEBUG:
     urlpatterns.append(path('static/<path:path>', never_cache(serve)))

@@ -3,7 +3,6 @@ from datetime import date, datetime
 
 from django.contrib.postgres.search import TrigramSimilarity
 from django.core.cache import cache
-from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
@@ -11,24 +10,7 @@ from django.views.generic.list import ListView
 from .forms import SearchForm
 from .models import MultipleChoiceQuestion, MultipleChoiceSubmission, Olympiad, OlympiadUser, OneChoiceQuestion, \
     OneChoiceSubmission, Subject, TrueFalseQuestion, TrueFalseSubmission
-from ..courses.models import Course
 from ..students.models import User
-
-
-def index(request):
-    courses = Course.objects.annotate(participant_count=Count('participants')) \
-        .select_related('teacher') \
-        .order_by('-participant_count')[:6]
-    olympiads = Olympiad.objects.annotate(participant_count=Count('participants')).order_by('-participant_count')[:3]
-    context = {
-        'courses': courses,
-        'olympiads': olympiads
-    }
-    return render(request, 'olympiads/index.html', context)
-
-
-def is_not_ready(request):
-    return render(request, 'is_not_ready.html')
 
 
 class UserOlympiadList(ListView):

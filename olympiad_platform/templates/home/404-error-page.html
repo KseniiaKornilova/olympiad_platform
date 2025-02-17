@@ -1,4 +1,4 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
 
@@ -15,7 +15,7 @@
                     	<div class="error-taxt">
                         	<h2>404! Page is not found!</h2>
                         	<p>Этой страницы не существует!</p>
-                            <a href="{% url 'olympiads:index' %}" class="btn btn-secondary btn-dark-animated btn-padding">Вернуться на главную страницу</a>
+                            <a href="{% url 'home:index' %}" class="btn btn-secondary btn-dark-animated btn-padding">Вернуться на главную страницу</a>
                         </div>
                     </div><!-- columns /-->
                     
@@ -37,7 +37,7 @@
                     
                     <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
                     	<div class="appointment-btn">
-                        	<a href="{% url 'olympiads:is_not_ready' %}" class="btn btn-secondary btn-padding btn-dark-animated">Нужна помощь</a>
+                        	<a href="{% url 'home:is_not_ready' %}" class="btn btn-secondary btn-padding btn-dark-animated">Нужна помощь</a>
                         </div><!-- Appointment Btn /-->
                     </div><!-- Columns /-->
                     

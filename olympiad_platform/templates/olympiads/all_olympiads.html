@@ -1,6 +1,7 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load i18n %}
 
 {% block title %} EduBuddy school - Список олимпиад {% endblock %} 
 
@@ -12,7 +13,7 @@
             <div class="col-sm-12 col-padding-y">
                 <div class="title-section-text">
                     
-                    <h1>Предстоящие олимпиады</h1>
+                    <h1>{% trans 'Предстоящие олимпиады' %}</h1>
                 </div>
             </div><!-- Top Columns /-->
             
@@ -44,10 +45,10 @@
                         <div class="course-text">
                             <h5>{{ olympiad.title }}</h5>
                             <ul class="menu">
-                                <li><i class="fas fa-check"></i> Предмет: {{ olympiad.subject }}</li><br> 
-                                <li><i class="fas fa-check"></i> Этап: {{ olympiad.stage }}</li><br>
+                                <li><i class="fas fa-check"></i> {% trans 'Предмет' %}: {{ olympiad.subject }}</li><br> 
+                                <li><i class="fas fa-check"></i> {% trans 'Этап' %}: {{ olympiad.stage }}</li><br>
                             </ul>
-                            <a href="{% url 'olympiads:olympiad_registration' olympiad.id %}" class="btn btn-light btn-dark-animated">Зарегистрироваться</a>
+                            <a href="{% url 'olympiads:olympiad_registration' olympiad.id %}" class="btn btn-light btn-dark-animated">{% trans 'Зарегистрироваться' %}</a>
                         </div>
                     </div><!-- Courses warp /-->
                 </div><!-- columns /-->
@@ -67,18 +68,18 @@
         </form>
 
         <div class="widget side-bar border-btm">
-            <h6>Этап олимпиады</h6>
+            <h6>{% trans 'Этап олимпиады' %}</h6>
             <div class="content">
                 <ul class="list-unstyled">
                     {% for stage in stages %}
-                    <li><a href="{% url 'olympiads:olympiads' %}?stage={{ stage }}">{{ stage }} этап</a></li>
+                    <li><a href="{% url 'olympiads:olympiads' %}?stage={{ stage }}">{{ stage }} {% trans 'этап' %}</a></li>
                     {% endfor %}
                 </ul>
             </div><!-- Widget Content /-->
         </div>
 
         <div class="widget side-bar border-btm">
-            <h6>Предмет</h6>
+            <h6>{% trans 'Предмет' %}</h6>
             <div class="content">
                 <ul class="list-unstyled">
                     {% for subject in subjects %}

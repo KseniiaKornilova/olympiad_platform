@@ -1,6 +1,7 @@
-{% extends 'basic.html' %} 
+{% extends 'home/basic.html' %} 
 {% load static %} 
 {% load bootstrap4 %}
+{% load i18n %}
 
 {% block title %} EduBuddy school - {{ olympiad.title }} {% endblock %} 
 
@@ -22,8 +23,8 @@
 
 {% if result  and allow_register %}
     <div class="section-title mt-5">
-        <h2>Регистрация на олимпиаду <span>{{ olympiad.title }}</span> успешно завершена</h2>
-        <p>Начало олимпиады: {{ olympiad.date_of_start }}</p>
+        <h2>{% trans 'Регистрация на олимпиаду' %} <span>{{ olympiad.title }}</span> {% trans 'успешно завершена' %}</h2>
+        <p>{% trans 'Начало олимпиады' %}: {{ olympiad.date_of_start }}</p>
     </div>
 
 <div class="request-appointment">
@@ -35,7 +36,7 @@
                     <p>Вы можете приступить к выполнению олимпиады сейчас или позже через личный кабинет</p>
                     <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
                         <div class="appointment-btn">
-                            <a href="{% url 'olympiads:olympiad_page' olympiad.id %}" class="btn btn-secondary btn-padding btn-dark-animated">Приступить к выполнению</a>
+                            <a href="{% url 'olympiads:olympiad_page' olympiad.id %}" class="btn btn-secondary btn-padding btn-dark-animated">{% trans 'Приступить к выполнению' %}</a>
                         </div>
                     </div>
                 </div>
@@ -48,14 +49,14 @@
 
 {% if not result %} 
 <div class="section-title mt-5">
-    <h2>К сожалению, регистрация на олимпиаду <span>{{ olympiad.title }}</span> закрыта</h2>
-    <p>Крайний срок регистрации на олимпиаду:  до {{ olympiad.registration_dedline }}</p>
+    <h2>{% trans 'К сожалению, регистрация на олимпиаду' %} <span>{{ olympiad.title }}</span> {% trans 'закрыта' %}</h2>
+    <p>{% trans 'Крайний срок регистрации на олимпиаду:  до' %} {{ olympiad.registration_dedline }}</p>
 </div>
 {% endif %} 
 
 {% if not allow_register %} 
 <div class="section-title mt-5">
-    <h2>Вы уже зарегистрированы на олимпиаду <span>{{ olympiad.title }}</span></h2>
+    <h2>{% trans 'Вы уже зарегистрированы на олимпиаду' %} <span>{{ olympiad.title }}</span></h2>
 </div>
 {% endif %} 
 
@@ -65,10 +66,10 @@
         <div class="row">
             <div class="col-sm-12 col-md-8 col-lg-9 col-padding-y">
                 <div class="appointment-text">
-                    <p>Вернуться к списку олимпиад</p>
+                    <p>{% trans 'Вернуться к списку олимпиад' %}</p>
                     <div class="col-sm-12 col-md-4 col-lg-3 col-padding-y">
                         <div class="appointment-btn">
-                            <a href="{% url 'olympiads:olympiads' %}" class="btn btn-secondary btn-padding btn-dark-animated">Вернуться</a>
+                            <a href="{% url 'olympiads:olympiads' %}" class="btn btn-secondary btn-padding btn-dark-animated">{% trans 'Вернуться' %}</a>
                         </div>
                     </div>
                 </div>
