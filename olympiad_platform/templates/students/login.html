@@ -27,9 +27,9 @@
         <form method="POST">
             {% csrf_token %} 
             {% if form.errors %} 
-            <p class="text-danger">Данные были введены некорректно, попробуйте еще раз.</p>
+            <p class="text-danger">{{ form.non_field_errors.0 }}</p>
             {% endif %} 
-            {{ form.username }}
+            {{ form.email }}
             {{ form.password }}
             <input type="hidden" name="next" value="{{ next }}">
             <div class="mb-3 mt-3">

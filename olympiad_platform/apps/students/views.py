@@ -1,7 +1,7 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetCompleteView, \
+from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordResetCompleteView, \
     PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
@@ -13,9 +13,21 @@ from .forms import ChangeInfoForm, ChangePasswordForm, LoginForm, ResetPasswordC
 from .models import User
 
 
-class UserLogin(LoginView):
-    form_class = LoginForm
-    template_name = 'students/login.html'
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, email=email, password=password)
+            if user:
+                login(request, user)
+                return redirect('students:profile')
+            else:
+                form.add_error(None, 'Неверный email или пароль')
+    else:
+        form = LoginForm()
+    return render(request, 'students/login.html', {'form': form})
 
 
 @login_required

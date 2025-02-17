@@ -10,7 +10,7 @@ class CustomUserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         if password:
             user.set_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
@@ -38,7 +38,7 @@ class User(AbstractUser):
         ('t', 'Учитель'),
     )
     email = models.EmailField(max_length=50, unique=True, verbose_name='Электронная почта')
-    username = models.CharField(max_length=50, unique=False, null=True, blank=True)
+    username = None
     last_name = models.CharField(max_length=150, verbose_name='Фамилия')
     first_name = models.CharField(max_length=150, verbose_name='Имя')
     patronymic = models.CharField(max_length=150, null=True, blank=True, verbose_name='Отчество')
