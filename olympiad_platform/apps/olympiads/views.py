@@ -62,10 +62,13 @@ class OlympiadList(ListView):
     context_object_name = 'olympiads'
 
     def get_queryset(self):
-        queryset = Olympiad.objects.all().select_related('subject').filter(date_of_start__gt=date.today())
         search_word = self.request.GET.get('keyword', None)
         stage = self.request.GET.get('stage', None)
         subject = self.request.GET.get('subject', None)
+        queryset = cache.get('all_olympiads')
+        if not queryset:
+            queryset = Olympiad.objects.all().select_related('subject').filter(date_of_start__gt=date.today())
+            cache.set('all_olympiads', queryset)
 
         if search_word:
             queryset = (Olympiad.objects.annotate(similarity=TrigramSimilarity('title', search_word))

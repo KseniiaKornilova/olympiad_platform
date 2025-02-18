@@ -6,8 +6,8 @@ from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core.cache import cache
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic.list import ListView
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.list import ListView
 
 from .forms import AssignmentSubmissionForm, AssignmentSubmissionTeacherCheckForm, UserCommentForm
 from .models import Assignment, AssignmentSubmission, Comment, Course, CourseUser, Lesson
@@ -50,7 +50,10 @@ class CourseList(ListView):
         category = self.request.GET.get('category', None)
         school_subject = self.request.GET.get('subject', None)
         search_word = self.request.GET.get('keyword')
-        queryset = Course.objects.select_related('teacher').all()
+        queryset = cache.get('all_courses')
+        if not queryset:
+            queryset = Course.objects.select_related('teacher').all()
+            cache.set('all_courses', queryset)
 
         if category:
             key_category = f'courses_category_{category}'
