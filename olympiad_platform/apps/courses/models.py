@@ -118,7 +118,7 @@ class Comment(models.Model):
     created_at = models.DateField(verbose_name='Дата публикации комментария')
 
     def __str__(self):
-        return f'{self.author} : {self.content}'
+        return f'{self.student} : {self.content}'
 
     class Meta:
         verbose_name = 'Комментарий'
