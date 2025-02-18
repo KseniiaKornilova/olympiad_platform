@@ -38,6 +38,7 @@
                 <h6>Содержание курса</h6>
                 <div class="content">
                     <ul class="list-unstyled">
+                        <li><a href="{% url 'courses:course_main_page'  course.id %}">Все уроки</a></li>
                         {% for les in lessons %}
                         <li><a href="{% url 'courses:lesson_view'  course.id les.id %}">{{ les.title }}</a></li>   
                         {% endfor %}
