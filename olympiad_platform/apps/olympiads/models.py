@@ -56,10 +56,33 @@ class OlympiadUser(models.Model):
         ordering = ['olympiad', 'user']
 
 
-class MultipleChoiceQuestion(models.Model):
-    question_num = models.SmallIntegerField(verbose_name='Номер вопроса', validators=[validators.MinValueValidator(1)])
-    title = models.CharField(verbose_name='Название вопроса', max_length=50)
-    description = models.CharField(verbose_name='Формулировка вопроса', max_length=200)
+class BaseQuestion(models.Model):
+    question_num = models.SmallIntegerField(verbose_name="Номер вопроса", validators=[validators.MinValueValidator(1)])
+    title = models.CharField(verbose_name="Название вопроса", max_length=50)
+    description = models.CharField(verbose_name="Формулировка вопроса", max_length=200)
+    mark = models.SmallIntegerField(verbose_name="Баллы за вопрос", validators=[validators.MinValueValidator(1)])
+    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Олимпиада")
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return f"{self.description}"
+
+
+class BaseSubmission(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Студент")
+    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)],
+                                             verbose_name="Баллы студента за ответ")
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return f"{self.student} : {self.question}"
+
+
+class MultipleChoiceQuestion(BaseQuestion):
     a = models.CharField(max_length=255, null=True)
     a_is_correct = models.BooleanField(default=False)
     b = models.CharField(max_length=255, null=True)
@@ -72,42 +95,27 @@ class MultipleChoiceQuestion(models.Model):
     e_is_correct = models.BooleanField(default=False)
     f = models.CharField(max_length=255, null=True, blank=True)
     f_is_correct = models.BooleanField(default=False)
-    mark = models.SmallIntegerField(verbose_name='Баллы за вопрос', validators=[validators.MinValueValidator(1)])
-    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL,
-                                 verbose_name='Вопрос для какой олимпиады')
-
-    def __str__(self):
-        return f'{self.description}'
 
     class Meta:
         verbose_name = 'Вопрос с множественным ответом'
         verbose_name_plural = 'Вопросы с множественным ответом'
 
 
-class MultipleChoiceSubmission(models.Model):
+class MultipleChoiceSubmission(BaseSubmission):
     a = models.BooleanField(default=False)
     b = models.BooleanField(default=False)
     c = models.BooleanField(default=False)
     d = models.BooleanField(default=False)
     e = models.BooleanField(default=False)
     f = models.BooleanField(default=False)
-    student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE, verbose_name='Вопрос')
-    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)],
-                                             verbose_name='Баллы студента за ответ')
-
-    def __str__(self):
-        return f'{self.student} : {self.question}'
 
     class Meta:
         verbose_name = 'Ответ на вопрос с множественным ответом'
         verbose_name_plural = 'Ответы на вопрос с множественным ответом'
 
 
-class OneChoiceQuestion(models.Model):
-    question_num = models.SmallIntegerField(verbose_name='Номер вопроса', validators=[validators.MinValueValidator(1)])
-    title = models.CharField(verbose_name='Название вопроса', max_length=50)
-    description = models.CharField(verbose_name='Формулировка вопроса', max_length=200)
+class OneChoiceQuestion(BaseQuestion):
     a = models.CharField(max_length=255, null=True)
     a_is_correct = models.BooleanField(default=False)
     b = models.CharField(max_length=255, null=True)
@@ -116,30 +124,18 @@ class OneChoiceQuestion(models.Model):
     c_is_correct = models.BooleanField(default=False)
     d = models.CharField(max_length=255, null=True, blank=True)
     d_is_correct = models.BooleanField(default=False)
-    mark = models.SmallIntegerField(verbose_name='Баллы за вопрос', validators=[validators.MinValueValidator(1)])
-    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL,
-                                 verbose_name='Вопрос для какой олимпиады')
-
-    def __str__(self):
-        return f'{self.description}'
 
     class Meta:
         verbose_name = 'Вопрос с одним ответом'
         verbose_name_plural = 'Вопросы с одним ответом'
 
 
-class OneChoiceSubmission(models.Model):
+class OneChoiceSubmission(BaseSubmission):
     a = models.BooleanField(default=False)
     b = models.BooleanField(default=False)
     c = models.BooleanField(default=False)
     d = models.BooleanField(default=False)
-    student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     question = models.ForeignKey(OneChoiceQuestion, on_delete=models.CASCADE, verbose_name='Вопрос')
-    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)],
-                                             verbose_name='Баллы студента за ответ')
-
-    def __str__(self):
-        return f'{self.student} : {self.question}'
 
     class Meta:
         verbose_name = 'Ответ на вопрос с одним ответом'
@@ -152,35 +148,19 @@ OPTION = (
          )
 
 
-class TrueFalseQuestion(models.Model):
-    question_num = models.SmallIntegerField(validators=[validators.MinValueValidator(1)], verbose_name='Номер вопроса')
-    title = models.CharField(max_length=50, verbose_name='Название вопроса')
-    description = models.CharField(max_length=150, verbose_name='Формулировка вопроса')
+class TrueFalseQuestion(BaseQuestion):
     first_statement = models.CharField(max_length=150, null=True, verbose_name='Первое утверждение')
     second_statement = models.CharField(max_length=150, null=True, verbose_name='Второе утверждение')
     answer = models.CharField(max_length=3, choices=OPTION, verbose_name='номер верного утверждения')
-    mark = models.SmallIntegerField(validators=[validators.MinValueValidator(1)],
-                                    verbose_name='Количество баллов за правильный ответ')
-    olympiad = models.ForeignKey(Olympiad, null=True, blank=True, on_delete=models.SET_NULL,
-                                 verbose_name='Вопрос для какой олимпиады')
-
-    def __str__(self):
-        return f'{self.description}'
 
     class Meta:
         verbose_name = 'Вопрос "Какое из утверждений верно"'
         verbose_name_plural = 'Вопросы "Какое из утверждений верно"'
 
 
-class TrueFalseSubmission(models.Model):
+class TrueFalseSubmission(BaseSubmission):
     answer = models.CharField(max_length=3, null=True, verbose_name='Ответ студента (1 или 2)')
-    students_mark = models.SmallIntegerField(default=0, validators=[validators.MinValueValidator(0)],
-                                             verbose_name='Баллы студента за ответ')
-    student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Студент')
     question = models.ForeignKey(TrueFalseQuestion, on_delete=models.CASCADE, verbose_name='Вопрос')
-
-    def __str__(self):
-        return f'{self.student} : {self.question}'
 
     class Meta:
         verbose_name = 'Ответ на вопрос "Какое из утверждений верно'
