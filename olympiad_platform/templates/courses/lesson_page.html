@@ -70,53 +70,5 @@
     </div>
 </div>
 
-<!-- <script>
-    function searchLessons(course_id) {
-        var lessonContent = document.getElementById('lesson_content_or_searched_list');
-        var keyword = document.getElementById('searchKeyword').value;
-        var submissionUrl = `/courses/search/${course_id}/?keyword=${keyword}`;
-        var templateUrl = '/courses/get_relevant_lessons/';
 
-        fetch(submissionUrl, {
-            method: GET,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ошибка');
-            }
-            return response.json();
-        })
-        .then(result => {
-            if (result.status === 'success') {
-                return fetch(templateUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrfToken,
-                    },
-                    body: JSON.stringify(result)
-                });
-            } else {
-                alert(result.message);
-                throw new Error(result.message);
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ошибка');
-            }
-            return response.text();
-        })
-        .then(htmlTemplate => {
-            lessonContent.innerHTML = htmlTemplate;
-        })
-        .catch(error => {
-            console.error('Ошибка', error);
-        });
-    }
-
-</script> -->
 {% endblock %}
