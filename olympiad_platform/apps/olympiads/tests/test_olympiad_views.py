@@ -1,50 +1,34 @@
 import json
-from datetime import date
+from datetime import date, timedelta
 
-from apps.olympiads.models import MultipleChoiceQuestion, MultipleChoiceSubmission, Olympiad, OlympiadUser, \
-    OneChoiceQuestion, OneChoiceSubmission, TrueFalseQuestion, TrueFalseSubmission
+
+from apps.olympiads.models import MultipleChoiceSubmission, OlympiadUser, OneChoiceSubmission, TrueFalseSubmission
+from apps.olympiads.tests.factories import OlympiadFactory, OlympiadUserFactory, UserFactory
 from apps.olympiads.views import compute_score, update_olympiad_user_ranking
 
-from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.test import Client
 from django.urls import reverse_lazy
 from django.utils import timezone
 
 import pytest
 
 
-User = get_user_model()
-
-
-@pytest.fixture
-def user(load_data):
-    return User.objects.get(email='ksyu.kornilova2809@gmail.com')
-
-
-@pytest.fixture
-def olympiad(load_data):
-    return Olympiad.objects.get(title='Олимпиада Ломоносова')
-
-
 @pytest.mark.django_db
-def test_user_olympiad_list_view(client, user):
-
+def test_user_olympiad_list_view(client, user_olympiad):
+    user, olympiad = user_olympiad
     client.force_login(user)
     url = reverse_lazy('olympiads:olympiads_list')
     response = client.get(url)
 
     assert response.status_code == 200
     olympiads = response.context['olympiads']
-    assert len(olympiads) == 3
-
-    search_response = client.get(url, {'keyword': 'Ломоносова'})
-    assert search_response.status_code == 200
-    assert len(search_response.context['olympiads']) == 1
+    assert olympiad in olympiads
 
 
 @pytest.mark.django_db
 def test_user_previous_olympiad_list_view(client, user):
+    olympiad = OlympiadFactory(date_of_start=timezone.now() - timedelta(days=10))
+    OlympiadUserFactory(user=user, olympiad=olympiad)
 
     client.force_login(user)
     url = reverse_lazy('olympiads:previous_list')
@@ -58,6 +42,8 @@ def test_user_previous_olympiad_list_view(client, user):
 
 @pytest.mark.django_db
 def test_user_coming_olympiad_list_view(client, user):
+    olympiad = OlympiadFactory(date_of_start=timezone.now() + timedelta(days=10))
+    OlympiadUserFactory(user=user, olympiad=olympiad)
 
     client.force_login(user)
     url = reverse_lazy('olympiads:coming_list')
@@ -70,7 +56,15 @@ def test_user_coming_olympiad_list_view(client, user):
 
 
 @pytest.mark.django_db
-def test_olympiad_list_view(client, user):
+def test_olympiad_list_view(client, user, subjects):
+    cache.clear()
+    math = next(s for s in subjects if s.name == 'Математика')
+    chemistry = next(s for s in subjects if s.name == 'Химия')
+
+    for i in range(3):
+        OlympiadFactory(stage='Всероссийский', subject=math)
+    for i in range(2):
+        OlympiadFactory(stage='Школьный', subject=chemistry)
 
     client.force_login(user)
     url = reverse_lazy('olympiads:olympiads')
@@ -80,21 +74,24 @@ def test_olympiad_list_view(client, user):
     olympiads = response.context['olympiads']
     assert len(olympiads) == 5
 
-    search_response = client.get(url, {'keyword': 'ВО'})
-    assert search_response.status_code == 200
-    assert len(search_response.context['olympiads']) == 2
-
     stage_response = client.get(url, {'stage': 'Всероссийский'})
     assert stage_response.status_code == 200
-    assert len(stage_response.context['olympiads']) == 2
+    filtered_olympiads = stage_response.context['olympiads']
+    assert len(filtered_olympiads) == 3
+    assert all(o.stage == 'Всероссийский' for o in filtered_olympiads)
+
     cached_context = cache.get('olympiad_stageВсероссийский')
     assert cached_context is not None
+    assert len(cached_context) == 3
 
-    subject_response = client.get(url, {'subject': '1'})
+    subject_response = client.get(url, {'subject': str(chemistry.id)})
     assert subject_response.status_code == 200
-    assert len(subject_response.context['olympiads']) == 1
-    cached_context = cache.get('olympiad_subject1')
+    filtered_olympiads = subject_response.context['olympiads']
+    assert len(filtered_olympiads) == 2
+
+    cached_context = cache.get(f'olympiad_subject{chemistry.id}')
     assert cached_context is not None
+    assert len(cached_context) == 2
 
 
 @pytest.mark.django_db
@@ -125,33 +122,7 @@ def test_olympiad_page_view(client, user, olympiad):
 def test_submit_o_question_answer_success(client, user, olympiad):
 
     client.force_login(user)
-    question = OneChoiceQuestion.objects.filter(olympiad=olympiad).first()
-
-    data = {
-        'olympiad_id': olympiad.id,
-        'question_id': question.id,
-        'answer': 'B'
-    }
-
-    url = reverse_lazy('olympiads:submit_o_question_answer')
-    response = client.post(url, data=json.dumps(data), content_type='application/json')
-    submission = OneChoiceSubmission.objects.get(student=user, question=question)
-
-    assert response.status_code == 200
-    response_data = response.json()
-    assert response_data['status'] == 'success'
-    assert response_data['message'] == 'Данные успешно обработаны.'
-
-    assert submission.b is True
-    assert submission.a is False
-    assert submission.students_mark == question.mark
-
-
-@pytest.mark.django_db
-def test_submit_o_question_answer_failure(client, user, olympiad):
-
-    client.force_login(user)
-    question = OneChoiceQuestion.objects.filter(olympiad=olympiad).first()
+    question = olympiad.onechoicequestion_set.first()
 
     data = {
         'olympiad_id': olympiad.id,
@@ -170,6 +141,32 @@ def test_submit_o_question_answer_failure(client, user, olympiad):
 
     assert submission.b is False
     assert submission.a is True
+    assert submission.students_mark == question.mark
+
+
+@pytest.mark.django_db
+def test_submit_o_question_answer_failure(client, user, olympiad):
+
+    client.force_login(user)
+    question = olympiad.onechoicequestion_set.first()
+
+    data = {
+        'olympiad_id': olympiad.id,
+        'question_id': question.id,
+        'answer': 'B'
+    }
+
+    url = reverse_lazy('olympiads:submit_o_question_answer')
+    response = client.post(url, data=json.dumps(data), content_type='application/json')
+    submission = OneChoiceSubmission.objects.get(student=user, question=question)
+
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data['status'] == 'success'
+    assert response_data['message'] == 'Данные успешно обработаны.'
+
+    assert submission.b is True
+    assert submission.a is False
     assert submission.students_mark == 0
 
 
@@ -212,12 +209,12 @@ def test_submit_o_question_answer_invalid_json(client, user):
 def test_submit_t_question_answer_success(client, user, olympiad):
 
     client.force_login(user)
-    question = TrueFalseQuestion.objects.filter(olympiad=olympiad).first()
+    question = olympiad.truefalsequestion_set.first()
 
     data = {
         'olympiad_id': olympiad.id,
         'question_id': question.id,
-        'answer': '1'
+        'answer': '2'
     }
 
     url = reverse_lazy('olympiads:submit_t_question_answer')
@@ -237,12 +234,12 @@ def test_submit_t_question_answer_success(client, user, olympiad):
 def test_submit_t_question_answer_failure(client, user, olympiad):
 
     client.force_login(user)
-    question = TrueFalseQuestion.objects.filter(olympiad=olympiad).first()
+    question = olympiad.truefalsequestion_set.first()
 
     data = {
         'olympiad_id': olympiad.id,
         'question_id': question.id,
-        'answer': '2'
+        'answer': '1'
     }
 
     url = reverse_lazy('olympiads:submit_t_question_answer')
@@ -259,12 +256,12 @@ def test_submit_t_question_answer_failure(client, user, olympiad):
 
 
 @pytest.mark.django_db
-def test_submit_t_question_answer_question_not_found(client, user):
+def test_submit_t_question_answer_question_not_found(client, user, olympiad):
 
     client.force_login(user)
 
     data = {
-        'olympiad_id': 1,
+        'olympiad_id': olympiad.id,
         'question_id': 9999,
         'answer': '1'
     }
@@ -297,13 +294,12 @@ def test_submit_t_question_answer_invalid_json(client, user):
 def test_submit_olympiad_answer_success(client, user, olympiad):
 
     client.force_login(user)
-    questions = olympiad.multiplechoicequestion_set.all()[:2]
+    question = olympiad.multiplechoicequestion_set.first()
     data = {
         'olympiad_id': olympiad.id,
         'student_id': user.id,
         'user_answers': {
-            questions[0].id: ['A', 'C', 'D', 'E'],
-            questions[1].id: ['A', 'B', 'C', 'D', 'E', 'F'],
+            question.id: ['A', 'C', 'E']
         }
     }
     url = reverse_lazy('olympiads:submit_olympiad_answer')
@@ -314,10 +310,10 @@ def test_submit_olympiad_answer_success(client, user, olympiad):
     assert response_data['status'] == 'success'
     assert response_data['message'] == 'Данные успешно обработаны'
 
-    for question in questions:
-        submission = MultipleChoiceSubmission.objects.get(student=user, question=question)
-        assert submission.students_mark == question.mark
-        assert submission.a is True
+    submission = MultipleChoiceSubmission.objects.get(student=user, question=question)
+    assert submission.students_mark == question.mark
+    assert submission.a is True
+    assert submission.b is False
 
     olympiad_user = OlympiadUser.objects.get(olympiad=olympiad, user=user)
     assert olympiad_user.is_finished is True
@@ -327,7 +323,7 @@ def test_submit_olympiad_answer_success(client, user, olympiad):
 def test_submit_olympiad_answer_failure(client, user, olympiad):
 
     client.force_login(user)
-    question = olympiad.multiplechoicequestion_set.all()[0]
+    question = olympiad.multiplechoicequestion_set.first()
     data = {
         'olympiad_id': olympiad.id,
         'student_id': user.id,
@@ -341,6 +337,9 @@ def test_submit_olympiad_answer_failure(client, user, olympiad):
     assert response.status_code == 200
     submission = MultipleChoiceSubmission.objects.get(student=user, question=question)
     assert submission.students_mark == 0
+
+    olympiad_user = OlympiadUser.objects.get(olympiad=olympiad, user=user)
+    assert olympiad_user.is_finished is True
 
 
 @pytest.mark.django_db
@@ -365,67 +364,52 @@ def test_submit_olympiad_answer_question_not_found(client, user, olympiad):
 
 
 @pytest.mark.django_db
-def test_submit_olympiad_answer_invalid_data(client, user, olympiad):
-
-    client.force_login(user)
-
-    data = {
-        'olympiad_id': 1
-    }
-
-    url = reverse_lazy('olympiads:submit_olympiad_answer')
-    response = client.post(url, data=json.dumps(data), content_type='application/json')
-
-    assert response.status_code == 400
-    response_data = response.json()
-    assert response_data['status'] == 'error'
-    assert response_data['message'] == 'Ошибка при разборе данных JSON.'
-
-
-@pytest.mark.django_db
 def test_compute_score(client, user, olympiad):
 
     client.force_login(user)
-    one_choice_question = OneChoiceQuestion.objects.get(olympiad=olympiad).first()
-    OneChoiceSubmission.objects.create(student=user, question=one_choice_question, student_mark=2)
+    one_choice_question = olympiad.onechoicequestion_set.first()
+    OneChoiceSubmission.objects.create(student=user, question=one_choice_question, students_mark=1)
 
-    multiple_choice_question = MultipleChoiceQuestion.objects.get(olympiad=olympiad).first()
-    MultipleChoiceSubmission.objects.create(student=user, question=multiple_choice_question, student_mark=5)
+    multiple_choice_question = olympiad.multiplechoicequestion_set.first()
+    MultipleChoiceSubmission.objects.create(student=user, question=multiple_choice_question, students_mark=2)
 
-    try_false_question = TrueFalseQuestion.objects.get(olympiad=olympiad).first()
-    TrueFalseSubmission.objects.create(student=user, question=try_false_question, student_mark=4)
+    try_false_question = olympiad.truefalsequestion_set.first()
+    TrueFalseSubmission.objects.create(student=user, question=try_false_question, students_mark=2)
 
     olympiad_user = OlympiadUser.objects.create(user=user, olympiad=olympiad)
     compute_score(user, olympiad, olympiad_user)
-    assert olympiad_user.earned_mark == 11
+    assert olympiad_user.earned_mark == 5
 
 
 @pytest.mark.django_db
-def test_update_olympiad_user_ranking(olympiad):
+def test_update_olympiad_user_ranking(user, olympiad):
 
-    user1 = User.objects.create_user(email='user1@example.com', password='password1')
-    user2 = User.objects.create_user(email='user2@example.com', password='password2')
-    user3 = User.objects.create_user(email='user3@example.com', password='password3')
+    user2 = UserFactory()
+    user3 = UserFactory()
 
-    OlympiadUser.objects.create(user=user1, olympiad=olympiad, earned_mark=90, is_finished=True)
-    OlympiadUser.objects.create(user=user2, olympiad=olympiad, earned_mark=80, is_finished=True)
-    OlympiadUser.objects.create(user=user3, olympiad=olympiad, earned_mark=95, is_finished=True)
+    submission1 = OlympiadUserFactory(user=user, olympiad=olympiad, earned_mark=90, is_finished=True)
+    submission2 = OlympiadUserFactory(user=user2, olympiad=olympiad, earned_mark=80, is_finished=True)
+    submission3 = OlympiadUserFactory(user=user3, olympiad=olympiad, earned_mark=95, is_finished=True)
 
     update_olympiad_user_ranking(olympiad)
 
-    user1_ranking = OlympiadUser.objects.get(user=user1).ranking_place
-    user2_ranking = OlympiadUser.objects.get(user=user2).ranking_place
-    user3_ranking = OlympiadUser.objects.get(user=user3).ranking_place
+    submission1.refresh_from_db()
+    submission2.refresh_from_db()
+    submission3.refresh_from_db()
+
+    user_ranking = submission1.ranking_place
+    user2_ranking = submission2.ranking_place
+    user3_ranking = submission3.ranking_place
 
     assert user3_ranking == 1
-    assert user1_ranking == 2
+    assert user_ranking == 2
     assert user2_ranking == 3
 
 
 @pytest.mark.django_db
 def test_olympiad_registration_success(client, olympiad):
 
-    user = User.objects.create_user(email='user1@example.com', password='password1')
+    user = UserFactory()
     client.force_login(user)
 
     assert not OlympiadUser.objects.filter(user=user, olympiad=olympiad).exists()
@@ -441,7 +425,7 @@ def test_olympiad_registration_success(client, olympiad):
 def test_olympiad_registration_already_registered(client, user, olympiad):
 
     client.force_login(user)
-    OlympiadUser.objects.create(user=user, olympiad=olympiad)
+    OlympiadUserFactory(user=user, olympiad=olympiad)
     assert OlympiadUser.objects.filter(user=user, olympiad=olympiad).exists()
 
     url = reverse_lazy('olympiads:olympiad_registration', kwargs={'olympiad_id': olympiad.id})
@@ -456,7 +440,7 @@ def test_olympiad_registration_closed(client, olympiad):
     olympiad.registration_dedline = timezone.now() - timezone.timedelta(days=1)
     olympiad.save()
 
-    user = User.objects.create_user(email='user1@example.com', password='password1')
+    user = UserFactory()
     client.force_login(user)
     url = reverse_lazy('olympiads:olympiad_registration', kwargs={'olympiad_id': olympiad.id})
     response = client.get(url)

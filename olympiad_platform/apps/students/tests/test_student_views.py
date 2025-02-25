@@ -81,7 +81,7 @@ def test_user():
 @pytest.mark.django_db
 def test_login_view(client, test_user):
     url = reverse_lazy('students:login')
-    response = client.post(url, {'username': 'ivanov@gmail.com', 'password': 'testpassword123'})
+    response = client.post(url, {'email': 'ivanov@gmail.com', 'password': 'testpassword123'})
 
     assert response.status_code == 302
     assert response.url == reverse_lazy('students:profile')
@@ -90,7 +90,7 @@ def test_login_view(client, test_user):
 @pytest.mark.django_db
 def test_profile_view(client, test_user):
     url = reverse_lazy('students:login')
-    response = client.post(url, {'username': 'ivanov@gmail.com', 'password': 'testpassword123'})
+    response = client.post(url, {'email': 'ivanov@gmail.com', 'password': 'testpassword123'})
 
     url = reverse_lazy('students:profile')
     response = client.get(url)

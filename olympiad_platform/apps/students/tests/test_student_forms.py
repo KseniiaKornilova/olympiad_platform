@@ -99,7 +99,7 @@ def test_user():
 @pytest.mark.django_db
 def test_login_form_valid_data(test_user):
     form = LoginForm(data={
-        'username': 'ivanov@gmail.com',
+        'email': 'ivanov@gmail.com',
         'password': 'testpassword123'
     })
 
@@ -109,23 +109,23 @@ def test_login_form_valid_data(test_user):
 @pytest.mark.django_db
 def test_login_form_invalid_password(test_user):
     form = LoginForm(data={
-        'username': 'ivanov@gmail.com',
+        'email': 'ivanov@gmail.com',
         'password': 'wrongpassword123'
     })
 
     assert not form.is_valid()
-    assert any(['введите правильные Электронная почта и пароль.' in error for error in form.errors['__all__']])
+    assert any(['Неверный email или пароль' in error for error in form.errors['__all__']])
 
 
 @pytest.mark.django_db
 def test_login_form_invalid_email(test_user):
     form = LoginForm(data={
-        'username': 'wrongivanov@gmail.com',
+        'email': 'wrongivanov@gmail.com',
         'password': 'testpassword123'
     })
 
     assert not form.is_valid()
-    assert any(['введите правильные Электронная почта и пароль.' in error for error in form.errors['__all__']])
+    assert any(['Неверный email или пароль' in error for error in form.errors['__all__']])
 
 
 @pytest.mark.django_db
