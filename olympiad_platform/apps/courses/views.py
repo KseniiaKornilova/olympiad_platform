@@ -82,10 +82,11 @@ class CourseList(ListView):
         context['form'] = SearchForm(self.request.GET)
 
         student = self.request.user
-        course_submissions = CourseUser.objects.select_related('course').filter(user=student)
-        all_courses_id = list()
-        for course_submission in course_submissions:
-            all_courses_id.append(course_submission.course.id)
+        all_courses_id = []
+        if student.is_authenticated:
+            course_submissions = CourseUser.objects.select_related('course').filter(user=student)
+            for course_submission in course_submissions:
+                all_courses_id.append(course_submission.course.id)
         context['all_courses_id'] = all_courses_id
         return context
 
