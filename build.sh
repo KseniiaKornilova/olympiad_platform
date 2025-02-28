@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -o errexit  
 
-cd /opt/render/project/src
 poetry install --only main
-python manage.py migrate  
-python manage.py collectstatic --no-input 
+python ./olympiad_platform/manage.py migrate  
+python ./olympiad_platform/manage.py collectstatic --no-input 
