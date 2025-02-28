@@ -1,0 +1,343 @@
+body {
+    background-color: #CAE1F1;
+}
+
+.custom-margin {
+    margin-top: 6rem;
+  }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.navbar {
+    flex: 2;
+}
+
+.image-container {
+    flex: 1;
+    max-width: 120px;
+    margin: 30px 40px;
+    border-radius: 30px;
+    box-shadow: 10px 5px 5px #DCB5EA;
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.nav-link {
+    color: #2D3030;
+    font-size: 16px;
+    font-family: fantasy;
+    font-weight: bold;
+    
+}
+
+.nav-link:hover {
+    color: #9F64EB;
+    text-decoration: none;
+}
+
+.nav-item.dropdown {
+    min-width: 150px;
+    font-family: fantasy;
+}
+
+.dropdown-item:hover {
+    background-color: #DCB5EA;
+}
+
+.carousel {
+    width: 900px;
+}
+
+.img-fluid {
+    min-width: 900px;
+    border: 1px solid #726D6F;
+}
+
+div.carousel-caption {
+    color: white;
+    font-size: 16px;
+    font-family: fantasy;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.col {
+    padding: 25px;
+}
+
+a.learn-more {
+    color: #2D3030;
+    font-size: 16px;
+    font-family: serif; 
+}
+
+a.learn-more:hover {
+    color: #9F64EB;
+    text-decoration: none;
+    
+}
+
+span.stressed {
+    color: white;
+    background-color: #9F64EB;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+a.stressed {
+    color: white;
+    background-color: #9F64EB;
+    font-size: 30px;
+    border-radius: 40px;
+    padding: 20px;
+    margin: 60px;
+    transition: all 3s, ease-in-out;
+    
+}
+a.stressed:hover {
+    text-decoration: none;
+    transform: scale(1.1);   
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 40px;
+    row-gap: 40px;
+    padding: 20px 30px;
+}
+.wrapper-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.wrapper-equal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 40px;
+    padding: 20px 30px;
+}
+.wrapper-teatchers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 40px;
+    padding: 20px 30px;
+}
+
+a.biology {
+    background-image: linear-gradient(45deg, #D27CCA 0%, #D27CC4 70%, #F2BD6C 70%, #F2BD6C 100%);
+    transition: transform 0.4s ease;
+    border-radius: 20px;
+}
+a.biology:hover {
+    text-decoration: none;
+    transform: translateY(-15px);
+}
+
+a.biology h4{
+    padding-top: 30px;
+    font-size: 30px;
+    font-family: fantasy;
+    color: #3768B0;
+    font-weight: bold;
+}
+
+a.biology p {
+    font-style: italic;
+    font-family: fantasy;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+    color: #2D3030;
+    padding-left: 40px;
+}
+
+.subjects {
+    padding-left: 50px;
+    padding-right: 50px;
+    
+}
+
+a.chemistry {
+    background-image: linear-gradient(-45deg, #D27CCA 0%, #D27CCA 70%, #A0D88D 70%, #A0D88D 100%);   
+    transition: transform 0.4s ease;
+    border-radius: 20px;
+}
+
+a.chemistry:hover {
+    text-decoration: none;
+    transform: translateY(-15px);
+}
+
+a.chemistry h4 {
+    padding-top: 30px;
+    font-size: 30px;
+    font-family: fantasy;
+    color: #3768B0;
+    font-weight: bold;
+}
+a.chemistry p {
+    font-style: italic;
+    font-family: fantasy;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+    color: #2D3030;
+    padding-left: 40px;
+}
+
+a.bioengineering {
+    background-image: linear-gradient(135deg, #B298E9 0%, #B298E9 70%, #F0DB91 70%, #F0DB91 100%);   
+    transition: transform 0.4s ease;
+    border-radius: 20px;
+}
+a.bioengineering:hover {
+    text-decoration: none;
+    transform: translateY(-15px);
+}
+a.bioengineering h4 {
+    padding-top: 30px;
+    font-size: 30px;
+    font-family: fantasy;
+    color: #3768B0;
+    font-weight: bold;
+}
+a.bioengineering p {
+    font-style: italic;
+    font-family: fantasy;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+    color: #2D3030;
+    padding-left: 40px;
+}
+
+a.physics {
+    background-image: linear-gradient(-45deg, #A2DE93 0%, #A2DE93 20%, #EC719D 20%, #EC719D 85%, #A2DE93 85%, #A2DE93 100%);
+    transition: transform 0.4s ease;
+    border-radius: 20px;
+}
+a.physics:hover {
+    text-decoration: none;
+    transform: translateY(-15px);
+}
+a.physics h4 {
+    padding-top: 30px;
+    font-size: 30px;
+    font-family: fantasy;
+    color: #3768B0;
+    font-weight: bold;
+}
+a.physics p {
+    font-style: italic;
+    font-family: fantasy;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+    color: #2D3030;
+    padding-left: 40px;
+}
+
+a.math {
+    background-image: linear-gradient(279deg, #F2BD6C 0%, #F2BD6C 70%, #EC719D 70%, #EC719D 100%);
+    transition: transform 0.4s ease;
+    border-radius: 20px;
+}
+a.math:hover {
+    text-decoration: none;
+    transform: translateY(-15px);
+}
+a.math h4 {
+    padding-top: 30px;
+    font-size: 30px;
+    font-family: fantasy;
+    color: #3768B0;
+    font-weight: bold;
+}
+a.math p {
+    font-style: italic;
+    font-family: fantasy;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+    color: #2D3030;
+    padding-left: 40px;
+}
+
+a.informatica {
+    background-image: linear-gradient(45deg, #A0D88D 0%, #A0D88D 50%, #C1B6EB 50%, #C1B6EB 100%);
+    transition: transform 0.4s ease;
+    border-radius: 20px;
+}
+a.informatica:hover {
+    text-decoration: none;
+    transform: translateY(-15px);
+}
+a.informatica h4 {
+    padding-top: 30px;
+    font-size: 30px;
+    font-family: fantasy;
+    color: #3768B0;
+    font-weight: bold;
+}
+a.informatica p {
+    font-style: italic;
+    font-family: fantasy;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+    color: #2D3030;
+    padding-left: 40px;
+}
+
+img.teachers {
+    max-width: fit-content;
+    height: 200px;
+    /* border: 1px solid #959595; */
+    box-shadow: 4px -4px 4px #DCB5EA;
+}
+p.title {
+    padding-top: 10px;
+    font-family: fantasy;  
+    font-weight: bold;
+    color: #2D3030;
+}
+p.description {
+    font-family: serif;  
+    color: #2D3030;
+}
+
+div.line {
+    background-color: black;
+    width: 100;
+    height: 1px;
+}
+
+a.social {
+    color: #2D3030;
+    font-size: 20px;
+    font-family: serif; 
+    padding: 30px;
+}
+
+a.social:hover {
+    color: #9F64EB;
+    text-decoration: none;
+    
+}
+
+img.social {
+    width: 50px;
+    height: 50px;
+}
+
+.form_style {
+    background-color: #C1B6EB;
+}
