@@ -11,6 +11,11 @@ from drf_yasg.views import get_schema_view
 
 from rest_framework import permissions
 
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 schema_view = get_schema_view(
    openapi.Info(
       title="api_olympiad_platform",
@@ -25,6 +30,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('sentry-debug/', trigger_error),
     path('admin/', admin.site.urls),
     path('', include('apps.olympiads.urls')),
     path('', include('apps.students.urls')),

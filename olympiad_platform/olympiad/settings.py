@@ -14,10 +14,11 @@ from pathlib import Path
 
 import dj_database_url
 
-
 from django.utils.translation import gettext_lazy as _
 
 from dotenv import load_dotenv
+
+import sentry_sdk
 
 load_dotenv()
 
@@ -194,3 +195,19 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+sentry_sdk.init(
+    dsn="https://aa99999d3c18f79d0fecc30351a22cae@o4508904404353024.ingest.de.sentry.io/4508904406057040",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    _experiments={
+        # Set continuous_profiling_auto_start to True
+        # to automatically start the profiler on when
+        # possible.
+        "continuous_profiling_auto_start": True,
+    },
+)
