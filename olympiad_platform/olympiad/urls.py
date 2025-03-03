@@ -5,6 +5,8 @@ from django.contrib import admin
 from django.contrib.staticfiles.views import serve
 from django.urls import include, path
 from django.views.decorators.cache import never_cache
+from django.views.generic.base import RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -30,6 +32,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico'))),
     path('sentry-debug/', trigger_error),
     path('admin/', admin.site.urls),
     path('', include('apps.olympiads.urls')),

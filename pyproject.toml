@@ -26,6 +26,8 @@ dj-database-url = "^2.3.0"
 whitenoise = {extras = ["brotli"], version = "^6.9.0"}
 gunicorn = "^23.0.0"
 sentry-sdk = {extras = ["django"], version = "^2.22.0"}
+cloudinary = "^1.42.2"
+django-cloudinary-storage = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
